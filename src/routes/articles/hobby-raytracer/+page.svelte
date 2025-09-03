@@ -13,7 +13,8 @@
 	<img
 	src="/articles/hobby-raytracer/presentation.png"
 	class="presentation-img" 
-	alt="Presentation"/>
+	alt="Presentation"
+	loading="eager"/>
 
 	<h1 id="hobby-raytracer"><a href="#hobby-raytracer">#</a> hobby-raytracer</h1>
 
