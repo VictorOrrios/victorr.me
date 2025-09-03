@@ -1,7 +1,11 @@
 <script lang="ts">
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcomeFallback from '$lib/images/svelte-welcome.png';
+	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
+
+	onMount(() => {
+		//goto("articles/hobby-raytracer");
+	});
+
 </script>
 
 <svelte:head>
@@ -9,51 +13,9 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcomeFallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
+<div class="flex-col content-center">
+	<h1>Hello!</h1>
+	<p><a href="https://victorr.me">victorr.me</a> is under construction</p>
+	<img src="penguin.gif" alt="Penguin with jackhammer" class="h-[10vh] w-[10vh]">
+	<p>In the mean time why don't you visit the <a href="articles/hobby-raytracer">article</a> that I wrote?</p>
+</div>
