@@ -9,8 +9,8 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>victorr.me</title>
+	<meta name="description" content="Landing page" />
 </svelte:head>
 
 <div class="flex-col content-center">

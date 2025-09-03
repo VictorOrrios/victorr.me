@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>hobby-raytracer</title>
 	<meta name="description" content="hobby-raytracer" />
 </svelte:head>
 
