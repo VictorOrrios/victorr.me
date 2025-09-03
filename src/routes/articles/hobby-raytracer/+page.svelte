@@ -194,7 +194,7 @@
 			<img
 			src="/articles/hobby-raytracer/020.png"
 			alt="Acne 3"/>
-			<p class="img-subtitle">Does it look weird when you move it?</p>
+			<p class="img-subtitle">An optical ilussion? Move it around</p>
 		</Carousel.Item>
 	</Carousel.Content>
 	<Carousel.Previous class="absolute left-2 top-1/2 -translate-y-1/2" />
@@ -501,7 +501,7 @@
 	<Carousel.Content>
 		<Carousel.Item>
 			<img
-			src="/articles/hobby-raytracer/064.png"
+			src="/articles/hobby-raytracer/062.png"
 			alt="Normal specular"/>
 			<p class="img-subtitle">Normal specular</p>
 		</Carousel.Item>
