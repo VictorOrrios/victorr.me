@@ -62,7 +62,12 @@
 		'Open Sans', 'Helvetica Neue', sans-serif;
 	--font-mono: 'Fira Mono', monospace;
 	font-family: var(--font-body);
-	--color-theme-1: #ff0000;
+
+  --theme-color-basic: #054771;
+  --theme-color-dark: #032B45;
+  --theme-color-darker: #010F18;
+  --theme-color-light: #07639D;
+  --theme-color-lighter: #087FC9;
 
 	--background: oklch(0.141 0.005 285.823);
 	--foreground: oklch(0.985 0 0);
@@ -95,6 +100,22 @@
 	--sidebar-accent-foreground: oklch(0.985 0 0);
 	--sidebar-border: oklch(1 0 0 / 10%);
 	--sidebar-ring: oklch(0.552 0.016 285.938);
+}
+
+[data-theme="blue"]{
+  --theme-color-basic: #054771;
+  --theme-color-dark: #032B45;
+  --theme-color-darker: #010F18;
+  --theme-color-light: #07639D;
+  --theme-color-lighter: #087FC9;
+}
+
+[data-theme="red"]{
+  --theme-color-basic: #5F1616;
+  --theme-color-dark: #3A0E0E;
+  --theme-color-darker: #150505;
+  --theme-color-light: #841F1F;
+  --theme-color-lighter: #ff0000;
 }
 
 @theme inline {
@@ -152,7 +173,6 @@ p {
 
 a {
 	text-decoration: none;
-	color: var(--color-theme-1);
 }
 
 a:hover {

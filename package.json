@@ -44,5 +44,9 @@
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.20.0",
 		"vite": "^7.0.4"
+	},
+	"dependencies": {
+		"@neodrag/svelte": "^3.0.0-next.8",
+		"svelte-persisted-store": "^0.12.0"
 	}
 }

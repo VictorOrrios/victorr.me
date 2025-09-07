@@ -1089,12 +1089,14 @@
 	}
 
 	article a {
+		text-decoration: none;
+		color: var(--theme-color-lighter);
 		transition: all 0.2s linear; 
 	}
 
 	article a:hover{ 
 		color: var(--text-foreground); 
-		background-color: var(--color-theme-1); 
+		background-color: var(--theme-color-lighter); 
 		text-decoration: none; 
 		font-weight: 900; 
 	}
