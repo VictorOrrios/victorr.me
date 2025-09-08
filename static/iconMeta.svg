@@ -1,2 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50.946 5.8385 40.4196 40.1552" width="40.4196px" height="40.1552px"><g id="object-0"><path style="fill: rgb(9, 9, 11);" d="M -50.946 28.971 C -49.628 33.154 -42.705 51.768 -23.109 44.206 C -15.428 41.242 -11.909 33.131 -10.647 27.351 C -10.646 34.21 -24.801 36.29 -30.969 35.911 C -42.203 35.221 -45.49 35.106 -50.946 28.971 Z"/><g transform="matrix(1, 0, 0, 1, -64.042656, 5.433753)"><g data-cell-id="0"><g data-cell-id="1" transform="matrix(1, 0, 0, 1, 3.457266, -8.967284)"><g data-cell-id="bmcYBsCIimO8hlbHtjKr-1"><g><ellipse cx="30.059" cy="29.372" rx="20" ry="20" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 1px;" pointer-events="all"/><path d="M 10.059 29.372 C 10.059 36.038 16.726 39.372 30.059 39.372 C 43.393 39.372 50.059 36.038 50.059 29.372" style="fill: none; stroke: rgb(255, 255, 255); stroke-width: 1px;" stroke-miterlimit="10" pointer-events="stroke"/></g></g><g data-cell-id="bmcYBsCIimO8hlbHtjKr-2"><g/></g></g></g></g></g></svg>
+<?xml version="1.0"?>
+<svg width="40.4196" height="40.1552" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+
+ <g class="layer">
+  <title>Layer 1</title>
+  <g id="object-0" transform="translate(0, -0.0787402) translate(-0.0787402) translate(0, -0.0787402) translate(0, 0.0787402) translate(0.0787402) translate(0.0787402) translate(0.0787402) translate(0.0787402) translate(0.0787402) translate(0, 0.0787402) translate(0.0787402) translate(0.0787402) translate(0, -0.0787402) translate(0, -0.0787402) translate(0, -0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0, 0.0787402) translate(0.355143, 0.434954) scale(0.974739) translate(-0.355143, -0.434954) translate(0.0787402) matrix(0.975359, 0, 0, 0.975359, 50.0497, -5.18091)">
+   <path d="m-50.95,28.97c1.32,4.18 8.25,22.8 27.84,15.24c7.68,-2.97 11.2,-11.08 12.46,-16.86c0,6.86 -14.15,8.94 -20.32,8.56c-11.23,-0.69 -14.52,-0.8 -19.98,-6.94z" fill="rgb(9, 9, 11)" id="svg_1"/>
+   <g id="svg_2" transform="matrix(1, 0, 0, 1, -64.042656, 5.433753)">
+    <g data-cell-id="0" id="svg_3">
+     <g data-cell-id="1" id="svg_4" transform="matrix(1, 0, 0, 1, 3.457266, -8.967284)">
+      <g data-cell-id="bmcYBsCIimO8hlbHtjKr-1" id="svg_5">
+       <g id="svg_6">
+        <ellipse cx="30.06" cy="29.37" fill="none" id="svg_7" rx="20" ry="20" stroke="rgb(255, 255, 255)" stroke-width="1px"/>
+        <path d="m10.06,29.37c0,6.67 6.67,10 20,10c13.33,0 20,-3.33 20,-10" fill="none" id="svg_8" stroke="rgb(255, 255, 255)" stroke-miterlimit="10" stroke-width="1px"/>
+       </g>
+      </g>
+      <g data-cell-id="bmcYBsCIimO8hlbHtjKr-2" id="svg_9">
+       <g id="svg_10"/>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

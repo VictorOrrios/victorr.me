@@ -3,6 +3,9 @@
 	import { onMount } from "svelte";
 	import Clock from "$lib/components/Clock.svelte";
 	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
+	import { Button } from "$lib/components/ui/button";
 
 
 	function onClickName(){
@@ -41,16 +44,94 @@
 	<!--TOP BAR-->
 	<div class="w-full h-8 flex justify-between p-0 text-sm ">
 		<div class="w-[30rem] h-full p-0 grid grid-cols-[10rem_auto_auto_auto_auto]">
-			<button type="button" onclick={onClickName} class=" name-card">VICTOR ORRIOS</button>
-			<button type="button" onclick={onClickClick}>CLICK</button>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger>
+					{#snippet child({ props })}
+						<button type="button" {...props} class="name-card">VICTOR ORRIOS</button>
+					{/snippet}
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content class="w-56" align="start">
+					<DropdownMenu.Item onclick={onClickHelp}>
+						About
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={onClickHelp}>
+						Resume (PDF)
+					</DropdownMenu.Item>
+					<DropdownMenu.Sub>
+						<DropdownMenu.SubTrigger>Contac info</DropdownMenu.SubTrigger>
+						<DropdownMenu.SubContent>
+						<a href="mailto:victorr.orrios.b@gmail.com">
+							<DropdownMenu.Item>Email</DropdownMenu.Item>
+						</a>
+						<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">
+							<DropdownMenu.Item>LinkedIn</DropdownMenu.Item>
+						</a>
+						<a href="https://www.instagram.com/v.baron_?igsh=MTh5ejJjM213dnYzbA==">
+							<DropdownMenu.Item>Instagram</DropdownMenu.Item>
+						</a>
+						<a href="https://github.com/VictorOrrios">
+							<DropdownMenu.Item>Github</DropdownMenu.Item>
+						</a>
+						</DropdownMenu.SubContent>
+					</DropdownMenu.Sub>
+					<DropdownMenu.Separator />
+					<DropdownMenu.Item onclick={onClickHelp}>
+						Enter fullscreen
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={onClickHelp}>
+						Shutdown
+					</DropdownMenu.Item>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger>
+					{#snippet child({ props })}
+						<button type="button" {...props}>CLICK</button>
+					{/snippet}
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content class="w-56" align="start">
+					<DropdownMenu.Item onclick={onClickHelp}>
+						victorr.me
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={onClickHelp}>
+						Resume
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={onClickHelp}>
+						About
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={onClickHelp}>
+						Articles
+					</DropdownMenu.Item>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
 			<button type="button" onclick={onClickStyle}>STYLE</button>
 			<button type="button" onclick={onClickBackground}>BACKGROUND</button>
-			<button type="button" onclick={onClickHelp}>HELP</button>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger>
+					{#snippet child({ props })}
+						<button type="button" {...props}>HELP</button>
+					{/snippet}
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content class="w-56" align="start">
+					<DropdownMenu.Item onclick={onClickHelp}>
+						Close all windows
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={onClickHelp}>
+						FAQ
+					</DropdownMenu.Item>
+					<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
+						<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
+					</a>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
 		</div>
 		<div class="flex items-center justify-center pr-8"><Clock/></div>
 	</div>
 	<a href="articles/hobby-raytracer">link</a>
 	<img src="iconMeta.svg" alt="About this website" class="w-[100px]"/>
+	<img src="page.svg" alt="About this website" class="w-[100px]"/>
+	<img src="man.svg" alt="About this website" class="w-[100px]"/>
+	<img src="folder.svg" alt="About this website" class="w-[100px]"/>
 	
 </div>
 
@@ -65,8 +146,8 @@
 
 	.name-card{
 		background: linear-gradient(to right, var(--theme-color-darker), var(--theme-color-basic), var(--theme-color-lighter), var(--theme-color-basic) ,var(--theme-color-darker));
-		background-size: 500% 100%;
-		animation: move-gradient 25s linear infinite;
+		background-size: 1000% 100%;
+		animation: move-gradient 60s linear infinite;
 		
 	}
 
@@ -79,7 +160,7 @@
 			background-position: 0% 0%;
 		}
 		100% {
-			background-position: 500% 0%;
+			background-position: 1000% 0%;
 		}
 	}
 
