@@ -43,11 +43,13 @@
 
 	<!--TOP BAR-->
 	<div class="w-full h-8 flex justify-between p-0 text-sm ">
-		<div class="w-[30rem] h-full p-0 grid grid-cols-[10rem_auto_auto_auto_auto]">
+		<div class="h-full p-0 grid grid-cols-[auto_auto_auto_auto_auto] gap-4">
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger>
 					{#snippet child({ props })}
-						<button type="button" {...props} class="name-card">VICTOR ORRIOS</button>
+						<button type="button" {...props} class="name-card">
+							<span>VICTOR ORRIOS</span>
+						</button>
 					{/snippet}
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content class="w-56" align="start">
@@ -147,9 +149,53 @@
 	.name-card{
 		background: linear-gradient(to right, var(--theme-color-darker), var(--theme-color-basic), var(--theme-color-lighter), var(--theme-color-basic) ,var(--theme-color-darker));
 		background-size: 1000% 100%;
-		animation: move-gradient 60s linear infinite;
-		
+		animation: move-gradient 30s linear infinite;
+
+		margin: 4px;
+		width: 1.5rem;
+		border-radius: 100%;
+		box-shadow: 0px 0px 5px var(--theme-color-lighter);
+		overflow: hidden;
+
+		transition: 
+			width 0.5s ease,
+			margin 0.1s ease,
+			font-size 0.5s ease,
+			border-radius 0.7s ease-in,
+			box-shadow 0.7s ease-in;
 	}
+
+	.name-card:hover{
+		animation: move-gradient 60s linear infinite;
+
+		margin: 0px;
+		width: 10rem;
+		border-radius: 0%;
+		box-shadow: 0 0px 0px var(--theme-color-lighter);
+
+		transition: 
+			width 0.5s ease,
+			margin 0.5s ease,
+			font-size 0.5s ease,
+			border-radius 0.2s ease-out,
+			box-shadow 0.2s ease-out;
+	}
+
+	.name-card span{
+		display: inline-block;
+		white-space: nowrap;
+		opacity: 0;
+		font-weight: 900;
+
+		transform: translateX(100%); 
+		transition: transform 0.5s ease, opacity 0.5s ease; /* Slide from the right*/
+	}
+
+	.name-card:hover span {
+		opacity: 1;
+		transform: translateX(0); 
+	}
+
 
 	.bg-basic{
 		background-color: var(--theme-color-basic);
