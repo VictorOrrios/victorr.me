@@ -4,6 +4,9 @@
 	import { onMount } from "svelte";
 
 	let { type } = $props();
+	const cellWidth = 100;
+	const cellHeight = 100;
+	const debugLogs = false;
 
 	function isCellOccupied(x: number, y: number) {
 		return $occupiedCells.some(cell => cell.x === x && cell.y === y);
@@ -20,9 +23,6 @@
 	}
 
 	onMount(() => {
-		const cellWidth = 100;
-		const cellHeight = 100;
-
 		const el = document.getElementById("desktop-icon-"+type);
 		if(!el) return;
 
@@ -32,8 +32,8 @@
 		const rect = el.getBoundingClientRect();
 		if(!rect) return;
 
-		console.log("COORX:",rect.left,prect.left);
-		console.log("COORY:",rect.top,prect.top);
+		if(debugLogs) console.log("COORX:",rect.left,prect.left);
+		if(debugLogs) console.log("COORY:",rect.top,prect.top);
 		const xIndexIni = Math.abs(Math.round((rect.left-prect.left) / cellWidth));
 		const yIndexIni = Math.abs(Math.round((rect.top-prect.top) / cellHeight));
 
@@ -42,7 +42,7 @@
 		let x = rect.left, y = rect.top, startX = rect.left, startY = rect.top;
 		const iniX = rect.left, iniY = rect.top;
 
-		console.log("INI:",xIndexIni,yIndexIni,x,y);
+		if(debugLogs) console.log("INI:",xIndexIni,yIndexIni,x,y);
 
 
 		interact(el).draggable({
@@ -66,7 +66,7 @@
 			inertia: false
 		})
 		.on("dragstart", (event) => {
-			console.log($selectedType,"=>",type);
+			if(debugLogs) console.log($selectedType,"=>",type);
 			$selectedType = type;
 			startX = x;
 			startY = y;
@@ -81,8 +81,8 @@
 			const yIndexEnd = Math.abs(Math.round((y-prect.top) / cellHeight));
 			const xIndexStart = Math.abs(Math.round((startX-prect.left) / cellWidth));
 			const yIndexStart = Math.abs(Math.round((startY-prect.top) / cellHeight));
-			console.log("START: ",xIndexStart,yIndexStart,startX,startY);
-			console.log("END: ",xIndexEnd,yIndexEnd,x,y);
+			if(debugLogs) console.log("START: ",xIndexStart,yIndexStart,startX,startY);
+			if(debugLogs) console.log("END: ",xIndexEnd,yIndexEnd,x,y);
 
 			if(isCellOccupied(xIndexEnd, yIndexEnd)) {
 				x = startX;
@@ -95,13 +95,13 @@
 			event.target.style.transform = `translate(${x-iniX}px, ${y-iniY}px)`;
 		})
 		.on('tap', function (event) {
-			console.log($selectedType,"=>",type);
+			if(debugLogs) console.log($selectedType,"=>",type);
 			$selectedType = type;
-			console.log("TAP",type);
+			if(debugLogs) console.log("TAP",type);
 			event.preventDefault()
 		})
 		.on('doubletap', function (event) {
-			console.log("DOUBLE TAP",type);
+			if(debugLogs) console.log("DOUBLE TAP",type);
 			event.preventDefault()
 		});
 
@@ -109,7 +109,8 @@
 	
 </script>
 
-<div class="w-[100px] h-[100px] desktop-icon relative z-10 {$selectedType === type ? 'border-2 border-white':''}" id={"desktop-icon-"+type}>
+<div class="w-[100px] h-[100px] desktop-icon select-none relative z-10 
+	{$selectedType === type ? 'border-2 border-white':''}" id={"desktop-icon-"+type}>
     <img src="iconMeta.svg" alt="About this website" class="w-[70px] m-auto"/>
 	{#if $selectedType === type}
 		<p class="text-center">Selected {type}</p>

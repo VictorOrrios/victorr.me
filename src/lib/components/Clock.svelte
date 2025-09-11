@@ -9,4 +9,4 @@
 	});
 </script>
 
-<span>{time}</span>
+<span class="select-none">{time}</span>

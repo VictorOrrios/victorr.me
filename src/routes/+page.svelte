@@ -2,8 +2,8 @@
 	import Clock from "$lib/components/Clock.svelte";
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import { occupiedCells, selectedType } from "$lib/stores";
-	import { nextTheme } from "$lib/tools/themeSwitcher";
+	import { occupiedCells, selectedType, themeStore } from "$lib/stores";
+	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
 	import { onMount } from "svelte";
 
 
@@ -32,7 +32,6 @@
 	}
 	
 	function onClickDesktop(){
-		console.log($selectedType,"=>",0);
 		$selectedType = 0;
 	}
 
@@ -144,7 +143,8 @@
 	<img src="folder.svg" alt="About this website" class="w-[100px]"/>
 
 	<div class="w-[1000px] h-[500px]">
-		<button onclick={onClickDesktop} class="w-full h-full absolute z-0" aria-label="desktop background"></button>
+		<button onclick={onClickDesktop} class="w-full h-full absolute z-0 cursor-default!" 
+				aria-label="desktop background"></button>
 		<DesktopIcon type={1}/>
 		<DesktopIcon type={2}/>
 	</div>
