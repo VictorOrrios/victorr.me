@@ -5,6 +5,7 @@
 	import Meta from "./icons/Meta.svelte";
 	import Resume from "./icons/Resume.svelte";
 	import About from "./icons/About.svelte";
+	import Articles from "./icons/Articles.svelte";
 
 	let { type } = $props();
 	const cellWidth = 150;
@@ -121,6 +122,8 @@
 		<Resume/>
 	{:else if type === 3}
 		<About/>
+	{:else if type === 4}
+		<Articles/>
 	{/if}
 </div>
 

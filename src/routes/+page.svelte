@@ -142,6 +142,7 @@
 		<DesktopIcon type={1}/>
 		<DesktopIcon type={2}/>
 		<DesktopIcon type={3}/>
+		<DesktopIcon type={4}/>
 	</div>
 	
 </div>

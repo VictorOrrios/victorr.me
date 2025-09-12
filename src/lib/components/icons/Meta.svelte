@@ -13,7 +13,7 @@
 	.gradient{
 		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), var(--color-background),var(--color-background));
 		background-size: 300% 300%;
-		animation: move-gradient 0.5s ease-out forwards;
+		animation: move-gradient 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 		border-radius: 100%;
 		background-repeat: no-repeat;
 	}
@@ -21,10 +21,10 @@
 
 	@keyframes move-gradient {
 		0% {
-			background-position: center -60%;
+			background-position: 100% -60%;
 		}
 		100% {
-			background-position: center 30%;
+			background-position: 15% 35%;
 		}
 	}
 
