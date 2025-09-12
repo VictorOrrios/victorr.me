@@ -136,12 +136,6 @@
 		</div>
 		<div class="flex items-center justify-center pr-8"><Clock/></div>
 	</div>
-	<a href="articles/hobby-raytracer">link</a>
-	<img src="iconMeta.svg" alt="About this website" class="w-[100px]"/>
-	<img src="page.svg" alt="About this website" class="w-[100px]"/>
-	<img src="man.svg" alt="About this website" class="w-[100px]"/>
-	<img src="folder.svg" alt="About this website" class="w-[100px]"/>
-
 	<div class="w-[1000px] h-[500px]">
 		<button onclick={onClickDesktop} class="w-full h-full absolute z-0 cursor-default!" 
 				aria-label="desktop background"></button>

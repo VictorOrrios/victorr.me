@@ -110,13 +110,9 @@
 </script>
 
 <div class="w-[100px] h-[100px] desktop-icon select-none relative z-10 
-	{$selectedType === type ? 'border-2 border-white':''}" id={"desktop-icon-"+type}>
-    <img src="iconMeta.svg" alt="About this website" class="w-[70px] m-auto"/>
-	{#if $selectedType === type}
-		<p class="text-center">Selected {type}</p>
-	{:else}
-		<p class="text-center">Hola {type}</p>
-	{/if}
+	{$selectedType === type ? '':'cursor-default!'}" id={"desktop-icon-"+type}>
+    <img src="iconMeta.svg" alt="About this website" class="w-[70px] m-auto {$selectedType === type ? 'gradient':''}"/>
+	<p class="text-center">Nombre {type}</p>
 </div>
 
 <style>
@@ -128,4 +124,23 @@
 	.desktop-icon:hover{
 		color: aqua;
 	}
+
+	.gradient{
+		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), var(--color-background),var(--color-background));
+		background-size: 300% 300%;
+		animation: move-gradient 0.5s ease-out forwards;
+		border-radius: 100%;
+		background-repeat: no-repeat;
+
+	}
+
+	@keyframes move-gradient {
+		0% {
+			background-position: center -60%;
+		}
+		100% {
+			background-position: center 30%;
+		}
+	}
+
 </style>
