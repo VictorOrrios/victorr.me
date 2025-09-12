@@ -109,9 +109,9 @@
 	
 </script>
 
-<div class="w-[100px] h-[100px] desktop-icon select-none relative z-10 
-	{$selectedType === type ? '':'cursor-default!'}" id={"desktop-icon-"+type}>
-    <img src="iconMeta.svg" alt="About this website" class="w-[70px] m-auto {$selectedType === type ? 'gradient':''}"/>
+<div class="w-[100px] h-[100px] desktop-icon select-none relative p-2
+	{$selectedType === type ? 'z-20':'z-10 cursor-default! unselected'}" id={"desktop-icon-"+type}>
+    <img src="iconMeta.svg" alt="About this website" class="w-[65px] m-auto {$selectedType === type ? 'gradient':''}"/>
 	<p class="text-center">Nombre {type}</p>
 </div>
 
@@ -122,7 +122,8 @@
 	}
 
 	.desktop-icon:hover{
-		color: aqua;
+		color: var(--theme-color-lighter);
+		
 	}
 
 	.gradient{
@@ -131,8 +132,13 @@
 		animation: move-gradient 0.5s ease-out forwards;
 		border-radius: 100%;
 		background-repeat: no-repeat;
-
 	}
+
+	.unselected:hover{
+		background-color: var(--theme-color-darker);
+		border-radius: 3px;
+	}
+
 
 	@keyframes move-gradient {
 		0% {
