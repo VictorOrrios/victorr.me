@@ -2,10 +2,13 @@
 	import { occupiedCells, selectedType } from "$lib/stores";
 	import interact from "interactjs";
 	import { onMount } from "svelte";
+	import Meta from "./icons/Meta.svelte";
+	import Resume from "./icons/Resume.svelte";
+	import About from "./icons/About.svelte";
 
 	let { type } = $props();
-	const cellWidth = 100;
-	const cellHeight = 100;
+	const cellWidth = 150;
+	const cellHeight = 150;
 	const debugLogs = false;
 
 	function isCellOccupied(x: number, y: number) {
@@ -109,44 +112,15 @@
 	
 </script>
 
-<div class="w-[100px] h-[100px] desktop-icon select-none relative p-2
-	{$selectedType === type ? 'z-20':'z-10 cursor-default! unselected'}" id={"desktop-icon-"+type}>
-    <img src="iconMeta.svg" alt="About this website" class="w-[65px] m-auto {$selectedType === type ? 'gradient':''}"/>
-	<p class="text-center">Nombre {type}</p>
+<div class="select-none relative m-0
+	{$selectedType === type ? 'z-20':'z-10 cursor-default!'}" id={"desktop-icon-"+type}
+	style="width: {cellWidth}px; height: {cellHeight}px;">
+	{#if type === 1}
+		<Meta/>
+	{:else if type === 2}
+		<Resume/>
+	{:else if type === 3}
+		<About/>
+	{/if}
 </div>
 
-<style>
-	.desktop-icon{
-		user-select: none;
-  		-webkit-user-select: none;
-	}
-
-	.desktop-icon:hover{
-		color: var(--theme-color-lighter);
-		
-	}
-
-	.gradient{
-		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), var(--color-background),var(--color-background));
-		background-size: 300% 300%;
-		animation: move-gradient 0.5s ease-out forwards;
-		border-radius: 100%;
-		background-repeat: no-repeat;
-	}
-
-	.unselected:hover{
-		background-color: var(--theme-color-darker);
-		border-radius: 3px;
-	}
-
-
-	@keyframes move-gradient {
-		0% {
-			background-position: center -60%;
-		}
-		100% {
-			background-position: center 30%;
-		}
-	}
-
-</style>

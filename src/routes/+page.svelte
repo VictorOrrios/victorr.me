@@ -141,6 +141,7 @@
 				aria-label="desktop background"></button>
 		<DesktopIcon type={1}/>
 		<DesktopIcon type={2}/>
+		<DesktopIcon type={3}/>
 	</div>
 	
 </div>
