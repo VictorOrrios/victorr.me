@@ -4,7 +4,7 @@
 </script>
 
 <div class="group  p-4 flex flex-col items-center gap-2">
-    <img src="man.svg" alt="About this website" class="h-[80px] m-auto overflow-visible z-[6]"/>
+    <img src="man.svg" alt="Man" class="h-[80px] m-auto overflow-visible z-[6]"/>
     <p class="rounded-[3px] group-hover:bg-(--theme-color-dark)">about</p>
 	<div class="absolute rounded-full z-[5] {$selectedType === type ? 'active':''}"></div>
 </div>
@@ -17,7 +17,6 @@
 		transform-origin: center center;
 		box-shadow: 0px 0px 5px var(--theme-color-lighter);
 		transition: box-shadow 0.3s linear;
-		
 	}
 
 

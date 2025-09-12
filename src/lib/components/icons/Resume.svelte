@@ -4,7 +4,7 @@
 </script>
 
 <div class="group  p-4 flex flex-col items-center gap-2">
-    <img src="page4.svg" alt="About this website" class="h-[80px] m-auto overflow-visible {$selectedType === type ? 'active':''}"/>
+    <img src="page4.svg" alt="File" class="h-[80px] m-auto overflow-visible {$selectedType === type ? 'active':''}"/>
     <p class="rounded-[3px] group-hover:bg-(--theme-color-dark)">resume</p>
 </div>
 
@@ -14,7 +14,6 @@
 		transform-origin: center center;
 		transform-style: preserve-3d;
 		transform: rotateX(30deg) rotateY(-30deg) scaleX(0.8);
-
 	}
 
 	.active{
