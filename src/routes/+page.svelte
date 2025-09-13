@@ -2,6 +2,7 @@
 	import Clock from "$lib/components/Clock.svelte";
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import WindowManager from "$lib/components/WindowManager.svelte";
 	import { occupiedCells, selectedType, themeStore } from "$lib/stores";
 	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
 	import { onMount } from "svelte";
@@ -46,7 +47,7 @@
 	<meta name="description" content="Landing page" />
 </svelte:head>
 
-<div class="w-full flex-col content-center">
+<div class="w-full  flex-col content-center">
 
 	<!--TOP BAR-->
 	<div class="w-full h-8 flex justify-between p-0 text-sm ">
@@ -136,8 +137,13 @@
 		</div>
 		<div class="flex items-center justify-center pr-8"><Clock/></div>
 	</div>
-	<div class="w-[1000px] h-[500px]">
-		<button onclick={onClickDesktop} class="w-full h-full absolute z-0 cursor-default!" 
+
+	<div class="w-full h-[97vh] absolute z-30 pointer-events-none">
+		<WindowManager/>
+	</div>
+
+	<div class="w-full h-[97vh] overflow-hidden">
+		<button onclick={onClickDesktop} class="w-full h-[97vh] absolute z-0 cursor-default!" 
 				aria-label="desktop background"></button>
 		<DesktopIcon type={1}/>
 		<DesktopIcon type={2}/>

@@ -2,10 +2,10 @@
 	import { occupiedCells, selectedType } from "$lib/stores";
 	import interact from "interactjs";
 	import { onMount } from "svelte";
-	import Meta from "./icons/Meta.svelte";
-	import Resume from "./icons/Resume.svelte";
 	import About from "./icons/About.svelte";
 	import Articles from "./icons/Articles.svelte";
+	import Meta from "./icons/Meta.svelte";
+	import Resume from "./icons/Resume.svelte";
 
 	let { type } = $props();
 	const cellWidth = 150;
@@ -22,7 +22,7 @@
 			$occupiedCells.splice(index,1);
 			$occupiedCells.push({x:xEnd,y:yEnd});
 		}else{
-			console.log("ChangeCell error:",xStart,yStart,xEnd,yEnd);
+			console.error("ChangeCell error:",xStart,yStart,xEnd,yEnd);
 		}
 	}
 
