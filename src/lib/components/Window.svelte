@@ -43,7 +43,9 @@
 
         interact('.window').draggable({
             allowFrom: '.window-header',
-            inertia: true,
+            inertia: {
+                resistance: 10.0,
+            },
             modifiers: [
                 interact.modifiers.restrictRect({
                     restriction: 'parent',
@@ -70,13 +72,13 @@
     <div class="window z-30 pointer-events-auto"
             style="width: {window_data.width}px; height: {window_data.height}px;">
 
-        <div class="window-header select-none cursor-default! p-1 pl-2 pr-2 border-1 border-white flex justify-between">
-            <p>{window_data.text}</p>
-            <div class="flex items-center gap-2 button-group">
+        <div class="window-header select-none cursor-default! border-1 border-white flex justify-between">
+            <p class="p-1 pl-2 ">{window_data.text}</p>
+            <div class="flex items-center gap-2 button-group ">
                 {#if window_data.link}
                     <a class="triangle" href={window_data.link} aria-label="Link to standalone app"></a>
                 {/if}
-                <div class="flex gap-2">
+                <div class="flex gap-2 h-full items-center control-button-group pr-2">
                     <button class="control-button aux-button" aria-label="Maximize/Minize"></button>
                     <button class="control-button close-button" aria-label="close"></button>
                 </div>
@@ -101,15 +103,21 @@
         border-radius: 100%;
         width: 1rem;
         height: 1rem;
-        background-color: white;
+        background-color: var(--color-background);
         transition: all 0.2s ease-out;
+		box-shadow: 0px 0px 10px var(--theme-color-lighter);
     }
 
     .triangle {
         width: 1rem;
         height: 1rem;
         border-radius: 100%;
-        background-color: white;
+        background-color: var(--color-background);
+        transition: all 0.2s ease-out;
+    }
+
+    .button-group:hover .control-button-group{
+        background: linear-gradient(to right, var(--theme-color-darker), var(--theme-color-basic));
         transition: all 0.2s ease-out;
     }
 
@@ -123,10 +131,12 @@
 
     .button-group:hover .close-button{
         background-color: var(--theme-color-lighter);
+		box-shadow: 0px 0px 5px var(--theme-color-darker);
     }
 
     .button-group:hover .aux-button{
         background-color: var(--theme-color-light);
+		box-shadow: 0px 0px 5px var(--theme-color-dark);
     }
 
 </style>
