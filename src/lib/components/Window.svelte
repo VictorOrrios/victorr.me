@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { activeWindows } from "$lib/stores";
 	import interact from "interactjs";
 	import { onMount } from "svelte";
+	import { derived } from "svelte/store";
 
     const window_library = [
         {
@@ -36,12 +38,22 @@
     let { type } = $props();
     let window_data = window_library.find(w => w.type === type);
 
+    function onClose(){
+        console.log($activeWindows)
+    }
+
+    function onMinimize(){
+
+    }
+
     onMount(() => {
 
+        const el = document.getElementById("window-"+type);
+		if(!el) return;
 
         let x = 0, y = 0;
 
-        interact('.window').draggable({
+        interact(el).draggable({
             allowFrom: '.window-header',
             inertia: {
                 resistance: 10.0,
@@ -59,17 +71,22 @@
                     y += event.dy
 
                     target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
-
-                }
+                },
             }
         })
+        .on("dragstart", (event) => {
+			const i = $activeWindows.findIndex(w => w === type);
+            if(i<0) console.log("Error finding window on drag start");
+            $activeWindows.splice(i,1);
+            $activeWindows.unshift(type);
+		})
 
     });
 
 </script>
 
 {#if window_data}
-    <div class="window z-30 pointer-events-auto"
+    <div class="window z-30 pointer-events-auto" id="window-{type}"
             style="width: {window_data.width}px; height: {window_data.height}px;">
 
         <div class="window-header select-none cursor-default! border-1 border-white flex justify-between">
@@ -79,8 +96,8 @@
                     <a class="triangle" href={window_data.link} aria-label="Link to standalone app"></a>
                 {/if}
                 <div class="flex gap-2 h-full items-center control-button-group pr-2">
-                    <button class="control-button aux-button" aria-label="Maximize/Minize"></button>
-                    <button class="control-button close-button" aria-label="close"></button>
+                    <button class="control-button aux-button" aria-label="Minimize" onclick={onMinimize}></button>
+                    <button class="control-button close-button" aria-label="close" onclick={onClose}></button>
                 </div>
             </div>
         </div>
@@ -105,8 +122,9 @@
         height: 1rem;
         background-color: var(--color-background);
         transition: all 0.2s ease-out;
-		box-shadow: 0px 0px 10px var(--theme-color-lighter);
+		border: 1px solid white;
     }
+
 
     .triangle {
         width: 1rem;
@@ -132,11 +150,13 @@
     .button-group:hover .close-button{
         background-color: var(--theme-color-lighter);
 		box-shadow: 0px 0px 5px var(--theme-color-darker);
+        border-color: var(--theme-color-lighter);
     }
 
     .button-group:hover .aux-button{
         background-color: var(--theme-color-light);
 		box-shadow: 0px 0px 5px var(--theme-color-dark);
+        border-color: var(--theme-color-light);
     }
 
 </style>
