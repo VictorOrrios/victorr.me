@@ -66,7 +66,7 @@
 
 	<!--TOP BAR-->
 	<div class="w-full h-8 flex justify-between p-0 text-sm ">
-		<div class="flex gap-2">
+		<div class="flex gap-6">
 			<div class="h-full p-0 grid grid-cols-[auto_auto_auto_auto_auto] gap-4">
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
