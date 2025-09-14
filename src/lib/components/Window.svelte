@@ -1,59 +1,55 @@
 <script lang="ts">
-	import { activeWindows } from "$lib/stores";
+	import { activeWindows, window_library } from "$lib/stores";
 	import interact from "interactjs";
 	import { onMount } from "svelte";
 	import { derived } from "svelte/store";
+	import MetaW from "./windows/MetaW.svelte";
+	import ResumeW from "./windows/ResumeW.svelte";
+	import AboutW from "./windows/AboutW.svelte";
+	import ArticlesW from "./windows/ArticlesW.svelte";
+	import { closeWindow, minimizeWindow, pushToFront } from "$lib/tools/windowFunctions";
 
-    const window_library = [
-        {
-            text:"victorr.me",
-            type: 1,
-            width:400,
-            height:400,
-            link:undefined
-        },
-        {
-            text:"resume",
-            type: 2,
-            width:500,
-            height:600,
-            link:"https://google.com"
-        },
-        {
-            text:"about",
-            type: 3,
-            width:600,
-            height:400,
-            link:undefined
-        },
-        {
-            text:"articles",
-            type: 4,
-            width:500,
-            height:300,
-            link:undefined
-        },
-    ];
+    
 
-    let { type } = $props();
-    let window_data = window_library.find(w => w.type === type);
+    let {type} = $props();
+
+    const window_data = window_library.find(w => w.type === type);
+
+    let wel:HTMLElement;
 
     function onClose(){
-        console.log($activeWindows)
+        console.log("click close");
+        closeWindow(type);
     }
 
     function onMinimize(){
+        minimizeWindow(type);
+    }
 
+    const windowZIndexes = $derived.by(() => {
+        const i = $activeWindows.findIndex(w => w.type === type);
+        if(i<0) return;
+
+        if(wel) wel.style.zIndex = String(50-i);
+        
+        return;
+    });
+
+    function handleControlButtonClick(e:Event) {
+        // Timeout to not crush control buttons events
+        setTimeout(() => pushToFront(type), 0);
     }
 
     onMount(() => {
 
         const el = document.getElementById("window-"+type);
 		if(!el) return;
+        wel = el;
 
         let x = 0, y = 0;
 
         interact(el).draggable({
+            ignoreFrom: '.control-button, .triangle',
             allowFrom: '.window-header',
             inertia: {
                 resistance: 10.0,
@@ -74,20 +70,18 @@
                 },
             }
         })
-        .on("dragstart", (event) => {
-			const i = $activeWindows.findIndex(w => w === type);
-            if(i<0) console.log("Error finding window on drag start");
-            $activeWindows.splice(i,1);
-            $activeWindows.unshift(type);
-		})
 
     });
 
+    
+
 </script>
 
+    
 {#if window_data}
-    <div class="window z-30 pointer-events-auto" id="window-{type}"
-            style="width: {window_data.width}px; height: {window_data.height}px;">
+    <div class="absolute window pointer-events-auto" id="window-{type}"
+            style="width: {window_data.width}px;"
+            onpointerdown={(e) => handleControlButtonClick(e)}>
 
         <div class="window-header select-none cursor-default! border-1 border-white flex justify-between">
             <p class="p-1 pl-2 ">{window_data.text}</p>
@@ -101,16 +95,19 @@
                 </div>
             </div>
         </div>
-        <div class="window-body">
-            Content
-        </div>
+        {#if window_data.type === 1}
+            <MetaW/>
+        {:else if window_data.type === 2}
+            <ResumeW/>
+        {:else if window_data.type === 3}
+            <AboutW/>
+        {:else if window_data.type === 4}
+            <ArticlesW/>
+        {/if}
     </div>
 {/if}
 
 <style>
-    .window{
-        border: 1px solid white;
-    }
 
     .window-header{
         background-color: var(--color-background);

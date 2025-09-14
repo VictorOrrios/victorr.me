@@ -6,6 +6,7 @@
 	import Articles from "./icons/Articles.svelte";
 	import Meta from "./icons/Meta.svelte";
 	import Resume from "./icons/Resume.svelte";
+	import { addWindow } from "$lib/tools/windowFunctions";
 
 	let { type } = $props();
 	const cellWidth = 150;
@@ -106,7 +107,8 @@
 		})
 		.on('doubletap', function (event) {
 			if(debugLogs) console.log("DOUBLE TAP",type);
-			event.preventDefault()
+			addWindow(type);
+			event.preventDefault();
 		});
 
 	});

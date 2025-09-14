@@ -3,13 +3,27 @@
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import WindowManager from "$lib/components/WindowManager.svelte";
-	import { occupiedCells, selectedType, themeStore } from "$lib/stores";
+	import { activeWindows, occupiedCells, selectedType, themeStore, window_library } from "$lib/stores";
 	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
+	import { maximizeWindow, minimizeWindow } from "$lib/tools/windowFunctions";
 	import { onMount } from "svelte";
+	import { slide } from "svelte/transition";
 
 
 	// Reset positions of items
 	$occupiedCells = [];
+
+	const minimizedWindows:{title:string,type:number}[] = $derived.by(() => {
+		let list:{title:string,type:number}[] = [];
+		$activeWindows.forEach(aw => {
+			if(!aw.onScreen){
+				const window_data = window_library.find(w => w.type === aw.type);
+				if(window_data !== undefined)
+					list.push({title:window_data.text,type:window_data.type});
+			}
+		});
+        return list;
+    });
 
 
 	function onClickName(){
@@ -26,6 +40,7 @@
 
 	function onClickBackground(){
 		nextTheme();
+		console.log($activeWindows);
 	}
 
 	function onClickHelp(){
@@ -47,98 +62,111 @@
 	<meta name="description" content="Landing page" />
 </svelte:head>
 
-<div class="w-full  flex-col content-center">
+<div class="w-[100vw] overflow-hidden flex-col content-center">
 
 	<!--TOP BAR-->
 	<div class="w-full h-8 flex justify-between p-0 text-sm ">
-		<div class="h-full p-0 grid grid-cols-[auto_auto_auto_auto_auto] gap-4">
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
-					{#snippet child({ props })}
-						<button type="button" {...props} class="name-card">
-							<span>VICTOR ORRIOS</span>
-						</button>
-					{/snippet}
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content class="w-56" align="start">
-					<DropdownMenu.Item onclick={onClickHelp}>
-						About
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onclick={onClickHelp}>
-						Resume (PDF)
-					</DropdownMenu.Item>
-					<DropdownMenu.Sub>
-						<DropdownMenu.SubTrigger>Contac info</DropdownMenu.SubTrigger>
-						<DropdownMenu.SubContent>
-						<a href="mailto:victorr.orrios.b@gmail.com">
-							<DropdownMenu.Item>Email</DropdownMenu.Item>
+		<div class="flex gap-2">
+			<div class="h-full p-0 grid grid-cols-[auto_auto_auto_auto_auto] gap-4">
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger>
+						{#snippet child({ props })}
+							<button type="button" {...props} class="name-card">
+								<span>VICTOR ORRIOS</span>
+							</button>
+						{/snippet}
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content class="w-56" align="start">
+						<DropdownMenu.Item onclick={onClickHelp}>
+							About
+						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={onClickHelp}>
+							Resume (PDF)
+						</DropdownMenu.Item>
+						<DropdownMenu.Sub>
+							<DropdownMenu.SubTrigger>Contac info</DropdownMenu.SubTrigger>
+							<DropdownMenu.SubContent>
+							<a href="mailto:victorr.orrios.b@gmail.com">
+								<DropdownMenu.Item>Email</DropdownMenu.Item>
+							</a>
+							<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">
+								<DropdownMenu.Item>LinkedIn</DropdownMenu.Item>
+							</a>
+							<a href="https://www.instagram.com/v.baron_?igsh=MTh5ejJjM213dnYzbA==">
+								<DropdownMenu.Item>Instagram</DropdownMenu.Item>
+							</a>
+							<a href="https://github.com/VictorOrrios">
+								<DropdownMenu.Item>Github</DropdownMenu.Item>
+							</a>
+							</DropdownMenu.SubContent>
+						</DropdownMenu.Sub>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Item onclick={onClickHelp}>
+							Enter fullscreen
+						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={onClickHelp}>
+							Shutdown
+						</DropdownMenu.Item>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger>
+						{#snippet child({ props })}
+							<button type="button" {...props}>CLICK</button>
+						{/snippet}
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content class="w-56" align="start">
+						<DropdownMenu.Item onclick={onClickHelp}>
+							victorr.me
+						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={onClickHelp}>
+							Resume
+						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={onClickHelp}>
+							About
+						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={onClickHelp}>
+							Articles
+						</DropdownMenu.Item>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+				<button type="button" onclick={onClickStyle}>STYLE</button>
+				<button type="button" onclick={onClickBackground}>BACKGROUND</button>
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger>
+						{#snippet child({ props })}
+							<button type="button" {...props}>HELP</button>
+						{/snippet}
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content class="w-56" align="start">
+						<DropdownMenu.Item onclick={onClickHelp}>
+							Close all windows
+						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={onClickHelp}>
+							FAQ
+						</DropdownMenu.Item>
+						<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
+							<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
 						</a>
-						<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">
-							<DropdownMenu.Item>LinkedIn</DropdownMenu.Item>
-						</a>
-						<a href="https://www.instagram.com/v.baron_?igsh=MTh5ejJjM213dnYzbA==">
-							<DropdownMenu.Item>Instagram</DropdownMenu.Item>
-						</a>
-						<a href="https://github.com/VictorOrrios">
-							<DropdownMenu.Item>Github</DropdownMenu.Item>
-						</a>
-						</DropdownMenu.SubContent>
-					</DropdownMenu.Sub>
-					<DropdownMenu.Separator />
-					<DropdownMenu.Item onclick={onClickHelp}>
-						Enter fullscreen
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onclick={onClickHelp}>
-						Shutdown
-					</DropdownMenu.Item>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
-					{#snippet child({ props })}
-						<button type="button" {...props}>CLICK</button>
-					{/snippet}
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content class="w-56" align="start">
-					<DropdownMenu.Item onclick={onClickHelp}>
-						victorr.me
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onclick={onClickHelp}>
-						Resume
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onclick={onClickHelp}>
-						About
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onclick={onClickHelp}>
-						Articles
-					</DropdownMenu.Item>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-			<button type="button" onclick={onClickStyle}>STYLE</button>
-			<button type="button" onclick={onClickBackground}>BACKGROUND</button>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
-					{#snippet child({ props })}
-						<button type="button" {...props}>HELP</button>
-					{/snippet}
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content class="w-56" align="start">
-					<DropdownMenu.Item onclick={onClickHelp}>
-						Close all windows
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onclick={onClickHelp}>
-						FAQ
-					</DropdownMenu.Item>
-					<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
-						<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
-					</a>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</div>
+
+			<div class="flex items-center">
+				{#each minimizedWindows as w, i (w.type)}
+					<button class="pr-2 pl-2 mini-title" 
+						onclick={() => {maximizeWindow(w.type)}}
+						transition:slide={{axis: 'x', duration: 400 }}>
+						{w.title}
+					</button>
+				{/each}
+			</div>
 		</div>
+
 		<div class="flex items-center justify-center pr-8"><Clock/></div>
 	</div>
 
-	<div class="w-full h-[97vh] absolute z-30 pointer-events-none">
+	<div class="w-[100vw] overflow-hidden h-[97vh] absolute z-30 pointer-events-none">
 		<WindowManager/>
 	</div>
 
@@ -229,12 +257,28 @@
 		background-color: var(--theme-color-basic);
 	}
 
+	.mini-title:hover{
+		background: linear-gradient(var(--theme-color-darker), var(--theme-color-basic), var(--theme-color-lighter));
+		animation: move-gradient-2 0.3s ease-out forwards;
+		background-repeat: no-repeat;
+		background-size: 100% 200%;
+	}
+
 	@keyframes move-gradient {
 		0% {
 			background-position: 0% 0%;
 		}
 		100% {
 			background-position: 1000% 0%;
+		}
+	}
+
+	@keyframes move-gradient-2 {
+		0% {
+			background-position: 0% -100%;
+		}
+		100% {
+			background-position: 0% 100%;
 		}
 	}
 

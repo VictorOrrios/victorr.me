@@ -3,7 +3,7 @@
     const type:number = 1;
 </script>
 
-<div class="group  p-4 flex flex-col items-center gap-2">
+<div class="group p-4 flex flex-col items-center gap-2">
     <img src="iconMeta.svg" alt="About this website" class="h-[80px] m-auto overflow-visible {$selectedType === type ? 'gradient':''}"/>
     <p class="rounded-[3px] group-hover:bg-(--theme-color-dark)">victorr.me</p>
 </div>
