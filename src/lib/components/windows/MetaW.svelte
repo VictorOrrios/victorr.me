@@ -8,7 +8,7 @@
 </script>
 
 
-<div class="w-full h-[500px] border-1 border-white">
+<div class="w-full h-full border-1 border-white">
     Hola {varx}
     <button onclick={onClick}>add</button>
 </div>

@@ -1,17 +1,19 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import Clock from "$lib/components/Clock.svelte";
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import WindowManager from "$lib/components/WindowManager.svelte";
 	import { activeWindows, occupiedCells, selectedType, themeStore, window_library } from "$lib/stores";
 	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
-	import { maximizeWindow, minimizeWindow } from "$lib/tools/windowFunctions";
+	import { addWindow, closeWindow, maximizeWindow, minimizeWindow } from "$lib/tools/windowFunctions";
 	import { onMount } from "svelte";
 	import { slide } from "svelte/transition";
 
 
-	// Reset positions of items
 	$occupiedCells = [];
+
+	let isInFullScreen:boolean = $state(false);
 
 	const minimizedWindows:{title:string,type:number}[] = $derived.by(() => {
 		let list:{title:string,type:number}[] = [];
@@ -25,16 +27,43 @@
         return list;
     });
 
-
-	function onClickName(){
-		nextTheme();
+	function toogleFullScreen(){
+		if(isInFullScreen){
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if ((document as any).webkitExitFullscreen) { // Safari
+				(document as any).webkitExitFullscreen();
+			} else if ((document as any).msExitFullscreen) { // IE11
+				(document as any).msExitFullscreen();
+			}
+		}else{
+			let elem: HTMLElement = document.documentElement
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if ((elem as any).webkitRequestFullscreen) { // Safari
+				(elem as any).webkitRequestFullscreen();
+			} else if ((elem as any).msRequestFullscreen) { // IE11
+				(elem as any).msRequestFullscreen();
+			}
+		}
+		isInFullScreen = !isInFullScreen;
 	}
 
-	function onClickClick(){
-		nextTheme();
+
+	function onClickAbout(){
+		const w = window_library.find(w => w.text === "about");
+		if(w) addWindow(w.type);
 	}
 	
+	function onClickShutdown(){
+		location.reload();
+	}
+
 	function onClickStyle(){
+		nextTheme();
+	}
+
+	function onClickFoo(){
 		nextTheme();
 	}
 
@@ -43,8 +72,16 @@
 		console.log($activeWindows);
 	}
 
-	function onClickHelp(){
-		nextTheme();
+	function onClickHelp1(){
+		window_library.forEach(w => {
+			closeWindow(w.type);
+		});
+	}
+
+	function onClickHelp2(){
+		window_library.forEach(w => {
+			minimizeWindow(w.type);
+		});
 	}
 	
 	function onClickDesktop(){
@@ -62,7 +99,7 @@
 	<meta name="description" content="Landing page" />
 </svelte:head>
 
-<div class="w-[100vw] overflow-hidden flex-col content-center">
+<div class="w-[100vw] overflow-hidden flex flex-col content-center">
 
 	<!--TOP BAR-->
 	<div class="w-full h-8 flex justify-between p-0 text-sm ">
@@ -77,10 +114,10 @@
 						{/snippet}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content class="w-56" align="start">
-						<DropdownMenu.Item onclick={onClickHelp}>
+						<DropdownMenu.Item onclick={onClickAbout}>
 							About
 						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp}>
+						<DropdownMenu.Item onclick={onClickFoo}>
 							Resume (PDF)
 						</DropdownMenu.Item>
 						<DropdownMenu.Sub>
@@ -101,10 +138,14 @@
 							</DropdownMenu.SubContent>
 						</DropdownMenu.Sub>
 						<DropdownMenu.Separator />
-						<DropdownMenu.Item onclick={onClickHelp}>
-							Enter fullscreen
+						<DropdownMenu.Item onclick={toogleFullScreen}>
+							{#if isInFullScreen}
+								Exit fullscreen
+							{:else}
+								Enter fullscreen
+							{/if}
 						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp}>
+						<DropdownMenu.Item onclick={onClickShutdown}>
 							Shutdown
 						</DropdownMenu.Item>
 					</DropdownMenu.Content>
@@ -116,18 +157,11 @@
 						{/snippet}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content class="w-56" align="start">
-						<DropdownMenu.Item onclick={onClickHelp}>
-							victorr.me
-						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp}>
-							Resume
-						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp}>
-							About
-						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp}>
-							Articles
-						</DropdownMenu.Item>
+						{#each window_library as window, i (window.type)}
+							<DropdownMenu.Item onclick={() => addWindow(window.type)}>
+								{window.text}
+							</DropdownMenu.Item>
+						{/each}
 					</DropdownMenu.Content>
 				</DropdownMenu.Root>
 				<button type="button" onclick={onClickStyle}>STYLE</button>
@@ -139,11 +173,11 @@
 						{/snippet}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content class="w-56" align="start">
-						<DropdownMenu.Item onclick={onClickHelp}>
+						<DropdownMenu.Item onclick={onClickHelp1}>
 							Close all windows
 						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp}>
-							FAQ
+						<DropdownMenu.Item onclick={onClickHelp2}>
+							Minimize all windows
 						</DropdownMenu.Item>
 						<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
 							<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
@@ -166,20 +200,23 @@
 		<div class="flex items-center justify-center pr-8"><Clock/></div>
 	</div>
 
-	<div class="w-[100vw] overflow-hidden h-[97vh] absolute z-30 pointer-events-none">
-		<WindowManager/>
-	</div>
+	<div class="w-full h-[calc(100vh-2rem)]">
+		<div class="w-full h-[calc(100vh-2rem)] absolute z-30 pointer-events-none overflow-hidden" >
+			<WindowManager/>
+		</div>
 
-	<div class="w-full h-[97vh] overflow-hidden">
-		<button onclick={onClickDesktop} class="w-full h-[97vh] absolute z-0 cursor-default!" 
-				aria-label="desktop background"></button>
-		<DesktopIcon type={1}/>
-		<DesktopIcon type={2}/>
-		<DesktopIcon type={3}/>
-		<DesktopIcon type={4}/>
+		<div class="w-full h-full overflow-hidden">
+			<button onclick={onClickDesktop} class="w-full h-[calc(100vh-2rem)] absolute z-0 cursor-default!" 
+					aria-label="desktop background"></button>
+			{#each window_library as window, i (window.type)}
+				<DesktopIcon type={window.type}/>
+			{/each}
+		</div>
+
 	</div>
 	
 </div>
+
 
 <style>
 	button {

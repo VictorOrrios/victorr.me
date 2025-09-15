@@ -49,28 +49,57 @@
         let x = 0, y = 0;
 
         interact(el).draggable({
-            ignoreFrom: '.control-button, .triangle',
-            allowFrom: '.window-header',
-            inertia: {
-                resistance: 10.0,
-            },
-            modifiers: [
-                interact.modifiers.restrictRect({
-                    restriction: 'parent',
-                    endOnly: false
-                })
-            ],
-            listeners: {
+                ignoreFrom: '.control-button, .triangle',
+                allowFrom: '.window-header',
+                inertia: {
+                    resistance: 10.0,
+                },
+                modifiers: [
+                    interact.modifiers.restrictRect({
+                        restriction: 'parent',
+                        endOnly: false
+                    })
+                ],
+                listeners: {
+                    move (event) {
+                        var target = event.target
+                        x +=  event.dx
+                        y += event.dy
+
+                        target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+                    },
+                }
+            })
+
+        if(window_data && window_data.resizeable && window_data.resizeParams){
+            interact(el)
+            .resizable({
+                edges: { left: true, right: true, bottom: true, top: true },
+                margin: 4,
+                listeners: {
                 move (event) {
                     var target = event.target
-                    x +=  event.dx
-                    y += event.dy
+
+                    target.style.width = event.rect.width + 'px'
+                    target.style.height = event.rect.height + 'px'
+
+                    x +=  event.deltaRect.left;
+                    y += event.deltaRect.top;
 
                     target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+                }
                 },
-            }
-        })
-
+                modifiers: [
+                    interact.modifiers.restrictEdges({
+                        outer: 'parent'
+                    }),
+                    interact.modifiers.restrictSize({
+                        min: { width: window_data.resizeParams.minWidth, height: window_data.resizeParams.minHeight },
+                        max: { width: window_data.resizeParams.maxWidth, height: window_data.resizeParams.maxHeight }
+                    })
+                ],
+            })
+        }
     });
 
     
@@ -79,8 +108,8 @@
 
     
 {#if window_data}
-    <div class="absolute window pointer-events-auto" id="window-{type}"
-            style="width: {window_data.width}px;"
+    <div class="absolute window pointer-events-auto  flex flex-col p-[4px]" id="window-{type}"
+            style="width: {window_data.width}px; height: {window_data.height}px"
             onpointerdown={(e) => handleControlButtonClick(e)}>
 
         <div class="window-header select-none cursor-default! border-1 border-white flex justify-between">
@@ -95,15 +124,7 @@
                 </div>
             </div>
         </div>
-        {#if window_data.type === 1}
-            <MetaW/>
-        {:else if window_data.type === 2}
-            <ResumeW/>
-        {:else if window_data.type === 3}
-            <AboutW/>
-        {:else if window_data.type === 4}
-            <ArticlesW/>
-        {/if}
+        <window_data.window/>
     </div>
 {/if}
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { occupiedCells, selectedType } from "$lib/stores";
+	import { occupiedCells, selectedType, window_library } from "$lib/stores";
 	import interact from "interactjs";
 	import { onMount } from "svelte";
 	import About from "./icons/About.svelte";
@@ -12,6 +12,8 @@
 	const cellWidth = 150;
 	const cellHeight = 150;
 	const debugLogs = false;
+    const icon_data = window_library.find(w => w.type === type);
+
 
 	function isCellOccupied(x: number, y: number) {
 		return $occupiedCells.some(cell => cell.x === x && cell.y === y);
@@ -115,17 +117,10 @@
 	
 </script>
 
-<div class="select-none relative m-0
-	{$selectedType === type ? 'z-20':'z-10 cursor-default!'}" id={"desktop-icon-"+type}
-	style="width: {cellWidth}px; height: {cellHeight}px;">
-	{#if type === 1}
-		<Meta/>
-	{:else if type === 2}
-		<Resume/>
-	{:else if type === 3}
-		<About/>
-	{:else if type === 4}
-		<Articles/>
-	{/if}
-</div>
-
+{#if icon_data}
+	<div class="select-none relative m-0
+		{$selectedType === type ? 'z-20':'z-10 cursor-default!'}" id={"desktop-icon-"+type}
+		style="width: {cellWidth}px; height: {cellHeight}px;">
+		<icon_data.icon/>
+	</div>
+{/if}

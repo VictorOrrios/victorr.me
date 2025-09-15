@@ -9,7 +9,7 @@
 
 {#each $activeWindows as window, i (window.type)}
         <div class="absolute h-full w-full"
-        style="padding-top: {window.type * 5 + '%'}; padding-left: {window.type * 5 + '%'}; 
+        style="padding-top: {((1 + (window.type-1) % 3) * 5 + (window.type/3) * 2) + '%'}; padding-left: {(1+window.type/3) * 5 + '%'}; 
         {window.onScreen ? '' : 'display: none;'}"
         in:slide={{axis: 'x', duration: 400 }}
         out:fly={{ x: 300, opacity: 0, duration: 400 }}>
