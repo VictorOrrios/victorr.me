@@ -4,5 +4,5 @@
 
 
 <div class="w-full h-full border-1 border-white">
-    <MicroMd preset={1} title="about"/>
+    <MicroMd preset={0} title="about"/>
 </div>

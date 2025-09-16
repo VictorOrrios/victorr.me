@@ -1,17 +1,32 @@
 <script lang="ts">
-
-    const { preset, title } = $props();
-    let editMode = $state(false);
+    import snarkdown from 'snarkdown';
+	import { onMount } from 'svelte';
 
     const presetLibrary = [
-        "#Hola",
+        "#Hola\n##Que tal\nYo *bien*\n\n_this_ is **easy** to `use`\n\n- Uno\n- Dos\n- Tres",
         "##Que tal",
         "- Pascual"
     ];
 
+    const { preset, title } = $props();
+    let editMode = $state(false);
+    let html = $state(snarkdown(presetLibrary[preset]));
+    let md = $state(presetLibrary[preset]);
+
+    
+
     function onClickMode(){
+        convert();
         editMode = !editMode;
     }
+
+    function convert(){
+        html = snarkdown(md);
+    }
+    
+    onMount(() => {
+        
+    });
 
 </script>
 
@@ -29,16 +44,46 @@
     </div>
     {#if editMode}
         <div class="p-4 w-full h-full">
-            <textarea class="w-full h-full">Ejemplo</textarea>
+            <textarea bind:value={md} class="w-full h-full"></textarea>
         </div>
     {:else}
-        <div class="p-4">
-            {presetLibrary[preset]}
+        <div class="p-4 generated-html">
+            {@html html}
         </div>
     {/if}
 </div>
 
 <style>
+
+    .generated-html :global{
+        h1{
+            font-size: 2rem;
+        }
+        h2{
+            font-size: 1.5rem;
+        }
+        h3{
+
+        }
+        em{
+
+        }
+        strong{
+
+        }
+        code{
+
+        }
+        ul{
+
+        }
+        ol{
+
+        }
+        li{
+
+        }
+    }
     
     textarea {
         resize: none;
