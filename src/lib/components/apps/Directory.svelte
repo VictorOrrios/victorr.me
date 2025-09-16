@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="h-full w-hull main-container p-4 overflow-auto">
+<div class="h-full w-hull main-container p-4 overflow-auto backdrop-blur-md">
     <div class="flex flex-wrap">
         {#each articles as article}
             <a class="flex flex-col items-center gap-2 m-4" href={"/articles/"+article}>
