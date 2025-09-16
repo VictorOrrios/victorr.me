@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-[100%] h-[100vh]">
-    <MicroMd preset={0} title="empty" />
+    <MicroMd preset={0} title="showcase" />
 </div>

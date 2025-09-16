@@ -1,9 +1,11 @@
 <script lang="ts">
+	import Directory from "../apps/Directory.svelte";
+
 
 
 </script>
 
 
-<div class="w-full h-full border-1 border-white">
-    Hola
+<div class="flex-1 overflow-hidden ">
+    <Directory/>
 </div>

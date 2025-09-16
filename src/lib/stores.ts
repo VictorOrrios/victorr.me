@@ -86,8 +86,8 @@ export const window_library:WindowConfig[] = [
     {
         text:"articles",
         type: 4,
-        width:500,
-        height:500,
+        width:600,
+        height:400,
         resizeable: true,
         resizeParams: {
             maxWidth: 10000,
