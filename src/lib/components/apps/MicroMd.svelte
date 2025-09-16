@@ -1,19 +1,17 @@
 <script lang="ts">
     import snarkdown from 'snarkdown';
 	import { onMount } from 'svelte';
-
+    import testmd from '$lib/md_presets/test.md?raw'
+    
     const presetLibrary = [
-        "#Hola\n##Que tal\nYo *bien*\n\n_this_ is **easy** to `use`\n\n- Uno\n- Dos\n- Tres",
-        "##Que tal",
-        "- Pascual"
+        testmd
     ];
 
     const { preset, title } = $props();
     let editMode = $state(false);
-    let html = $state(snarkdown(presetLibrary[preset]));
     let md = $state(presetLibrary[preset]);
+    let html = $state(snarkdown(presetLibrary[preset]));
 
-    
 
     function onClickMode(){
         convert();
@@ -23,14 +21,14 @@
     function convert(){
         html = snarkdown(md);
     }
+
     
     onMount(() => {
-        
     });
 
 </script>
 
-<div class="h-full w-full flex flex-col">
+<div class="h-full w-full flex flex-col backdrop-blur-md main-container">
     <div class="flex justify-between items-center pl-4">
         <div>micro_md 1.0</div>
         <div>buffer:{title}</div>
@@ -43,50 +41,21 @@
         </button>
     </div>
     {#if editMode}
-        <div class="p-4 w-full h-full">
-            <textarea bind:value={md} class="w-full h-full"></textarea>
-        </div>
+        <textarea bind:value={md} class="p-4 flex-1"></textarea>
     {:else}
-        <div class="p-4 generated-html">
+        <div class="p-4 flex-1 generated-html overflow-auto">
             {@html html}
         </div>
     {/if}
 </div>
 
 <style>
-
-    .generated-html :global{
-        h1{
-            font-size: 2rem;
-        }
-        h2{
-            font-size: 1.5rem;
-        }
-        h3{
-
-        }
-        em{
-
-        }
-        strong{
-
-        }
-        code{
-
-        }
-        ul{
-
-        }
-        ol{
-
-        }
-        li{
-
-        }
-    }
-    
     textarea {
         resize: none;
+    }
+
+    .main-container{
+        border: 1px solid white;
     }
 
     .mode-button:hover{
@@ -95,6 +64,33 @@
 		background-size: 300% 100%;
 		animation: move-gradient 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     
+    }
+
+    .generated-html :global{
+        h1{
+            font-family: 'Dot Matrix';
+            font-size: 2rem;
+        }
+        h2{
+            font-family: 'Dot Matrix';
+            font-size: 1.5rem;
+        }
+        ul {
+            list-style: disc;
+            margin-left: 1rem;
+            padding-left: 1rem;
+        }
+        ol {
+            list-style: decimal;
+            margin-left: 1rem;
+            padding-left: 1rem;
+        }
+        li {
+            padding: 0.25rem;
+        }
+        a:hover{
+            color: var(--theme-color-lighter);
+        }
     }
 
     @keyframes move-gradient {

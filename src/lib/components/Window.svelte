@@ -108,7 +108,7 @@
 
     
 {#if window_data}
-    <div class="absolute window pointer-events-auto  flex flex-col p-[4px]" id="window-{type}"
+    <div class="absolute window pointer-events-auto flex flex-col p-[4px]" id="window-{type}"
             style="width: {window_data.width}px; height: {window_data.height}px"
             onpointerdown={(e) => handleControlButtonClick(e)}>
 
@@ -129,7 +129,6 @@
 {/if}
 
 <style>
-
     .window-header{
         background-color: var(--color-background);
     }

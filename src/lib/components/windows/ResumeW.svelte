@@ -1,9 +1,9 @@
 <script lang="ts">
-
+	import MicroMd from "../apps/MicroMd.svelte";
 
 </script>
 
 
-<div class="w-full h-full border-1 border-white">
-    Hola
+<div class="flex-1 overflow-hidden ">
+    <MicroMd preset={0} title="resume"/>
 </div>

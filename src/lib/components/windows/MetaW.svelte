@@ -1,14 +1,9 @@
 <script lang="ts">
+	import MicroMd from "../apps/MicroMd.svelte";
 
-    let varx = $state(0);
-
-    function onClick(){
-        varx++;
-    }
 </script>
 
 
-<div class="w-full h-full border-1 border-white">
-    Hola {varx}
-    <button onclick={onClick}>add</button>
+<div class="flex-1 overflow-hidden ">
+    <MicroMd preset={0} title="victorr.me"/>
 </div>
