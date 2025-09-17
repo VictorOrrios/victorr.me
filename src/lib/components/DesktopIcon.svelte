@@ -118,9 +118,10 @@
 </script>
 
 {#if icon_data}
-	<div class="select-none relative m-0
+	<div class="select-none relative m-0 ¡
 		{$selectedType === type ? 'z-20':'z-10 cursor-default!'}" id={"desktop-icon-"+type}
-		style="width: {cellWidth}px; height: {cellHeight}px;">
+		style="width: {cellWidth}px; height: {cellHeight}px;
+				grid-column-start: {icon_data.iconX}; grid-row-start: {icon_data.iconY};">
 		<icon_data.icon/>
 	</div>
 {/if}

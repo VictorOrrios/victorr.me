@@ -9,6 +9,8 @@ import AboutW from "./components/windows/AboutW.svelte";
 import Articles from "./components/icons/Articles.svelte";
 import ArticlesW from "./components/windows/ArticlesW.svelte";
 import type { Component } from "svelte";
+import Bigms from "./components/icons/Bigms.svelte";
+import BigmsW from "./components/windows/BigmsW.svelte";
 
 
 export const themeStore = writable("blue");
@@ -31,6 +33,8 @@ export interface WindowConfig {
         minHeight: number;
     };
     icon: Component;   
+    iconX: number;
+    iconY: number;
     window: Component;
 };
 
@@ -49,6 +53,8 @@ export const window_library:WindowConfig[] = [
             minHeight: 250,
         },
         icon: Meta,
+        iconX: 1,
+        iconY: 1,
         window: MetaW
     },
     {
@@ -65,6 +71,8 @@ export const window_library:WindowConfig[] = [
             minHeight: 250,
         },
         icon: Resume,
+        iconX: 2,
+        iconY: 1,
         window: ResumeW
     },
     {
@@ -81,6 +89,8 @@ export const window_library:WindowConfig[] = [
             minHeight: 250,
         },
         icon: About,
+        iconX: 1,
+        iconY: 2,
         window: AboutW
     },
     {
@@ -96,6 +106,26 @@ export const window_library:WindowConfig[] = [
             minHeight: 250,
         },
         icon: Articles,
+        iconX: 1,
+        iconY: 3,
         window: ArticlesW
+    },
+    {
+        text:"bigms",
+        type: 5,
+        width:500,
+        height:500,
+        link:"/bigms",
+        resizeable: true,
+        resizeParams: {
+            maxWidth: 10000,
+            maxHeight: 10000,
+            minWidth: 400,
+            minHeight: 400,
+        },
+        icon: Bigms,
+        iconX: 1,
+        iconY: 4,
+        window: BigmsW
     },
 ];

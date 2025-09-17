@@ -205,7 +205,7 @@
 			<WindowManager/>
 		</div>
 
-		<div class="w-full h-full overflow-hidden">
+		<div class="w-full h-full overflow-hidden grid grid-cols-[repeat(auto-fill,150px)] grid-rows-[repeat(auto-fill,150px)]">
 			<button onclick={onClickDesktop} class="w-full h-[calc(100vh-2rem)] absolute z-0 cursor-default!" 
 					aria-label="desktop background"></button>
 			{#each window_library as window, i (window.type)}
@@ -226,6 +226,14 @@
 	button:hover{
 		font-weight: 900;
 	}
+
+	.icons-container{
+		height: 100%;
+		display: flex;
+		align-items: flex-start;
+		flex-flow: column wrap;
+	}
+	
 
 	.name-card{
 		background: linear-gradient(to right, var(--theme-color-darker), var(--theme-color-basic), var(--theme-color-lighter), var(--theme-color-basic) ,var(--theme-color-darker));
