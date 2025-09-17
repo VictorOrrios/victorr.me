@@ -2,12 +2,6 @@
 
     const articles = [
         "hobby-raytracer",
-        "hobby-raytracer",
-        "hobby-raytracer",
-        "hobby-raytracer",
-        "hobby-raytracer",
-        "hobby-raytracer",
-        "hobby-raytracer",
     ]
 
 </script>
