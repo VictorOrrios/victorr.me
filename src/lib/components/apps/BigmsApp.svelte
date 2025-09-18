@@ -19,6 +19,7 @@
     let showMode = $state(false);
     let loaded = $state(false);
     let showCopied = $state(false); 
+    let parts:string[] = $state([])
 
 
     const url_text = $derived(createUrl());
@@ -38,8 +39,23 @@
         return base+'?s='+style+'&t='+s;
     }
 
+    function clickText(){
+        showMode = false;
+    }
+
+    function evangelionParser(){
+        parts = text.split("\n", 4);
+    }
+
+    async function updateFit() {
+        await tick();
+        let textElem = document.getElementById("text-id");
+        if(textElem) fit(textElem,{min_size: 10, max_size:100000});
+        await tick();
+    }
+
     
-    onMount(() => {
+    onMount(async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const textParam = urlParams.get('t');
         const styleParam = urlParams.get('s');
@@ -47,23 +63,25 @@
         if (textParam && styleParam) {
             text = decodeString(textParam);
             style = parseInt(styleParam) || 0;
+            if(style === 1) evangelionParser();
             showMode = true;
         }
 
         loaded = true;
+        setTimeout(() => {
+            updateFit()
+        },1);
     });
 
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
 {#if loaded}
     {#if !showMode}
         <div class="h-full w-full main-container p-8 text-3xl flex flex-col items-center gap-4 justify-center">
 
             <div class="flex gap-4">
                 <div>
-                    <p class="p-1">MESSAGE</p>
+                    <p class="p-1">MESSG</p>
                     <textarea bind:value={text} class="p-4"></textarea>
                 </div>
                 <div class="flex flex-col">
@@ -73,21 +91,37 @@
                     {/each}
                 </div>
             </div>
-            <button class="url w-[435px] p-2 text-left text-nowrap overflow-hidden inline-block" onclick={onClickUrl}>
-                {#if showCopied}
-                    Copied to clipboard
-                {:else}
-                    {url_text}
-                {/if}
-            </button>
+            <div class="w-[435px] flex gap-4 items-center">
+                <a href={url_text} class="p-1 py-[0.4rem]" onclick={() => window.location.href=url_text}>LINK!</a>
+                <button class="url p-2 text-left overflow-hidden text-nowrap rtl inline-block flex-1" onclick={onClickUrl}>
+                    {#if showCopied}
+                        Copied to clipboard
+                    {:else}
+                        {url_text}
+                    {/if}
+                </button>
+            </div>
         </div>
     {:else if style === 0}
-        <div class="main-text text-center flex items-center justify-center select-none"
-            onclick={() => text = text+' '}>
-            <p use:fit={{min_size: 10, max_size:100000}}>{text}</p>
+        <div class="main-text overflow-hidden text-center flex items-center justify-center select-none">
+            <button id="text-id"
+                    onclick={clickText}
+                    class="cursor-pointer italic">
+                {text}
+            </button>
         </div>
     {:else if style === 1}
-        {text}
+        <div class="main-text eva-main overflow-hidden text-center flex items-center justify-center select-none">
+            <button id="text-id"
+                    onclick={clickText}
+                    class="cursor-pointer eva-button">
+                <div class="eva-0">{parts[0]}</div>
+                <div class="eva-1">{parts[1]}</div>
+                <div class="eva-2">{parts[2]}</div>
+                <div class="eva-3">{parts[3]}</div>
+            </button>
+        </div>
+            
     {:else if style === 2}
         {text}
     {:else if style === 3}
@@ -107,7 +141,7 @@
         height: 14rem;
     }
 
-    p, button{
+    p, button, a{
         font-weight: 900;
     }
 
@@ -115,7 +149,7 @@
         text-decoration: none;
     }
 
-    button:hover {
+    button:hover, a:hover {
         background-color: var(--color-background);
     }
 
@@ -130,8 +164,45 @@
     .main-text{
         width: 100vw;
         height: 100vh;
-        /*font-size: calc(min(20vw,20vh));*/
         cursor: pointer;   
+        padding: 2%;
+    }
+
+    .eva-button {
+        transform: scaleX(0.7);
+        text-shadow: 0px 0px 7px white;
+        text-align: left;
+        letter-spacing: -5px;
+    }
+
+    .eva-0 {
+        font-family: 'Century';
+        font-size: 60%;
+        width: 0%;
+        line-height: 0.9;
+        transform: scaleY(1.2);
+    }
+
+    .eva-1 {
+        font-family: 'Century';
+        line-height: 1.2;
+        transform: scaleY(1.2);
+    }
+
+    .eva-2{
+        font-family: Helvetica;
+        font-size: 54%;
+        line-height: 1.3;
+        transform: scaleY(0.8);
+    }
+
+    .eva-3{
+        font-family: Times;
+        text-align: right;
+        font-size: 61%;
+        line-height: 1.0;
+        font-weight: 400;
+        letter-spacing: 0px;
     }
 
     .url{
