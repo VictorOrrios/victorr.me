@@ -6,5 +6,5 @@
 
 
 <div class="flex-1 overflow-hidden ">
-    <BigmsApp/>
+    <BigmsApp standAlone={false}/>
 </div>

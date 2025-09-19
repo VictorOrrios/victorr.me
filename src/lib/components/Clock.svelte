@@ -4,7 +4,7 @@
     function updateTime() {
         const now = new Date();
         const ms = now.getMilliseconds().toString().padStart(3, '0');
-        time = now.toLocaleTimeString() + '.' + ms;
+        time = now.toLocaleString() + '.' + ms;
     }
 
     $effect(() => {

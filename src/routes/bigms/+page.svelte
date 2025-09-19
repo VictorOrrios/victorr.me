@@ -4,5 +4,5 @@
 </script>
 
 <div class="w-[100%] h-[100vh]">
-    <BigmsApp/>
+    <BigmsApp standAlone={true}/>
 </div>

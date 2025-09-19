@@ -14,12 +14,15 @@
 
     const base:string = 'http://localhost:5173/bigms';
 
+    let { standAlone } = $props();
+
     let text = $state('');
     let style = $state(0);
     let showMode = $state(false);
     let loaded = $state(false);
     let showCopied = $state(false); 
     let parts:string[] = $state([])
+    let bratSingle = $state(false);
 
 
     const url_text = $derived(createUrl());
@@ -45,6 +48,13 @@
 
     function evangelionParser(){
         parts = text.split("\n", 4);
+        for(let i = 0; i<3; i++){
+            if(parts[i]) parts[i] = parts[i].toUpperCase();
+        }
+    }
+
+    function bratParser(){
+        bratSingle = /^\S+$/.test(text);
     }
 
     async function updateFit() {
@@ -64,6 +74,7 @@
             text = decodeString(textParam);
             style = parseInt(styleParam) || 0;
             if(style === 1) evangelionParser();
+            if(style === 2) bratParser();
             showMode = true;
         }
 
@@ -81,7 +92,12 @@
 
             <div class="flex gap-4">
                 <div>
-                    <p class="p-1">MESSG</p>
+                    <div class="flex justify-between items-center">
+                        <p class="p-1">MESSG</p>
+                        {#if standAlone}
+                            <a class="p-1" href="/">VICTORR.ME</a>
+                        {/if}
+                    </div>
                     <textarea bind:value={text} class="p-4"></textarea>
                 </div>
                 <div class="flex flex-col">
@@ -92,7 +108,11 @@
                 </div>
             </div>
             <div class="w-[435px] flex gap-4 items-center">
-                <a href={url_text} class="p-1 py-[0.4rem]" onclick={() => window.location.href=url_text}>LINK!</a>
+                {#if standAlone}
+                    <a href={url_text} class="p-1 py-[0.4rem]" onclick={() => window.location.href=url_text}>LINK!</a>
+                {:else}
+                    <a href={url_text} target="_blank" class="p-1 py-[0.4rem]">LINK!</a>
+                {/if}
                 <button class="url p-2 text-left overflow-hidden text-nowrap rtl inline-block flex-1" onclick={onClickUrl}>
                     {#if showCopied}
                         Copied to clipboard
@@ -121,9 +141,22 @@
                 <div class="eva-3">{parts[3]}</div>
             </button>
         </div>
-            
     {:else if style === 2}
-        {text}
+        <div class="main-text brat-main overflow-hidden text-center flex items-center justify-center select-none">
+            <button id="text-id"
+                    onclick={clickText}
+                    class="cursor-pointer brat-button">
+                {#if bratSingle}
+                    <div class="bratSingleFix mx-auto">
+                        {text}
+                    </div>
+                {:else}
+                    <div class="brat-div mx-auto">
+                        {text}
+                    </div>
+                {/if}
+            </button>
+        </div>
     {:else if style === 3}
         {text}
     {:else if style === 4}
@@ -203,6 +236,38 @@
         line-height: 1.0;
         font-weight: 400;
         letter-spacing: 0px;
+    }
+
+    .brat-main{
+        background-color: #8ACE00;
+    }
+
+    .brat-button:hover{
+        background-color: #8ACE00;
+    }
+
+    .brat-button{
+        font-family: "Arial Narrow Custom";
+        font-weight: 400;
+        color: black;
+        font-stretch: condensed;
+        transform: scaleX(0.8);
+        line-height: 1.0;
+        filter: blur(2px);
+        text-shadow: 0px 0px 2px black;
+    }
+
+    .brat-div{
+        
+        text-align: justify;
+        text-align-last: justify;
+        text-justify: inter-word;
+        width: 35%;
+        
+    }
+
+    .brat-single-fix{
+        padding: 50%;
     }
 
     .url{
