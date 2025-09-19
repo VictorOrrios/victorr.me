@@ -171,7 +171,7 @@
         background-color: var(--color-background);
         border: 2px solid white;
         width: 20rem;
-        height: 14rem;
+        height: 13.7rem;
     }
 
     p, button, a{
@@ -247,6 +247,7 @@
     }
 
     .brat-button{
+        width: 100%;
         font-family: "Arial Narrow Custom";
         font-weight: 400;
         color: black;
@@ -254,16 +255,14 @@
         transform: scaleX(0.8);
         line-height: 1.0;
         filter: blur(2px);
-        text-shadow: 0px 0px 2px black;
+        text-shadow: 0px 0px min(0.5vh,0.5vw) black;
     }
 
     .brat-div{
-        
         text-align: justify;
         text-align-last: justify;
         text-justify: inter-word;
-        width: 35%;
-        
+        width: min(100vh,100vw);
     }
 
     .brat-single-fix{
