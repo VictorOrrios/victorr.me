@@ -126,7 +126,7 @@
         <div class="main-text overflow-hidden text-center flex items-center justify-center select-none">
             <button id="text-id"
                     onclick={clickText}
-                    class="cursor-pointer italic">
+                    class="cursor-pointer italic big-button">
                 {text}
             </button>
         </div>
@@ -134,7 +134,7 @@
         <div class="main-text eva-main overflow-hidden text-center flex items-center justify-center select-none">
             <button id="text-id"
                     onclick={clickText}
-                    class="cursor-pointer eva-button">
+                    class="cursor-pointer eva-button big-button">
                 <div class="eva-0">{parts[0]}</div>
                 <div class="eva-1">{parts[1]}</div>
                 <div class="eva-2">{parts[2]}</div>
@@ -145,20 +145,20 @@
         <div class="main-text brat-main overflow-hidden text-center flex items-center justify-center select-none">
             <button id="text-id"
                     onclick={clickText}
-                    class="cursor-pointer brat-button">
-                {#if bratSingle}
-                    <div class="bratSingleFix mx-auto">
-                        {text}
-                    </div>
-                {:else}
-                    <div class="brat-div mx-auto">
-                        {text}
-                    </div>
-                {/if}
+                    class="cursor-pointer brat-button big-button">
+                <div class="brat-div mx-auto">
+                    {text}
+                </div>
             </button>
         </div>
     {:else if style === 3}
-        {text}
+        <div class="main-text seizr overflow-hidden text-center flex items-center justify-center select-none">
+            <button id="text-id"
+                    onclick={clickText}
+                    class="cursor-pointer italic big-button">
+                {text}
+            </button>
+        </div>
     {:else if style === 4}
         {text}
     {/if}
@@ -171,7 +171,7 @@
         background-color: var(--color-background);
         border: 2px solid white;
         width: 20rem;
-        height: 13.7rem;
+        height: 13.8rem;
     }
 
     p, button, a{
@@ -242,8 +242,8 @@
         background-color: #8ACE00;
     }
 
-    .brat-button:hover{
-        background-color: #8ACE00;
+    .big-button:hover{
+        background-color: transparent;
     }
 
     .brat-button{
@@ -254,7 +254,6 @@
         font-stretch: condensed;
         transform: scaleX(0.8);
         line-height: 1.0;
-        filter: blur(2px);
         text-shadow: 0px 0px min(0.5vh,0.5vw) black;
     }
 
@@ -265,8 +264,8 @@
         width: min(100vh,100vw);
     }
 
-    .brat-single-fix{
-        padding: 50%;
+    .seizr{
+        animation: magic 0.2s infinite;
     }
 
     .url{
@@ -281,6 +280,64 @@
         background-color: var(--color-background);
         color: var(--color-foreground);
         text-decoration: underline;
+    }
+
+    @keyframes magic{
+        0%{
+            background-color: rgb(170, 255, 0);
+            color: black;
+            filter: blur(10px);
+        }
+        10%{
+            background-color: red;
+            color: white;
+            filter: none;
+        }
+        20%{
+            background-color: blue;
+            color: white;
+            filter: blur(10px);
+        }
+        30%{
+            background-color: yellow;
+            color: black;
+            filter: none;
+        }
+        40%{
+            background-color: purple;
+            color: black;
+            filter: blur(10px);
+        }
+        50%{
+            background-color: pink;
+            color: white;
+            filter: none;
+        }
+        60%{
+            background-color: black;
+            color: white;
+            filter: blur(10px);
+        }
+        70%{
+            background-color: orange;
+            color: black;
+            filter: none;
+        }
+        80%{
+            background-color: #00e1ff;
+            color: white;
+            filter: blur(10px);
+        }
+        90%{
+            background-color: #ff0059;
+            color: white;
+            filter: none;
+        }
+        100%{
+            background: white;
+            color: black;
+            filter: blur(10px);
+        }
     }
 
 </style>
