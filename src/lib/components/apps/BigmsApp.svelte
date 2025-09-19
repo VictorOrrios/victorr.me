@@ -142,15 +142,29 @@
             </button>
         </div>
     {:else if style === 2}
-        <div class="main-text brat-main overflow-hidden text-center flex items-center justify-center select-none">
-            <button id="text-id"
-                    onclick={clickText}
-                    class="cursor-pointer brat-button big-button">
-                <div class="brat-div mx-auto">
-                    {text}
+        {#if bratSingle}
+            <div class="main-text brat-main overflow-hidden text-center flex items-center justify-center select-none">
+                <div class="w-[50%] h-full flex items-center justify-center">
+                    <button id="text-id"
+                            onclick={clickText}
+                            class="cursor-pointer brat-button big-button">
+                        <div class="mx-auto brat-single-fix">
+                            {text}
+                        </div>
+                    </button>
                 </div>
-            </button>
-        </div>
+            </div>
+        {:else}
+            <div class="main-text brat-main overflow-hidden text-center flex items-center justify-center select-none">
+                <button id="text-id"
+                        onclick={clickText}
+                        class="cursor-pointer brat-button big-button">
+                    <div class="brat-div mx-auto">
+                        {text}
+                    </div>
+                </button>
+            </div>
+        {/if}
     {:else if style === 3}
         <div class="main-text seizr overflow-hidden text-center flex items-center justify-center select-none">
             <button id="text-id"
@@ -262,6 +276,10 @@
         text-align-last: justify;
         text-justify: inter-word;
         width: min(100vh,100vw);
+    }
+
+    .brat-single-fix{
+        text-align: center;
     }
 
     .seizr{
