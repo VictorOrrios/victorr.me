@@ -12,6 +12,14 @@
         "BLSCR",
     ]
 
+    const presets:string[] = [
+        "Your text here...",
+        "NEON GENESIS\nEVANGELION\nFINALE:\nTake care of yourself.",
+        "brat and it's the same but there's three more songs so it's not",
+        "Epilepsy warning. Be careful",
+        ":(\nYour PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.\n69% complete"
+    ]
+
     const base:string = 'http://localhost:5173/bigms';
 
     let { standAlone } = $props();
@@ -26,6 +34,11 @@
 
 
     const url_text = $derived(createUrl());
+
+    $effect(() => {
+        if(text === "" || presets.find(s => s === text) !== undefined)
+            text = presets[style]
+    });
 
     function onClickUrl(){
         navigator.clipboard.writeText(createUrl());
@@ -200,7 +213,7 @@
                                 , give them this info:
                             </div>
                             <div>
-                                Stop code: VIDEO_TDR_TIMEOUT_DETECTED
+                                Stop code: BIG_MS_BLSCR_STYLE_ERROR
                             </div>
                         </div>
                     </div>
