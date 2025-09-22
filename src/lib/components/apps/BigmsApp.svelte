@@ -299,6 +299,7 @@
 
     .brat-main{
         background-color: #8ACE00;
+
     }
 
     .big-button:hover{
@@ -314,6 +315,7 @@
         transform: scaleX(0.8);
         line-height: 1.0;
         text-shadow: 0px 0px min(0.5vh,0.5vw) black;
+        filter: blur(4px);
     }
 
     .brat-div{
