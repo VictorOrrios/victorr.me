@@ -76,6 +76,21 @@
   font-style: normal;
 }
 
+/* Bold */
+@font-face {
+  font-family: 'Trade Gothic';
+  src: url('/fonts/trade-gothic-lt-bold-no-2.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Regular */
+@font-face {
+  font-family: "open-sans";
+  src: url("/fonts/OpenSans-Light.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 
 :root {
 	--font-body:

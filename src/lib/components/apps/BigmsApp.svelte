@@ -9,7 +9,7 @@
         "EVANG",
         "BRATY",
         "SEIZR",
-        "DITHR"
+        "BLSCR",
     ]
 
     const base:string = 'http://localhost:5173/bigms';
@@ -57,6 +57,11 @@
         bratSingle = /^\S+$/.test(text);
     }
 
+    function msParser(){
+        parts = text.split("\n", 3);
+        console.log(parts)
+    }
+
     async function updateFit() {
         await tick();
         let textElem = document.getElementById("text-id");
@@ -75,6 +80,7 @@
             style = parseInt(styleParam) || 0;
             if(style === 1) evangelionParser();
             if(style === 2) bratParser();
+            if(style === 4) msParser();
             showMode = true;
         }
 
@@ -169,12 +175,38 @@
         <div class="main-text seizr overflow-hidden text-center flex items-center justify-center select-none">
             <button id="text-id"
                     onclick={clickText}
-                    class="cursor-pointer italic big-button">
-                {text}
+                    class="cursor-pointer big-button">
+                {text.toUpperCase()}
             </button>
         </div>
     {:else if style === 4}
-        {text}
+        <div class="main-text win-main overflow-hidden text-center flex items-center justify-center select-none">
+            <button id="text-id"
+                    onclick={clickText}
+                    class="cursor-pointer big-button win-button">
+                <div class="msb-0">{parts[0]}</div>
+                <div class="msb-1">{parts[1]}</div>
+                <div class="msb-2">{parts[2]}</div>
+                <div class="grid grid-cols-[1fr_6fr] items-center gap-8"> 
+                    <img src="qr.svg" alt="qr code" class="h-[13vh] w-[13vh] mx-auto"/>
+                    <div class="msb-r flex flex-col h-full justify-between">
+                        <div>
+                            For more information about this issue and possible fixes, 
+                            visit <a href="https://victorr.me">https://victorr.me</a>
+                        </div>
+                        <div>
+                            <div>
+                                If you <a href="mailto:victorr.orrios.b@gmail.com">email support</a>
+                                , give them this info:
+                            </div>
+                            <div>
+                                Stop code: VIDEO_TDR_TIMEOUT_DETECTED
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
     {/if}
 {/if}
 
@@ -284,6 +316,36 @@
 
     .seizr{
         animation: magic 0.2s infinite;
+        font-weight: 900;
+        letter-spacing: -7%;
+    }
+
+    .win-main{
+        font-family: 'open-sans';
+        background-color: #0079d8;
+    }
+
+    .win-button{
+        text-align: left;
+        margin: 10%;
+    }
+
+    .msb-0{
+        font-size: 100%;
+    }
+
+    .msb-1{
+        font-size: 25%;
+    }
+
+    .msb-2{
+        font-size: 25%;
+        margin-top: 6%;
+        margin-bottom: 6%;
+    }
+
+    .msb-r{
+        font-size: 14%;
     }
 
     .url{
@@ -322,14 +384,13 @@
             filter: none;
         }
         40%{
-            background-color: purple;
+            background-color: rgb(255, 0, 255);
             color: black;
             filter: blur(10px);
         }
         50%{
-            background-color: pink;
-            color: white;
-            filter: none;
+            background-color: rgb(170, 255, 0);
+            color: black;
         }
         60%{
             background-color: black;
