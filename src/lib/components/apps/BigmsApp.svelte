@@ -2,8 +2,6 @@
 	import { decodeString, encodeString } from "$lib/tools/stringDEncoder";
 	import { onMount, tick } from "svelte";
     import { fit, parent_style } from '@leveluptuts/svelte-fit'
-	import { get } from "svelte/store";
-
 
     const styles:string[] = [
         "BIGMS",
