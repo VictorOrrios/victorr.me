@@ -33,7 +33,7 @@
 
     .active-circle{
         animation: circle-anim 0.3s ease-in forwards;
-		box-shadow: 0px 0px 5px var(--theme-color-lighter);
+		box-shadow: 0px 0px 8px var(--theme-color-lighter);
         transition: box-shadow 0.3s ease;
     }
 
@@ -71,6 +71,7 @@
         0%{
             opacity: 0%;
             background-color: var(--theme-color-darker);
+            border: 1px solid var(--theme-color-lighter);
         }
         50%{
             opacity: 100%;
@@ -78,6 +79,7 @@
         100%{
             opacity: 100%;
             background-color: var(--theme-color-lighter);
+            border: 1px solid var(--theme-color-basic);
         }
     }
 
