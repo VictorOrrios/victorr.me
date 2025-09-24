@@ -11,6 +11,7 @@ import ArticlesW from "./components/windows/ArticlesW.svelte";
 import type { Component } from "svelte";
 import Bigms from "./components/icons/Bigms.svelte";
 import BigmsW from "./components/windows/BigmsW.svelte";
+import Chat from "./components/icons/Chat.svelte";
 
 
 export const themeStore = writable("blue");
@@ -120,6 +121,17 @@ export const window_library:WindowConfig[] = [
         icon: Bigms,
         iconX: 1,
         iconY: 4,
+        window: BigmsW
+    },
+    {
+        text:"chat",
+        type: 6,
+        width:300,
+        height:500,
+        resizeable: false,
+        icon: Chat,
+        iconX: 2,
+        iconY: 2,
         window: BigmsW
     },
 ];

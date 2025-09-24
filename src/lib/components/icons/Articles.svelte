@@ -9,7 +9,7 @@
 	    <div class="absolute rounded-[100%] z-[7] overflow-hidden {$selectedType === type ? 'active':''}">
             <div class="w-[200%] h-[200%] ml-[-50%] mt-[-10%] {$selectedType === type ? 'active-bg':''}"></div>
         </div>
-        <img src="square.svg" alt="Square on top of folder" class=" w-[68px] z-[8] absolute scale-y-[0.75] top-[29px]"/>
+        <img src="square.svg" alt="Square on top of folder" class=" w-[70px] z-[8] absolute scale-y-[0.75] top-[29px]"/>
     </div>
     <p class="rounded-[3px] group-hover:bg-(--theme-color-dark)">articles</p>
 </div>
