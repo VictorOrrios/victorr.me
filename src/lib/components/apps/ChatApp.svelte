@@ -25,7 +25,7 @@
             name:"Kyle",
             iconSrc:"iconMeta.svg",
             initialMss:"Hey. Wadup?",
-            mssPool:["Hola","Que tal?","Bien bien, vete a la mierda"],
+            mssPool:["Nothing much, just chillin'","U free this sunday got bbq prty","yu also know victor?","cool cool"],
             times:{reactionMin:300,reactionMax:1000,writingMin:1500,writingMax:3000}
         }
     ];
