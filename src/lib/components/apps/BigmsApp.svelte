@@ -3,6 +3,7 @@
 	import { onMount, tick } from "svelte";
     import { fit, parent_style } from '@leveluptuts/svelte-fit'
 
+
     const styles:string[] = [
         "BIGMS",
         "EVANG",
@@ -23,8 +24,7 @@
 
     let { standAlone } = $props();
 
-    
-    let text = $state(presets[0]);
+    let text = $state('');
     let style = $state(0);
     let showMode = $state(false);
     let loaded = $state(false);
@@ -32,7 +32,13 @@
     let parts:string[] = $state([])
     let bratSingle = $state(false);
 
+
     const url_text = $derived(createUrl());
+
+    $effect(() => {
+        if(text === "" || presets.find(s => s === text) !== undefined)
+            text = presets[style]
+    });
 
     function onClickUrl(){
         navigator.clipboard.writeText(createUrl());
@@ -67,12 +73,6 @@
     function msParser(){
         parts = text.split("\n", 3);
         console.log(parts)
-    }
-
-    function changeStyle(s:number){
-        style = s;
-        if(text === "" || presets.find(s => s === text) !== undefined)
-            text = presets[style]
     }
 
     async function updateFit() {
@@ -122,7 +122,7 @@
                 <div class="flex flex-col">
                     <p class="p-1">STYLE</p>
                     {#each styles as text, i}
-                        <button type="button" onclick={() => changeStyle(i)} class="p-1 {style === i ? 'selected':''}">{text}</button>
+                        <button type="button" onclick={() => style = i} class="p-1 {style === i ? 'selected':''}">{text}</button>
                     {/each}
                 </div>
             </div>
@@ -270,7 +270,7 @@
     .eva-0 {
         font-family: 'Century';
         font-size: 60%;
-        width: 0%;
+        width: 65%;
         line-height: 0.9;
         transform: scaleY(1.2);
     }
@@ -279,6 +279,7 @@
         font-family: 'Century';
         line-height: 1.2;
         transform: scaleY(1.2);
+        word-break: none;
     }
 
     .eva-2{
