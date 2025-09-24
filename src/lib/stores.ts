@@ -12,6 +12,7 @@ import type { Component } from "svelte";
 import Bigms from "./components/icons/Bigms.svelte";
 import BigmsW from "./components/windows/BigmsW.svelte";
 import Chat from "./components/icons/Chat.svelte";
+import ChatW from "./components/windows/ChatW.svelte";
 
 
 export const themeStore = writable("blue");
@@ -127,11 +128,17 @@ export const window_library:WindowConfig[] = [
         text:"chat",
         type: 6,
         width:300,
-        height:500,
-        resizeable: false,
+        height:450,
+        resizeable: true,
+        resizeParams: {
+            maxWidth: 10000,
+            maxHeight: 10000,
+            minWidth: 200,
+            minHeight: 250,
+        },
         icon: Chat,
         iconX: 2,
         iconY: 2,
-        window: BigmsW
+        window: ChatW
     },
 ];
