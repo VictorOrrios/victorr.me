@@ -27,15 +27,7 @@
     let botLibrary:bot[] = $state([
         {
             name:"Kyle",
-            iconSrc:"iconMeta.svg",
-            initialMss:"Hey. Wadup?",
-            mssPool:["Nothing much, just chillin'","U free this sunday got bbq prty","yu also know victor?","cool cool"],
-            times:{reactionMin:300,reactionMax:1000,writingMin:1500,writingMax:3000},
-            chat:[]
-        },
-        {
-            name:"John",
-            iconSrc:"iconMeta.svg",
+            iconSrc:"kitty.png",
             initialMss:"Hey. Wadup?",
             mssPool:["Nothing much, just chillin'","U free this sunday got bbq prty","yu also know victor?","cool cool"],
             times:{reactionMin:300,reactionMax:1000,writingMin:1500,writingMax:3000},
@@ -43,17 +35,28 @@
         },
         {
             name:"Emi",
-            iconSrc:"iconMeta.svg",
-            initialMss:"Hey. Wadup?",
-            mssPool:["Nothing much, just chillin'","U free this sunday got bbq prty","yu also know victor?","cool cool"],
-            times:{reactionMin:300,reactionMax:1000,writingMin:1500,writingMax:3000},
+            iconSrc:"microemi.png",
+            initialMss:"You got IC P2?",
+            mssPool:["how did you do it??","Is the server up","server down",
+            "ok","Ok","OK","ok 👍","👍","do you also have P3?",
+            "whats the .env??","api docs wrong AGAIN","do we have meeting monday","thxs"],
+            times:{reactionMin:50,reactionMax:120,writingMin:500,writingMax:1300},
             chat:[]
         },
         {
-            name:"Cat",
-            iconSrc:"iconMeta.svg",
-            initialMss:"Hey. Wadup?",
-            mssPool:["Nothing much, just chillin'","U free this sunday got bbq prty","yu also know victor?","cool cool"],
+            name:"HK",
+            iconSrc:"doggi.png",
+            mssPool:["local database, think about it",
+            "JSONB is truly the best option right now",
+            "Trust me, I tried it in my machine and it 100% works",
+            "Migrating to COBOL should fix all the problems",
+            "raw sql from front is secure, it's https",
+            "no i have not read the docs and im not going to so stop asking",
+            "Check out the revision i made for the pr: http://localhost:5173/index.html",
+            "Water cooling the network switch is 200% the move",
+            "i got better gaming chair than u so shut up",
+            "look at my new linkedin post, give it a like",
+            "if a was in charge db would have been done by now"],
             times:{reactionMin:300,reactionMax:1000,writingMin:1500,writingMax:3000},
             chat:[]
         }
@@ -90,19 +93,25 @@
         if(!botSending){
             botSending = true;
             setTimeout(() => {
-                thinking = true;
-                scrollToBottom();
+                if(botSending){
+                    thinking = true;
+                    scrollToBottom();
+                }
             },randInt(bot.times.reactionMax,bot.times.reactionMin));
 
             setTimeout(() => {
-                thinking = false;
-                setTimeout(() => {
-                    const newMss:message = { id: getKey(), user:bot.name, text:generateBotMss()};
-                    messages = [...messages,newMss];
-                    bot.chat = [...messages];
-                    botSending = false;
-                    scrollToBottom();
-                },100);
+                if(botSending){
+                    thinking = false;
+                    setTimeout(() => {
+                        if(botSending){
+                            const newMss:message = { id: getKey(), user:bot.name, text:generateBotMss()};
+                            messages = [...messages,newMss];
+                            bot.chat = [...messages];
+                            botSending = false;
+                            scrollToBottom();
+                        }
+                    },100);
+                }
             }, randInt(bot.times.writingMax,bot.times.writingMin));
         }
     }
@@ -128,6 +137,8 @@
     }
 
     function changeBot(id:number){
+        thinking = false;
+        botSending = false;
         bot = botLibrary[id];
         if(bot.chat.length === 0 && bot.initialMss !== undefined){
             bot.chat.push({id:getKey(),user:bot.name,text:bot.initialMss})
@@ -148,7 +159,7 @@
             <div class="flex items-end gap-2 {m.user === null? 'justify-end' : 'justify-start'}"
             in:fade={{duration: 300 }}>
                 {#if m.user !== null}
-                    <img src={bot.iconSrc} alt="Bot icon" class="h-6 rounded mb-1">
+                    <img src={bot.iconSrc} alt="Bot icon" class="h-6 w-6 rounded-full mb-1">
                 {/if}
                 <div class="{m.user === null? 'me-mss' : 'not-me-mss'} p-1">{m.text}</div>
             </div>
@@ -156,7 +167,7 @@
         {#if thinking}
             <div class="flex items-end gap-2 justify-start"
             in:fade={{duration: 100 }}>
-                <img src={bot.iconSrc} alt="Bot icon" class="h-6 rounded mb-1">
+                <img src={bot.iconSrc} alt="Bot icon" class="h-6 w-6 rounded-full mb-1">
                 <div class="not-me-mss p-1">...</div>
             </div>
         {/if}
@@ -193,6 +204,13 @@
         border-bottom: 1px solid white;
     }
 
+    textarea:focus,
+    textarea:focus-visible,
+    textarea:-moz-focusring {
+        outline: none !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid white;
+    }
 
     .not-me-mss{
         background-color: var(--theme-color-lighter);

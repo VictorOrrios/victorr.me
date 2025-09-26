@@ -233,6 +233,14 @@
         height: 13.8rem;
     }
 
+    textarea:focus,
+    textarea:focus-visible,
+    textarea:-moz-focusring {
+        border: 2px solid white;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
     p, button, a{
         font-weight: 900;
     }
