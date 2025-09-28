@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import BgBase from "$lib/components/backgrounds/BgBase.svelte";
 	import Clock from "$lib/components/Clock.svelte";
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
@@ -201,6 +202,10 @@
 	</div>
 
 	<div class="w-full h-[calc(100vh-2rem)]">
+		<div class="w-full h-[calc(100vh-2rem)] absolute z-0 ">
+			<BgBase/>
+		</div>
+
 		<div class="w-full h-[calc(100vh-2rem)] absolute z-30 pointer-events-none overflow-hidden" >
 			<WindowManager/>
 		</div>

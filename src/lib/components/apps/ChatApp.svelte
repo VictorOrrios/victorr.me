@@ -214,11 +214,12 @@
 
     .not-me-mss{
         background-color: var(--theme-color-lighter);
-
+        margin-right: 1rem;
     }
 
     .me-mss{
         border-bottom: 1px solid white;
+        margin-left: 1rem;
     }
 
 </style>

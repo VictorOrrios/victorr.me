@@ -43,14 +43,18 @@
 		"tw-animate-css": "^1.3.7",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.20.0",
-		"vite": "^7.0.4"
+		"vite": "^7.0.4",
+		"vite-plugin-string": "^1.2.3"
 	},
 	"dependencies": {
 		"@leveluptuts/svelte-fit": "^1.0.3",
 		"@neodrag/svelte": "^3.0.0-next.8",
+		"@types/three": "^0.180.0",
 		"interactjs": "^1.10.27",
 		"snarkdown": "^2.0.0",
 		"svelte-persisted-store": "^0.12.0",
-		"tailwindcss-rtl": "^0.9.0"
+		"tailwindcss-rtl": "^0.9.0",
+		"three": "^0.180.0",
+		"troika-three-text": "^0.52.4"
 	}
 }
