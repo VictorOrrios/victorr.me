@@ -202,7 +202,7 @@
 	</div>
 
 	<div class="w-full h-[calc(100vh-2rem)]">
-		<div class="w-full h-[calc(100vh-2rem)] absolute z-0 ">
+		<div class="w-full h-[calc(100vh-2rem)] absolute z-0 overflow-hidden">
 			<BgBase/>
 		</div>
 

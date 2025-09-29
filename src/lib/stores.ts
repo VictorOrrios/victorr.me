@@ -133,7 +133,7 @@ export const window_library:WindowConfig[] = [
         resizeParams: {
             maxWidth: 10000,
             maxHeight: 10000,
-            minWidth: 200,
+            minWidth: 275,
             minHeight: 250,
         },
         icon: Chat,
