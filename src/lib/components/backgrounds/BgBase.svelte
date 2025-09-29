@@ -52,6 +52,12 @@
 		myText.sync();
 		scene.add(myText);
 
+		const geometry = new THREE.SphereGeometry( height/10 );
+		const material = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
+		const sphere = new THREE.Mesh( geometry, material ); 
+		sphere.position.set(width/2,height/2,0.0);
+		scene.add( sphere );
+
 		composer = new EffectComposer( renderer );
 		composer.addPass( new RenderPass( scene, camera ) );
 
