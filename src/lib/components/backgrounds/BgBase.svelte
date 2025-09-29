@@ -9,6 +9,8 @@
 	import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 	import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 	import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+	import { themeStore } from '$lib/stores';
+	import { get } from 'svelte/store';
 
 
 	let container: HTMLDivElement;
@@ -16,6 +18,7 @@
 	let composer: EffectComposer;
 	let scene: THREE.Scene;
 	let camera: THREE.OrthographicCamera;
+	let material: THREE.MeshPhongMaterial;
 
 	let mousePos = new Tween({ x: 0, y: 0 }, { duration: 1000, easing: cubicOut });
 	
@@ -26,6 +29,14 @@
 		mousePos.target = { x,y };
 	}
 
+	$effect(() => {
+		$themeStore.lighter;
+		if(material){
+			let color = $themeStore.lighter
+			material.emissive.set(color);
+			console.log("NIA")
+		}
+	});
 	
 	onMount(async () => {
 		scene = new THREE.Scene();
@@ -52,11 +63,21 @@
 		myText.sync();
 		scene.add(myText);
 
-		const geometry = new THREE.SphereGeometry( height/10 );
-		const material = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
+		const radius:number = Math.min(height,width)/7
+		const geometry = new THREE.SphereGeometry( radius );
+		material =  new THREE.MeshPhongMaterial({ 
+								color: 0xffffff,
+								emissive: $themeStore.lighter,
+								emissiveIntensity: 0.6
+							});
 		const sphere = new THREE.Mesh( geometry, material ); 
-		sphere.position.set(width/2,height/2,0.0);
+		sphere.position.set(width-radius*1.5,radius*1.5,-1000.0);
 		scene.add( sphere );
+
+		const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+		directionalLight.position.set(1, 1, 1);
+		scene.add(directionalLight);
+
 
 		composer = new EffectComposer( renderer );
 		composer.addPass( new RenderPass( scene, camera ) );
@@ -88,6 +109,11 @@
 			myText.fontSize = Math.min(height,width*0.8) / 10;
 			myText.position.set(width - 5.2*myText.fontSize, myText.fontSize, 0);
 
+			const radius:number = Math.min(height,width)/7
+			sphere.geometry = new THREE.SphereGeometry( radius );
+			sphere.position.set(width-radius*1.5,radius*1.5,-1000.0);
+
+
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			composer.setSize( window.innerWidth, window.innerHeight );
 
@@ -99,6 +125,9 @@
 			const now = performance.now();
 			effect.uniforms.u_time.value += (now - lastTime) * 0.001;
 			lastTime = now;
+
+			directionalLight.position.x = mousePos.current.x - 0.5;
+			directionalLight.position.y = mousePos.current.y;
 
 			effect.uniforms.u_mouse.value.set(mousePos.current.x, mousePos.current.y);
 

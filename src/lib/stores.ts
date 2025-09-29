@@ -13,9 +13,10 @@ import Bigms from "./components/icons/Bigms.svelte";
 import BigmsW from "./components/windows/BigmsW.svelte";
 import Chat from "./components/icons/Chat.svelte";
 import ChatW from "./components/windows/ChatW.svelte";
+import { themes, type Theme } from "./tools/themeSwitcher";
 
 
-export const themeStore = writable("blue");
+export const themeStore = writable<Theme>(themes[0]);
 export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
