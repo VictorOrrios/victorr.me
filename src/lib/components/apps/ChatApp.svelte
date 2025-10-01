@@ -180,7 +180,7 @@
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
                 {#snippet child({ props })}
-                    <button type="button" {...props} class="p-2">
+                    <button type="button" {...props} class="p-2 hover:cursor-pointer">
                         <span>·{bot.name}</span>
                     </button>
                 {/snippet}
