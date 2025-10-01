@@ -22,10 +22,12 @@
 	let mousePos = new Tween({ x: 0, y: 0 }, { duration: 1000, easing: cubicOut });
 	
 	function onMouseMove(event: MouseEvent) {
-		const { left, top, width, height } = container.getBoundingClientRect();
-		const x = (event.clientX - left) / width;
-		const y = 1 - (event.clientY - top) / height;
-		mousePos.target = { x,y };
+		if(container){
+			const { left, top, width, height } = container.getBoundingClientRect();
+			const x = (event.clientX - left) / width;
+			const y = 1 - (event.clientY - top) / height;
+			mousePos.target = { x,y };
+		}
 	}
 
 	$effect(() => {

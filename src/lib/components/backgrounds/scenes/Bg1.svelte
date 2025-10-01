@@ -8,6 +8,7 @@
 	import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 	import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 	import { activeBackground, themeStore } from '$lib/stores';
+	import { Font, FontLoader, TextGeometry } from 'three/examples/jsm/Addons.js';
 
 	let vertex = $activeBackground.filter.vertex;
 	let fragment = $activeBackground.filter.fragment;
@@ -16,16 +17,18 @@
 	let renderer: THREE.WebGLRenderer;
 	let composer: EffectComposer;
 	let scene: THREE.Scene;
-	let camera: THREE.OrthographicCamera;
+	let camera: THREE.PerspectiveCamera;
 	let material: THREE.MeshPhongMaterial;
 
 	let mousePos = new Tween({ x: 0, y: 0 }, { duration: 1000, easing: cubicOut });
 	
 	function onMouseMove(event: MouseEvent) {
-		const { left, top, width, height } = container.getBoundingClientRect();
-		const x = (event.clientX - left) / width;
-		const y = 1 - (event.clientY - top) / height;
-		mousePos.target = { x,y };
+		if(container){
+			const { left, top, width, height } = container.getBoundingClientRect();
+			const x = (event.clientX - left) / width;
+			const y = 1 - (event.clientY - top) / height;
+			mousePos.target = { x,y };
+		}
 	}
 
 	$effect(() => {
@@ -37,16 +40,30 @@
 		}
 	});
 
-
-
+	async function loadFont(url:string) {
+		const loader = new FontLoader();
+		return new Promise((resolve, reject) => {
+			loader.load(
+			url,
+			font => resolve(font),
+			undefined, // onProgress
+			err => reject(err)
+			);
+		});
+	}
 
 	onMount(async () => {
+		const font:any = await loadFont("/fonts/PixelTwist/PixelTwist.json");
+
 		scene = new THREE.Scene();
 
 		const width = container.clientWidth;
 		const height = container.clientHeight;
 
-		camera = new THREE.OrthographicCamera(0, width, height, 0, -1000, 1000);
+		camera = new THREE.PerspectiveCamera(35, width/height, 0.1, 1000);
+		camera.position.set(20, 20, 50);
+		camera.lookAt(new THREE.Vector3(0,0,0));
+
 
 		renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 		renderer.setPixelRatio( window.devicePixelRatio );
@@ -54,31 +71,30 @@
 		renderer.setAnimationLoop(animate);
 		container.appendChild(renderer.domElement);
 
-		const myText = new Text();
-		myText.text = 'VICTORR.ME';
-		myText.font = '/fonts/PixelTwist/PixelTwist.ttf';
-		myText.fontSize = Math.min(height,width*0.8) / 10;
-		myText.position.set(width - 5.2*myText.fontSize, myText.fontSize, 0);
-		myText.anchorX = 'center';
-		myText.anchorY = 'middle';
-		myText.color = 0xffffff;
-		myText.sync();
-		scene.add(myText);
+		const text_geometry = new TextGeometry('VICTORR ME', {
+			font,
+			size: 5,
+			depth:6,
+		});
 
-		const radius:number = Math.min(height,width)/7
-		const geometry = new THREE.SphereGeometry( radius );
-		material =  new THREE.MeshPhongMaterial({ 
-								color: 0xffffff,
-								emissive: $themeStore.lighter,
-								emissiveIntensity: 0.6
-							});
-		const sphere = new THREE.Mesh( geometry, material ); 
-		sphere.position.set(width-radius*1.5,radius*1.5,-1000.0);
-		scene.add( sphere );
+		const text_material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+		const text_mesh = new THREE.Mesh(text_geometry, text_material);
+		text_mesh.position.set(-27,0,0.0);
+    	scene.add(text_mesh);
+
+		const cube_size = 2;
+		const cube_geometry = new THREE.BoxGeometry(cube_size,cube_size,cube_size);
+		const cube_material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+		const cube = new THREE.Mesh(cube_geometry, cube_material);
+		cube.position.set(17.2,cube_size/2,cube_size/2);
+		scene.add(cube);
 
 		const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
-		directionalLight.position.set(1, 1, 1);
+		directionalLight.position.set(1, 1, 5);
 		scene.add(directionalLight);
+
+		const ambient = new THREE.AmbientLight(0xffffff,1);
+		//scene.add(ambient)
 
 
 		composer = new EffectComposer( renderer );
@@ -94,7 +110,7 @@
 							fragmentShader: fragment
 						} );
 		effect_filter.renderToScreen = true;
-		composer.addPass( effect_filter );
+		//composer.addPass( effect_filter );
 
 
 		window.addEventListener('resize', onWindowResize );
@@ -104,17 +120,8 @@
 			const width = container.clientWidth;
 			const height = container.clientHeight;
 
-			camera.right = width;
-			camera.top = height;
-			camera.updateProjectionMatrix();
-
-			myText.fontSize = Math.min(height,width*0.8) / 10;
-			myText.position.set(width - 5.2*myText.fontSize, myText.fontSize, 0);
-
-			const radius:number = Math.min(height,width)/7
-			sphere.geometry = new THREE.SphereGeometry( radius );
-			sphere.position.set(width-radius*1.5,radius*1.5,-1000.0);
-
+			//myText.fontSize = Math.min(height,width*0.8) / 10;
+			//myText.position.set(width - 5.2*myText.fontSize, myText.fontSize, 0);
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			composer.setSize( window.innerWidth, window.innerHeight );
