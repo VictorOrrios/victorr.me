@@ -60,6 +60,13 @@
         resize: none;
     }
 
+    textarea:focus,
+    textarea:focus-visible,
+    textarea:-moz-focusring {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
     .main-container{
         border: 1px solid white;
     }

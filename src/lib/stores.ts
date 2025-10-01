@@ -29,6 +29,7 @@ export interface BackgroundConfig {
 export interface BackgroundScene {
     name:string;
     component: Component;
+    allowedFilters:string[];
 };
 
 export interface Filter {
@@ -162,11 +163,13 @@ export const window_library:WindowConfig[] = [
 export const bg_scene_library:BackgroundScene[] = [
     {
         name:"DotCom",
-        component:Bg0
+        component:Bg0,
+        allowedFilters:["BayesDither","EdgeFinder"]
     },
     {
         name:"Blocks",
-        component:Bg1
+        component:Bg1,
+        allowedFilters:["BayesDither"]
     }
 ];
 
@@ -191,6 +194,6 @@ export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
 export const activeBackground = writable<BackgroundConfig>({
-    scene:bg_scene_library[1],
+    scene:bg_scene_library[0],
     filter:filter_library[0]
 });

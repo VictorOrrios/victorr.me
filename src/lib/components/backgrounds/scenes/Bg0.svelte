@@ -35,7 +35,6 @@
 		if(material){
 			let color = $themeStore.lighter
 			material.emissive.set(color);
-			console.log("NIA")
 		}
 	});
 

@@ -20,7 +20,7 @@ void main() {
     vec4 originalColor = texture2D(tDiffuse, vUv);
     
     vec2 pos = gl_FragCoord.xy;
-    vec2 bayesPos = pos * 0.2 + u_mouse * 10.0 + u_time * 30.0;
+    vec2 bayesPos = pos * 0.2 + u_mouse * 10.0 + u_time * 3.0;
     float threshold = bayerDither(bayesPos);
 
     float brightness = (originalColor.r + originalColor.g + originalColor.b) / 3.0;
