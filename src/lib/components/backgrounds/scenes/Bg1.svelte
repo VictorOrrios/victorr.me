@@ -106,7 +106,7 @@
 		light.position.copy(cube.position);
 		scene.add(light);
 
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+		const directionalLight = new THREE.DirectionalLight(0xffffff, 4.5);
 		directionalLight.position.set(0.5, 0.5, 5);
 		scene.add(directionalLight);
 
@@ -114,8 +114,6 @@
 		scene.add(gridHelper);
 
 		scene.fog = new THREE.FogExp2(0x09090b, 0.015);
-
-		
 
 		composer = new EffectComposer( renderer );
 		composer.addPass( new RenderPass( scene, camera ) );
@@ -140,8 +138,6 @@
 			const width = container.clientWidth;
 			const height = container.clientHeight;
 
-			//myText.fontSize = Math.min(height,width*0.8) / 10;
-			//myText.position.set(width - 5.2*myText.fontSize, myText.fontSize, 0);
 			camera.aspect = width/height;
 			camera.updateProjectionMatrix();
 
@@ -156,8 +152,8 @@
 			effect_filter.uniforms.u_time.value += (now - lastTime) * 0.001;
 			lastTime = now;
 
-			directionalLight.position.x = -(mousePos.current.x - 0.5)*5;
-			//directionalLight.position.y = mousePos.current.y;
+			directionalLight.position.x = (mousePos.current.x - 0.5)*5;
+			directionalLight.position.y = mousePos.current.y;
 
 			camera.position.x = 20 - (mousePos.current.x-0.5)*4
 			camera.position.y = 20 - (mousePos.current.y-0.5)*4
@@ -179,6 +175,6 @@
 	
 </script>
 
-<div class="h-full w-full" bind:this={container}></div>
+<div class="h-full w-full mt-[25vh]" bind:this={container}></div>
  
 
