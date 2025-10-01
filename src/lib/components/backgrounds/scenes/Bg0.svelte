@@ -90,6 +90,7 @@
 								tDiffuse: { value: null },
 								u_time: { value: 0 },
 								u_mouse: { value: new THREE.Vector2(0, 0) },
+								u_resolution: { value: new THREE.Vector2(width,height) },
 							},
 							vertexShader: vertex,
 							fragmentShader: fragment
@@ -116,6 +117,7 @@
 			sphere.geometry = new THREE.SphereGeometry( radius );
 			sphere.position.set(width-radius*1.5,radius*1.5,-1000.0);
 
+			effect_filter.uniforms.u_resolution.value = new THREE.Vector2(width,height);
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			composer.setSize( window.innerWidth, window.innerHeight );

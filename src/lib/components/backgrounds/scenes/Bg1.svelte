@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import * as THREE from 'three';
-	import { Text } from 'troika-three-text';
 	import { Tween } from 'svelte/motion';
   	import { cubicOut } from 'svelte/easing';
 	import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 	import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 	import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 	import { activeBackground, themeStore } from '$lib/stores';
-	import { Font, FontLoader, TextGeometry } from 'three/examples/jsm/Addons.js';
+	import { FontLoader, TextGeometry } from 'three/examples/jsm/Addons.js';
+
 
 	let vertex = $activeBackground.filter.vertex;
 	let fragment = $activeBackground.filter.fragment;
@@ -115,6 +115,8 @@
 
 		scene.fog = new THREE.FogExp2(0x09090b, 0.015);
 
+		scene.background = null;
+
 		composer = new EffectComposer( renderer );
 		composer.addPass( new RenderPass( scene, camera ) );
 
@@ -123,12 +125,13 @@
 								tDiffuse: { value: null },
 								u_time: { value: 0 },
 								u_mouse: { value: new THREE.Vector2(0, 0) },
+								u_resolution: { value: new THREE.Vector2(width,height) },
 							},
 							vertexShader: vertex,
 							fragmentShader: fragment
 						} );
 		effect_filter.renderToScreen = true;
-		//composer.addPass( effect_filter );
+		composer.addPass( effect_filter );
 
 
 		window.addEventListener('resize', onWindowResize );
@@ -140,6 +143,8 @@
 
 			camera.aspect = width/height;
 			camera.updateProjectionMatrix();
+
+			effect_filter.uniforms.u_resolution.value = new THREE.Vector2(width,height);
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			composer.setSize( window.innerWidth, window.innerHeight );
@@ -155,7 +160,7 @@
 			directionalLight.position.x = (mousePos.current.x - 0.5)*5;
 			directionalLight.position.y = mousePos.current.y;
 
-			camera.position.x = 20 - (mousePos.current.x-0.5)*4
+			camera.position.x = 20 - (mousePos.current.x-0.5)*15
 			camera.position.y = 20 - (mousePos.current.y-0.5)*4
 			camera.lookAt(new THREE.Vector3(0,0,0));
 

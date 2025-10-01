@@ -18,8 +18,8 @@ import Bg0 from "./components/backgrounds/scenes/Bg0.svelte";
 import Bg1 from "./components/backgrounds/scenes/Bg1.svelte";
 import vertexBayesDither from '$lib/components/backgrounds/filters/BayesDither/vertex.glsl';
 import fragmentBayesDither from '$lib/components/backgrounds/filters/BayesDither/fragment.glsl';
-import vertexEdge from '$lib/components/backgrounds/filters/EdgeFinder/vertex.glsl';
-import fragmentEdge from '$lib/components/backgrounds/filters/EdgeFinder/fragment.glsl';
+import vertexPixel from '$lib/components/backgrounds/filters/Pixel/vertex.glsl';
+import fragmentPixel from '$lib/components/backgrounds/filters/Pixel/fragment.glsl';
 
 export interface BackgroundConfig {
     scene: BackgroundScene;
@@ -164,12 +164,12 @@ export const bg_scene_library:BackgroundScene[] = [
     {
         name:"DotCom",
         component:Bg0,
-        allowedFilters:["BayesDither","EdgeFinder"]
+        allowedFilters:["BayesDither"]
     },
     {
         name:"Blocks",
         component:Bg1,
-        allowedFilters:["BayesDither"]
+        allowedFilters:["Pixel"]
     }
 ];
 
@@ -180,9 +180,9 @@ export const filter_library:Filter[] = [
         fragment:fragmentBayesDither,
     },
     {
-        name:"EdgeFinder",
-        vertex:vertexEdge,
-        fragment:fragmentEdge,
+        name:"Pixel",
+        vertex:vertexPixel,
+        fragment:fragmentPixel,
     }
 ];
 
@@ -194,6 +194,6 @@ export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
 export const activeBackground = writable<BackgroundConfig>({
-    scene:bg_scene_library[0],
-    filter:filter_library[0]
+    scene:bg_scene_library[1],
+    filter:filter_library[1]
 });
