@@ -35,11 +35,6 @@
 
     const url_text = $derived(createUrl());
 
-    $effect(() => {
-        if(text === "" || presets.find(s => s === text) !== undefined)
-            text = presets[style]
-    });
-
     function onClickUrl(){
         navigator.clipboard.writeText(createUrl());
 
@@ -59,6 +54,12 @@
         showMode = false;
     }
 
+    function changeStyle(id:number){
+        style = id;
+        if(text === "" || presets.find(s => s === text) !== undefined)
+            text = presets[style]
+    }
+
     function evangelionParser(){
         parts = text.split("\n", 4);
         for(let i = 0; i<3; i++){
@@ -74,6 +75,7 @@
         parts = text.split("\n", 3);
         console.log(parts)
     }
+
 
     async function updateFit() {
         await tick();
@@ -122,7 +124,7 @@
                 <div class="flex flex-col">
                     <p class="p-1">STYLE</p>
                     {#each styles as text, i}
-                        <button type="button" onclick={() => style = i} class="p-1 {style === i ? 'selected':''}">{text}</button>
+                        <button type="button" onclick={() => changeStyle(i)} class="p-1 {style === i ? 'selected':''}">{text}</button>
                     {/each}
                 </div>
             </div>

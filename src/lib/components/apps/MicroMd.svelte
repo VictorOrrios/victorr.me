@@ -30,7 +30,7 @@
 
 <div class="h-full w-full flex flex-col backdrop-blur-md main-container">
     <div class="flex justify-between items-center pl-4">
-        {#if preset == 0}
+        {#if preset === 0}
             <div>
                 <a href="https://victorr.me">victorr.me</a> micro_md 1.0
             </div>
