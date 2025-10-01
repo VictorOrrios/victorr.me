@@ -18,7 +18,7 @@
 
 	.active{
 		animation: spin 2.5s ease-out forwards, gradient-slide 0.5s ease-out forwards;
-		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), var(--color-background), var(--color-background));
+		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), transparent, transparent);
 		background-size: 200% 200%;
 		background-repeat: no-repeat;
 	}

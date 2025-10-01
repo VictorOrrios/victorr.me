@@ -11,7 +11,7 @@
 <style>
 
 	.gradient{
-		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), var(--color-background),var(--color-background));
+		background: radial-gradient(circle, var(--theme-color-lighter), var(--theme-color-basic), transparent, transparent);
 		background-size: 300% 300%;
 		animation: move-gradient 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 		border-radius: 100%;
