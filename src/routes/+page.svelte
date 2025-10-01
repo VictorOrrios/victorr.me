@@ -6,6 +6,7 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import WindowManager from "$lib/components/WindowManager.svelte";
 	import { activeWindows, occupiedCells, selectedType, themeStore, window_library } from "$lib/stores";
+	import { changeBackground } from "$lib/tools/bgSwitcher";
 	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
 	import { addWindow, closeWindow, maximizeWindow, minimizeWindow } from "$lib/tools/windowFunctions";
 	import { onMount } from "svelte";
@@ -69,8 +70,7 @@
 	}
 
 	function onClickBackground(){
-		nextTheme();
-		console.log($activeWindows);
+		changeBackground();
 	}
 
 	function onClickHelp1(){

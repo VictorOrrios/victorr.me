@@ -14,13 +14,28 @@ import BigmsW from "./components/windows/BigmsW.svelte";
 import Chat from "./components/icons/Chat.svelte";
 import ChatW from "./components/windows/ChatW.svelte";
 import { themes, type Theme } from "./tools/themeSwitcher";
+import Bg0 from "./components/backgrounds/scenes/Bg0.svelte";
+import Bg1 from "./components/backgrounds/scenes/Bg1.svelte";
+import vertexBayesDither from '$lib/components/backgrounds/filters/BayesDither/vertex.glsl';
+import fragmentBayesDither from '$lib/components/backgrounds/filters/BayesDither/fragment.glsl';
+import vertexEdge from '$lib/components/backgrounds/filters/EdgeFinder/vertex.glsl';
+import fragmentEdge from '$lib/components/backgrounds/filters/EdgeFinder/fragment.glsl';
 
+export interface BackgroundConfig {
+    scene: BackgroundScene;
+    filter: Filter;
+}
 
-export const themeStore = writable<Theme>(themes[0]);
-export const occupiedCells = writable<{ x: number, y: number }[]>([]);
-export const selectedType = writable(0);
-export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
+export interface BackgroundScene {
+    name:string;
+    component: Component;
+};
 
+export interface Filter {
+    name:string;
+    vertex: string;
+    fragment: string;
+};
 
 export interface WindowConfig {
     text: string;
@@ -143,3 +158,39 @@ export const window_library:WindowConfig[] = [
         window: ChatW
     },
 ];
+
+export const bg_scene_library:BackgroundScene[] = [
+    {
+        name:"DotCom",
+        component:Bg0
+    },
+    {
+        name:"Blocks",
+        component:Bg1
+    }
+];
+
+export const filter_library:Filter[] = [
+    {
+        name:"BayesDither",
+        vertex:vertexBayesDither,
+        fragment:fragmentBayesDither,
+    },
+    {
+        name:"EdgeFinder",
+        vertex:vertexEdge,
+        fragment:fragmentEdge,
+    }
+];
+
+
+
+
+export const themeStore = writable<Theme>(themes[0]);
+export const occupiedCells = writable<{ x: number, y: number }[]>([]);
+export const selectedType = writable(0);
+export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
+export const activeBackground = writable<BackgroundConfig>({
+    scene:bg_scene_library[0],
+    filter:filter_library[0]
+});

@@ -30,7 +30,13 @@
 
 <div class="h-full w-full flex flex-col backdrop-blur-md main-container">
     <div class="flex justify-between items-center pl-4">
-        <div>micro_md 1.0</div>
+        {#if preset == 0}
+            <div>
+                <a href="https://victorr.me">victorr.me</a> micro_md 1.0
+            </div>
+        {:else}
+            <div>micro_md 1.0</div>
+        {/if}
         <div>buffer:{title}</div>
         <button type="button" onclick={onClickMode} class="mode-button p-1 pl-8 pr-8">
         {#if editMode}
