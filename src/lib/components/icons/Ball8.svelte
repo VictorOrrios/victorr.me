@@ -15,6 +15,7 @@
             width={40} height={40} viewBox="0 0 {max} {max}">
             <path
                 in:draw={{duration: 1500}}
+                out:draw={{duration: 500}}
                 fill="none"
                 style="stroke: var(--theme-color-lighter)"
                 stroke-width="2px"

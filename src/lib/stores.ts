@@ -162,8 +162,8 @@ export const window_library:WindowConfig[] = [
     {
         text:"8ball",
         type: 7,
-        width:300,
-        height:300,
+        width:250,
+        height:250,
         resizeable: false,
         icon: Ball8,
         iconX: 2,
@@ -206,6 +206,6 @@ export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
 export const activeBackground = writable<BackgroundConfig>({
-    scene:bg_scene_library[1],
-    filter:filter_library[1]
+    scene:bg_scene_library[0],
+    filter:filter_library[0]
 });
