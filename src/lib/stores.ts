@@ -1,25 +1,26 @@
-import { persisted } from "svelte-persisted-store";
-import { writable } from "svelte/store";
+import fragmentBayesDither from '$lib/components/backgrounds/filters/BayesDither/fragment.glsl';
+import vertexBayesDither from '$lib/components/backgrounds/filters/BayesDither/vertex.glsl';
+import fragmentPixel from '$lib/components/backgrounds/filters/Pixel/fragment.glsl';
+import vertexPixel from '$lib/components/backgrounds/filters/Pixel/vertex.glsl';
 import Meta from "$lib/components/icons/Meta.svelte";
-import MetaW from "./components/windows/MetaW.svelte";
-import Resume from "./components/icons/Resume.svelte";
-import ResumeW from "./components/windows/ResumeW.svelte";
-import About from "./components/icons/About.svelte";
-import AboutW from "./components/windows/AboutW.svelte";
-import Articles from "./components/icons/Articles.svelte";
-import ArticlesW from "./components/windows/ArticlesW.svelte";
 import type { Component } from "svelte";
-import Bigms from "./components/icons/Bigms.svelte";
-import BigmsW from "./components/windows/BigmsW.svelte";
-import Chat from "./components/icons/Chat.svelte";
-import ChatW from "./components/windows/ChatW.svelte";
-import { themes, type Theme } from "./tools/themeSwitcher";
+import { writable } from "svelte/store";
 import Bg0 from "./components/backgrounds/scenes/Bg0.svelte";
 import Bg1 from "./components/backgrounds/scenes/Bg1.svelte";
-import vertexBayesDither from '$lib/components/backgrounds/filters/BayesDither/vertex.glsl';
-import fragmentBayesDither from '$lib/components/backgrounds/filters/BayesDither/fragment.glsl';
-import vertexPixel from '$lib/components/backgrounds/filters/Pixel/vertex.glsl';
-import fragmentPixel from '$lib/components/backgrounds/filters/Pixel/fragment.glsl';
+import About from "./components/icons/About.svelte";
+import Articles from "./components/icons/Articles.svelte";
+import Bigms from "./components/icons/Bigms.svelte";
+import Chat from "./components/icons/Chat.svelte";
+import Resume from "./components/icons/Resume.svelte";
+import AboutW from "./components/windows/AboutW.svelte";
+import ArticlesW from "./components/windows/ArticlesW.svelte";
+import BigmsW from "./components/windows/BigmsW.svelte";
+import ChatW from "./components/windows/ChatW.svelte";
+import MetaW from "./components/windows/MetaW.svelte";
+import ResumeW from "./components/windows/ResumeW.svelte";
+import { themes, type Theme } from "./tools/themeSwitcher";
+import Ball8 from './components/icons/Ball8.svelte';
+import Ball8W from './components/windows/Ball8W.svelte';
 
 export interface BackgroundConfig {
     scene: BackgroundScene;
@@ -157,6 +158,17 @@ export const window_library:WindowConfig[] = [
         iconX: 2,
         iconY: 2,
         window: ChatW
+    },
+    {
+        text:"8ball",
+        type: 7,
+        width:300,
+        height:300,
+        resizeable: false,
+        icon: Ball8,
+        iconX: 2,
+        iconY: 3,
+        window: Ball8W
     },
 ];
 
