@@ -22,7 +22,7 @@
 	let light: THREE.PointLight;
 	let gridHelper: THREE.GridHelper;
 
-	let mousePos = new Tween({ x: 0, y: 0 }, { duration: 5000, easing: cubicOut });
+	let mousePos = new Tween({ x: 0.5, y: 0.5 }, { duration: 5000, easing: cubicOut });
 	
 	function onMouseMove(event: MouseEvent) {
 		if(container){

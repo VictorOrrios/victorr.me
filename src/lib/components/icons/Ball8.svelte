@@ -11,7 +11,7 @@
 <div class="group p-4 flex flex-col items-center gap-2">
     <img src="ball.svg" alt="Magic 8 ball" class="h-[70px] my-[5px] m-auto {$selectedType === type?'icos':''}"/>
     {#if $selectedType === type}
-        <svg class="m-auto absolute mt-[24px] rotate-180"
+        <svg class="m-auto absolute mt-[16px]"
             width={40} height={40} viewBox="0 0 {max} {max}">
             <path
                 in:draw={{duration: 1500}}

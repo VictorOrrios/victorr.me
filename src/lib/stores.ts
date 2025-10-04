@@ -2,6 +2,8 @@ import fragmentBayesDither from '$lib/components/backgrounds/filters/BayesDither
 import vertexBayesDither from '$lib/components/backgrounds/filters/BayesDither/vertex.glsl';
 import fragmentPixel from '$lib/components/backgrounds/filters/Pixel/fragment.glsl';
 import vertexPixel from '$lib/components/backgrounds/filters/Pixel/vertex.glsl';
+import fragmentDots from '$lib/components/backgrounds/filters/Dots/fragment.glsl';
+import vertexDots from '$lib/components/backgrounds/filters/Dots/vertex.glsl';
 import Meta from "$lib/components/icons/Meta.svelte";
 import type { Component } from "svelte";
 import { writable } from "svelte/store";
@@ -176,7 +178,7 @@ export const bg_scene_library:BackgroundScene[] = [
     {
         name:"DotCom",
         component:Bg0,
-        allowedFilters:["BayesDither"]
+        allowedFilters:["BayesDither","Dots"]
     },
     {
         name:"Blocks",
@@ -195,7 +197,12 @@ export const filter_library:Filter[] = [
         name:"Pixel",
         vertex:vertexPixel,
         fragment:fragmentPixel,
-    }
+    },
+    {
+        name:"Dots",
+        vertex:vertexDots,
+        fragment:fragmentDots,
+    },
 ];
 
 
