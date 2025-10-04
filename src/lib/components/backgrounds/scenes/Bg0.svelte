@@ -19,7 +19,7 @@
 	let camera: THREE.OrthographicCamera;
 	let material: THREE.MeshPhongMaterial;
 
-	let mousePos = new Tween({ x: 0, y: 0 }, { duration: 1000, easing: cubicOut });
+	let mousePos = new Tween({ x: 0.5, y: 0.5 }, { duration: 1000, easing: cubicOut });
 	
 	function onMouseMove(event: MouseEvent) {
 		if(container){

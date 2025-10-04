@@ -132,6 +132,7 @@
         <div class="triangle z-1 {animation? 'active-tri': ''}"
              style="transform: rotate({rotation}deg) scale({scale},{scale}); 
              margin-top: {positionX}%; margin-left: {positionY}%;"></div>
+        <div class="absolute w-[170px] h-[170px] ring z-2"></div>
     </div>
     <p class="absolute z-2 w-[100px] text-center select-none text {animation? 'active-text': ''}">{text}</p>
 </div>
@@ -141,10 +142,17 @@
         background-color: var(--color-background);
     }
 
+    .ring{
+        border-radius: 100%;
+		background: radial-gradient(circle, transparent,transparent, var(--color-background),var(--color-background));
+
+    }
+
     .text{
         font-size: 120%;
         font-weight: 900;
         transition: color 1s ease-out;
+        border-radius: 100%;
     }
 
     .active-text{
