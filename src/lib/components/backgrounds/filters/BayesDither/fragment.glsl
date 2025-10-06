@@ -30,7 +30,7 @@ void main() {
     if (brightness * mouseControl > threshold) {
         gl_FragColor = originalColor;
     } else {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, originalColor.a);
+        gl_FragColor = vec4(0.0);
     }
 
 }

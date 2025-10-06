@@ -19,22 +19,28 @@
 	let composer: EffectComposer;
 	let scene: THREE.Scene;
 	let camera: THREE.PerspectiveCamera;
-	let cube_material: THREE.MeshStandardMaterial;
 	let light: THREE.PointLight;
-	let gridHelper: THREE.GridHelper;
+	let boxes: {mesh:THREE.Mesh,body:CANNON.Body}[] = [];
 
-	let mousePos = new Tween({ x: 0.5, y: 0.5 }, { duration: 0, easing: cubicOut });
+	let mousePos = new Tween({ x: 0.5, y: 0.5 }, { duration: 1000, easing: cubicOut });
+	let lightPos = new Tween({ x: 0.0, y: 0.0 }, { duration: 100, easing: cubicOut });
 	
 	function onMouseMove(event: MouseEvent) {
 		if(container){
 			const { left, top, width, height } = container.getBoundingClientRect();
-			const x = (event.clientX - left) / width;
-			const y = 1 - (event.clientY - top) / height;
-			mousePos.target = { x,y };
+			const xm = (event.clientX - left) / width;
+			const ym = 1 - (event.clientY - top) / height;
+			mousePos.target = { x:xm,y:ym };
+			lightPos.target = { x:xm-0.5,y:ym-0.5 };
 		}
 	}
 
 	$effect(() => {
+		$themeStore.lighter;
+		if(light){
+			let color = $themeStore.lighter
+			light.color.set(color);
+		}
 	});
 
 
@@ -68,9 +74,9 @@
 		camera.position.set(20, 20, 20);
 		camera.lookAt(new THREE.Vector3(0,0,0));
 
-		const directionalLight = new THREE.PointLight(0xffffff, 200.0);
-		directionalLight.position.set(3.0, 10.0, -3.0);
-		scene.add(directionalLight);
+		const mainL = new THREE.PointLight(0xffffff, 200.0,0.0);
+		mainL.position.set(0.0, 10.0, 0.0);
+		scene.add(mainL);
 
 		scene.background = null;
 
@@ -78,7 +84,7 @@
 			gravity: new CANNON.Vec3(0, -9.82, 0),
 		});
 
-		const roomHeight = 5;
+		const roomHeight = 7;
 		const roomWidth = 20;
 		const roomDepth = 20;
 
@@ -130,36 +136,46 @@
 		copyText(-6.0)
 		copyText(-9.0)
 
-		
-		const boxShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1));
-		const boxBody = new CANNON.Body({
-			mass: 1,
-			shape: boxShape,
-			position: new CANNON.Vec3(0, 2.5, 0),
-		});
-		world.addBody(boxBody);
-
-		const boxGeo = new THREE.BoxGeometry(2, 2, 2);
-		const boxMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
-		const boxMesh = new THREE.Mesh(boxGeo, boxMat);
-		scene.add(boxMesh);
-
 		const sphereShape = new CANNON.Sphere(1.0);
 		const sphereBody = new CANNON.Body({
 			mass: 0,
 			shape: sphereShape,
-			position: new CANNON.Vec3(0, 0.0, 0),
+			position: new CANNON.Vec3(0, 0.5, 0),
 		});
 		world.addBody(sphereBody);
 
 		const sphereGeo = new THREE.SphereGeometry(1.0)
 		const sphereMat = new THREE.MeshStandardMaterial({ color: $themeStore.lighter });
 		const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-		scene.add(sphereMesh);
+		//scene.add(sphereMesh);
 
-		light = new THREE.PointLight($themeStore.lighter, 40, 550); 
+		light = new THREE.PointLight($themeStore.lighter, 50, 0); 
 		light.position.copy(sphereBody.position);
 		scene.add(light);
+
+		function addBox(x:number,y:number,z:number){
+			const boxShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1));
+			const boxBody = new CANNON.Body({
+				mass: 1,
+				shape: boxShape,
+				position: new CANNON.Vec3(x, y, z),
+			});
+			world.addBody(boxBody);
+
+			const boxGeo = new THREE.BoxGeometry(2, 2, 2);
+			const boxMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+			const boxMesh = new THREE.Mesh(boxGeo, boxMat);
+			boxMesh.position.copy(boxBody.position);
+			scene.add(boxMesh);
+			boxes.push({mesh:boxMesh,body:boxBody});
+		}
+
+		addBox(0.0,2.5,-5.0);
+		addBox(0.0,2.5,5.0);
+		addBox(5.0,1.5,0.0);
+		addBox(-5.0,1.5,0.0);
+
+		
 
 
 		composer = new EffectComposer( renderer );
@@ -176,7 +192,7 @@
 							fragmentShader: fragment
 						} );
 		effect_filter.renderToScreen = true;
-		//composer.addPass( effect_filter );
+		composer.addPass( effect_filter );
 
 
 		window.addEventListener('resize', onWindowResize );
@@ -207,19 +223,26 @@
 			effect_filter.uniforms.u_time.value += (now - lastTime) * 0.001;
 			lastTime = now;
 
+			const width = container.clientWidth;
+			const height = container.clientHeight;
+
 			const delta = clock.getDelta();
       		world.step(1 / 60, delta, 3);
 
+			const ratio = width/height;
 			const scale = 20.0;
-			const x_pos = mousePos.current.x*scale-scale/2.0;
-			const y_pos = mousePos.current.y*scale-scale/2.0;
+			const x_pos = lightPos.current.x*scale*ratio;
+			const y_pos = lightPos.current.y*scale*ratio;
 			sphereBody.position.x = clamp(-9.0,-y_pos+x_pos,9.0);
 			sphereBody.position.z = clamp(-9.0,-y_pos-x_pos,9.0);
 			light.position.copy(sphereBody.position);
 			sphereMesh.position.copy(sphereBody.position);
 
-			boxMesh.position.copy(boxBody.position);
-      		boxMesh.quaternion.copy(boxBody.quaternion);
+			
+			boxes.forEach((b) => {
+				b.mesh.position.copy(b.body.position);
+      			b.mesh.quaternion.copy(b.body.quaternion);
+			})
 
 
 			effect_filter.uniforms.u_mouse.value.set(mousePos.current.x, mousePos.current.y);
