@@ -9,6 +9,7 @@ import type { Component } from "svelte";
 import { writable } from "svelte/store";
 import Bg0 from "./components/backgrounds/scenes/Bg0.svelte";
 import Bg1 from "./components/backgrounds/scenes/Bg1.svelte";
+import Bg2 from "./components/backgrounds/scenes/Bg2.svelte";
 import About from "./components/icons/About.svelte";
 import Articles from "./components/icons/Articles.svelte";
 import Bigms from "./components/icons/Bigms.svelte";
@@ -184,7 +185,12 @@ export const bg_scene_library:BackgroundScene[] = [
         name:"Blocks",
         component:Bg1,
         allowedFilters:["Pixel"]
-    }
+    },
+    {
+        name:"Physics",
+        component:Bg2,
+        allowedFilters:["BayesDither"]
+    },
 ];
 
 export const filter_library:Filter[] = [
@@ -213,6 +219,6 @@ export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
 export const activeBackground = writable<BackgroundConfig>({
-    scene:bg_scene_library[0],
+    scene:bg_scene_library[2],
     filter:filter_library[0]
 });

@@ -50,6 +50,7 @@
 		"@leveluptuts/svelte-fit": "^1.0.3",
 		"@neodrag/svelte": "^3.0.0-next.8",
 		"@types/three": "^0.180.0",
+		"cannon-es": "^0.20.0",
 		"interactjs": "^1.10.27",
 		"snarkdown": "^2.0.0",
 		"svelte-persisted-store": "^0.12.0",
