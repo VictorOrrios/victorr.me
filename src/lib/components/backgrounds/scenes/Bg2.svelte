@@ -232,12 +232,11 @@
 			const ratio = width/height;
 			const scale = 20.0;
 			const x_pos = lightPos.current.x*scale*ratio;
-			const y_pos = lightPos.current.y*scale*ratio;
+			const y_pos = (Math.pow(lightPos.current.y,2.0)*4.1313+lightPos.current.y*4.18666+0.0112506)*10.0;
 			sphereBody.position.x = clamp(-9.0,-y_pos+x_pos,9.0);
 			sphereBody.position.z = clamp(-9.0,-y_pos-x_pos,9.0);
 			light.position.copy(sphereBody.position);
 			sphereMesh.position.copy(sphereBody.position);
-
 			
 			boxes.forEach((b) => {
 				b.mesh.position.copy(b.body.position);

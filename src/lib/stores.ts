@@ -219,6 +219,6 @@ export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
 export const activeBackground = writable<BackgroundConfig>({
-    scene:bg_scene_library[0],
+    scene:bg_scene_library[2],
     filter:filter_library[0]
 });
