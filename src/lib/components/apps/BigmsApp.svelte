@@ -24,7 +24,7 @@
 
     let { standAlone } = $props();
 
-    let text = $state('');
+    let text = $state('Your text here...');
     let style = $state(0);
     let showMode = $state(false);
     let loaded = $state(false);
