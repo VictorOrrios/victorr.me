@@ -4,6 +4,8 @@ import fragmentPixel from '$lib/components/backgrounds/filters/Pixel/fragment.gl
 import vertexPixel from '$lib/components/backgrounds/filters/Pixel/vertex.glsl';
 import fragmentDots from '$lib/components/backgrounds/filters/Dots/fragment.glsl';
 import vertexDots from '$lib/components/backgrounds/filters/Dots/vertex.glsl';
+import fragmentLenticular from '$lib/components/backgrounds/filters/Lenticular/fragment.glsl';
+import vertexLenticular from '$lib/components/backgrounds/filters/Lenticular/vertex.glsl';
 import Meta from "$lib/components/icons/Meta.svelte";
 import type { Component } from "svelte";
 import { writable } from "svelte/store";
@@ -179,7 +181,7 @@ export const bg_scene_library:BackgroundScene[] = [
     {
         name:"DotCom",
         component:Bg0,
-        allowedFilters:["BayesDither","Dots"]
+        allowedFilters:["BayesDither","Dots","Lenticular"]
     },
     {
         name:"Blocks",
@@ -209,6 +211,11 @@ export const filter_library:Filter[] = [
         vertex:vertexDots,
         fragment:fragmentDots,
     },
+    {
+        name:"Lenticular",
+        vertex:vertexLenticular,
+        fragment:fragmentLenticular,
+    },
 ];
 
 
@@ -219,6 +226,6 @@ export const occupiedCells = writable<{ x: number, y: number }[]>([]);
 export const selectedType = writable(0);
 export const activeWindows = writable<{type:number,onScreen:boolean}[]>([]);
 export const activeBackground = writable<BackgroundConfig>({
-    scene:bg_scene_library[2],
+    scene:bg_scene_library[0],
     filter:filter_library[0]
 });
