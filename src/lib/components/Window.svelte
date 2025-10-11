@@ -26,13 +26,17 @@
         minimizeWindow(type);
     }
 
-    const windowZIndexes = $derived.by(() => {
+    function updateZ(){
+        const L = $activeWindows.length;
         const i = $activeWindows.findIndex(w => w.type === type);
         if(i<0) return;
-
-        if(wel) wel.style.zIndex = String(50-i);
         
-        return;
+        if(wel) wel.style.zIndex = String(200+i*5);
+    }
+
+    $effect(() => {
+        $activeWindows;
+        //updateZ();
     });
 
     function handleControlButtonClick(e:Event) {
@@ -99,7 +103,7 @@
                     })
                 ],
             })
-        }
+        }        
     });
 
     
@@ -108,8 +112,8 @@
 
     
 {#if window_data}
-    <div class="absolute window pointer-events-auto flex flex-col p-[4px]" id="window-{type}"
-            style="width: {window_data.width}px; height: {window_data.height}px"
+    <div class="absolute window pointer-events-auto flex flex-col p-[4px] z-0" id="window-{type}"
+            style="width: {window_data.width}px; height: {window_data.height}px;"
             onpointerdown={(e) => handleControlButtonClick(e)}>
 
         <div class="window-header select-none cursor-default! border-1 border-white flex justify-between">
