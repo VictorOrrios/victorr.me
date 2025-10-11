@@ -31,6 +31,7 @@
     let showCopied = $state(false); 
     let parts:string[] = $state([])
     let bratSingle = $state(false);
+    let smallerViewPort = $state(false);
 
 
     const url_text = $derived(createUrl());
@@ -81,6 +82,8 @@
         await tick();
         let textElem = document.getElementById("text-id");
         if(textElem) fit(textElem,{min_size: 10, max_size:100000});
+        let appCont = document.getElementById("app-container-id");
+        if(textElem) fit(textElem,{min_size: 10, max_size:100000});
         await tick();
     }
 
@@ -99,6 +102,9 @@
             showMode = true;
         }
 
+        smallerViewPort = window.matchMedia('(max-width: 500px)').matches;
+
+
         loaded = true;
         setTimeout(() => {
             updateFit()
@@ -109,38 +115,40 @@
 
 {#if loaded}
     {#if !showMode}
-        <div class="h-full w-full main-container p-8 text-3xl flex flex-col items-center gap-4 justify-center">
+        <div class="h-full w-full main-container p-8 flex flex-col items-center">
 
-            <div class="flex gap-4">
-                <div>
-                    <div class="flex justify-between items-center">
-                        <p class="p-1">MESSG</p>
-                        {#if standAlone}
-                            <a class="p-1" href="/">VICTORR.ME</a>
-                        {/if}
+            <div class="h-full w-full text-3xl flex flex-col items-center gap-4 justify-center {smallerViewPort?'scale-80':''}">
+                <div class="flex gap-4">
+                    <div>
+                        <div class="flex justify-between items-center">
+                            <p class="p-1">MESSG</p>
+                            {#if standAlone}
+                                <a class="p-1" href="/">VICTORR.ME</a>
+                            {/if}
+                        </div>
+                        <textarea bind:value={text} class="p-4"></textarea>
                     </div>
-                    <textarea bind:value={text} class="p-4"></textarea>
+                    <div class="flex flex-col">
+                        <p class="p-1">STYLE</p>
+                        {#each styles as text, i}
+                            <button type="button" onclick={() => changeStyle(i)} class="p-1 {style === i ? 'selected':''}">{text}</button>
+                        {/each}
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <p class="p-1">STYLE</p>
-                    {#each styles as text, i}
-                        <button type="button" onclick={() => changeStyle(i)} class="p-1 {style === i ? 'selected':''}">{text}</button>
-                    {/each}
-                </div>
-            </div>
-            <div class="w-[435px] flex gap-4 items-center">
-                {#if standAlone}
-                    <a href={url_text} class="p-1 py-[0.4rem]" onclick={() => window.location.href=url_text}>LINK!</a>
-                {:else}
-                    <a href={url_text} target="_blank" class="p-1 py-[0.4rem]">LINK!</a>
-                {/if}
-                <button class="url p-2 text-left overflow-hidden text-nowrap rtl inline-block flex-1" onclick={onClickUrl}>
-                    {#if showCopied}
-                        Copied to clipboard
+                <div class="w-[435px] flex gap-4 items-center">
+                    {#if standAlone}
+                        <a href={url_text} class="p-1 py-[0.4rem]" onclick={() => window.location.href=url_text}>LINK!</a>
                     {:else}
-                        {url_text}
+                        <a href={url_text} target="_blank" class="p-1 py-[0.4rem]">LINK!</a>
                     {/if}
-                </button>
+                    <button class="url p-2 text-left overflow-hidden text-nowrap rtl inline-block flex-1" onclick={onClickUrl}>
+                        {#if showCopied}
+                            Copied to clipboard
+                        {:else}
+                            {url_text}
+                        {/if}
+                    </button>
+                </div>
             </div>
         </div>
     {:else if style === 0}

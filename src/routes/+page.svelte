@@ -17,6 +17,15 @@
 
 	let isInFullScreen:boolean = $state(false);
 
+	let agentCheck:boolean = $state(false);
+	let isMobile:boolean = $state(false);
+
+	if (typeof navigator !== 'undefined') {
+		const ua = navigator.userAgent;
+		isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
+		agentCheck = true;
+	}
+
 	const minimizedWindows:{title:string,type:number}[] = $derived.by(() => {
 		let list:{title:string,type:number}[] = [];
 		$activeWindows.forEach(aw => {
@@ -89,10 +98,6 @@
 		$selectedType = 0;
 	}
 
-	onMount(() => {
-
-	});
-
 </script>
 
 <svelte:head>
@@ -100,128 +105,155 @@
 	<meta name="description" content="Landing page" />
 </svelte:head>
 
-<div class="w-[100vw] overflow-hidden flex flex-col content-center">
+{#if agentCheck}
+	{#if !isMobile}
+		<div class="w-[100vw] overflow-hidden flex flex-col content-center">
 
-	<!--TOP BAR-->
-	<div class="w-full h-8 flex justify-between p-0 text-sm ">
-		<div class="flex gap-6">
-			<div class="h-full p-0 grid grid-cols-[auto_auto_auto_auto_auto] gap-4">
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger>
-						{#snippet child({ props })}
-							<button type="button" {...props} class="name-card">
-								<span>VICTOR ORRIOS</span>
+			<!--TOP BAR-->
+			<div class="w-full h-8 flex justify-between p-0 text-sm ">
+				<div class="flex gap-6">
+					<div class="h-full p-0 grid grid-cols-[auto_auto_auto_auto_auto] gap-4">
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger>
+								{#snippet child({ props })}
+									<button type="button" {...props} class="name-card">
+										<span>VICTOR ORRIOS</span>
+									</button>
+								{/snippet}
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content class="w-56" align="start">
+								<DropdownMenu.Item onclick={onClickAbout}>
+									About
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={onClickFoo}>
+									Resume (PDF)
+								</DropdownMenu.Item>
+								<DropdownMenu.Sub>
+									<DropdownMenu.SubTrigger>Contac info</DropdownMenu.SubTrigger>
+									<DropdownMenu.SubContent>
+									<a href="mailto:victorr.orrios.b@gmail.com">
+										<DropdownMenu.Item>Email</DropdownMenu.Item>
+									</a>
+									<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">
+										<DropdownMenu.Item>LinkedIn</DropdownMenu.Item>
+									</a>
+									<a href="https://www.instagram.com/v.baron_?igsh=MTh5ejJjM213dnYzbA==">
+										<DropdownMenu.Item>Instagram</DropdownMenu.Item>
+									</a>
+									<a href="https://github.com/VictorOrrios">
+										<DropdownMenu.Item>Github</DropdownMenu.Item>
+									</a>
+									</DropdownMenu.SubContent>
+								</DropdownMenu.Sub>
+								<DropdownMenu.Separator />
+								<DropdownMenu.Item onclick={toogleFullScreen}>
+									{#if isInFullScreen}
+										Exit fullscreen
+									{:else}
+										Enter fullscreen
+									{/if}
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={onClickShutdown}>
+									Shutdown
+								</DropdownMenu.Item>
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger>
+								{#snippet child({ props })}
+									<button type="button" {...props}>CLICK</button>
+								{/snippet}
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content class="w-56" align="start">
+								{#each window_library as window, i (window.type)}
+									<DropdownMenu.Item onclick={() => addWindow(window.type)}>
+										{window.text}
+									</DropdownMenu.Item>
+								{/each}
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
+						<button type="button" onclick={onClickStyle}>STYLE</button>
+						<button type="button" onclick={onClickBackground}>BACKGROUND</button>
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger>
+								{#snippet child({ props })}
+									<button type="button" {...props}>HELP</button>
+								{/snippet}
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content class="w-56" align="start">
+								<DropdownMenu.Item onclick={onClickHelp1}>
+									Close all windows
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onclick={onClickHelp2}>
+									Minimize all windows
+								</DropdownMenu.Item>
+								<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
+									<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
+								</a>
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
+					</div>
+
+					<div class="flex items-center">
+						{#each minimizedWindows as w, i (w.type)}
+							<button class="pr-2 pl-2 mini-title" 
+								onclick={() => {maximizeWindow(w.type)}}
+								transition:slide={{axis: 'x', duration: 400 }}>
+								{w.title}
 							</button>
-						{/snippet}
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Content class="w-56" align="start">
-						<DropdownMenu.Item onclick={onClickAbout}>
-							About
-						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickFoo}>
-							Resume (PDF)
-						</DropdownMenu.Item>
-						<DropdownMenu.Sub>
-							<DropdownMenu.SubTrigger>Contac info</DropdownMenu.SubTrigger>
-							<DropdownMenu.SubContent>
-							<a href="mailto:victorr.orrios.b@gmail.com">
-								<DropdownMenu.Item>Email</DropdownMenu.Item>
-							</a>
-							<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">
-								<DropdownMenu.Item>LinkedIn</DropdownMenu.Item>
-							</a>
-							<a href="https://www.instagram.com/v.baron_?igsh=MTh5ejJjM213dnYzbA==">
-								<DropdownMenu.Item>Instagram</DropdownMenu.Item>
-							</a>
-							<a href="https://github.com/VictorOrrios">
-								<DropdownMenu.Item>Github</DropdownMenu.Item>
-							</a>
-							</DropdownMenu.SubContent>
-						</DropdownMenu.Sub>
-						<DropdownMenu.Separator />
-						<DropdownMenu.Item onclick={toogleFullScreen}>
-							{#if isInFullScreen}
-								Exit fullscreen
-							{:else}
-								Enter fullscreen
-							{/if}
-						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickShutdown}>
-							Shutdown
-						</DropdownMenu.Item>
-					</DropdownMenu.Content>
-				</DropdownMenu.Root>
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger>
-						{#snippet child({ props })}
-							<button type="button" {...props}>CLICK</button>
-						{/snippet}
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Content class="w-56" align="start">
-						{#each window_library as window, i (window.type)}
-							<DropdownMenu.Item onclick={() => addWindow(window.type)}>
-								{window.text}
-							</DropdownMenu.Item>
 						{/each}
-					</DropdownMenu.Content>
-				</DropdownMenu.Root>
-				<button type="button" onclick={onClickStyle}>STYLE</button>
-				<button type="button" onclick={onClickBackground}>BACKGROUND</button>
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger>
-						{#snippet child({ props })}
-							<button type="button" {...props}>HELP</button>
-						{/snippet}
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Content class="w-56" align="start">
-						<DropdownMenu.Item onclick={onClickHelp1}>
-							Close all windows
-						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={onClickHelp2}>
-							Minimize all windows
-						</DropdownMenu.Item>
-						<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
-							<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
-						</a>
-					</DropdownMenu.Content>
-				</DropdownMenu.Root>
+					</div>
+				</div>
+
+				<div class="flex items-center justify-center pr-8"><Clock/></div>
 			</div>
 
-			<div class="flex items-center">
-				{#each minimizedWindows as w, i (w.type)}
-					<button class="pr-2 pl-2 mini-title" 
-						onclick={() => {maximizeWindow(w.type)}}
-						transition:slide={{axis: 'x', duration: 400 }}>
-						{w.title}
-					</button>
-				{/each}
+			<div class="w-full h-[calc(100vh-2rem)]">
+				<div class="w-full h-[calc(100vh-2rem)] absolute z-0 overflow-hidden">
+					<BgBase/>
+				</div>
+
+				<div class="w-full h-[calc(100vh-2rem)] absolute z-30 pointer-events-none overflow-hidden" >
+					<WindowManager/>
+				</div>
+
+				<div class="w-full h-full overflow-hidden grid grid-cols-[repeat(auto-fill,150px)] grid-rows-[repeat(auto-fill,150px)]">
+					<button onclick={onClickDesktop} class="w-full h-[calc(100vh-2rem)] absolute z-0 cursor-default!" 
+							aria-label="desktop background"></button>
+					{#each window_library as window, i (window.type)}
+						<DesktopIcon type={window.type}/>
+					{/each}
+				</div>
+
 			</div>
 		</div>
 
-		<div class="flex items-center justify-center pr-8"><Clock/></div>
-	</div>
+	{:else}
 
-	<div class="w-full h-[calc(100vh-2rem)]">
-		<div class="w-full h-[calc(100vh-2rem)] absolute z-0 overflow-hidden">
-			<BgBase/>
+		<div class="mobile text-center">
+			<p class="face mt-8">:'(</p>
+			<h1 class="">VICTORR.ME</h1>
+			<p>is unaviable <u>on mobile</u></p>
+			<p>sorry for the inconvenience</p>
+			<div class="mt-8 flex flex-col text-right">
+				<p class="text-left">contact info</p>
+				<hr class="my-2">
+				<a href="mailto:victorr.orrios.b@gmail.com">Email</a>
+				<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">LinkedIn</a>
+				<a href="https://www.instagram.com/v.baron_?igsh=MTh5ejJjM213dnYzbA==">Instagram</a>
+				<a href="https://github.com/VictorOrrios">Github</a>
+				<p class="text-left">tools</p>
+				<hr class="my-2">
+				<a href="/bigms">Bigms</a>
+				<p class="text-left">articles</p>
+				<hr class="my-2">
+				<a href="/articles/hobby-raytracer">hobby-raytracer</a>
+			</div>
 		</div>
 
-		<div class="w-full h-[calc(100vh-2rem)] absolute z-30 pointer-events-none overflow-hidden" >
-			<WindowManager/>
-		</div>
+	{/if}
 
-		<div class="w-full h-full overflow-hidden grid grid-cols-[repeat(auto-fill,150px)] grid-rows-[repeat(auto-fill,150px)]">
-			<button onclick={onClickDesktop} class="w-full h-[calc(100vh-2rem)] absolute z-0 cursor-default!" 
-					aria-label="desktop background"></button>
-			{#each window_library as window, i (window.type)}
-				<DesktopIcon type={window.type}/>
-			{/each}
-		</div>
-
-	</div>
-	
-</div>
-
+{/if}
 
 <style>
 	button {
@@ -330,6 +362,16 @@
 		100% {
 			background-position: 0% 100%;
 		}
+	}
+
+	.mobile h1{
+        font-family: 'Dot Matrix';
+        font-size: 3rem;
+	}
+
+	.mobile .face{
+        font-family: 'Dot Matrix';
+        font-size: 6rem;
 	}
 
 
