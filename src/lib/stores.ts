@@ -26,6 +26,7 @@ import ResumeW from "./components/windows/ResumeW.svelte";
 import { themes, type Theme } from "./tools/themeSwitcher";
 import Ball8 from './components/icons/Ball8.svelte';
 import Ball8W from './components/windows/Ball8W.svelte';
+import { persisted } from 'svelte-persisted-store';
 
 export interface BackgroundConfig {
     scene: BackgroundScene;
@@ -229,3 +230,4 @@ export const activeBackground = writable<BackgroundConfig>({
     scene:bg_scene_library[0],
     filter:filter_library[0]
 });
+export const loadingBios = persisted<boolean>("Should load BIOS",false);
