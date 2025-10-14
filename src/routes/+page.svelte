@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import BgBase from "$lib/components/backgrounds/BgBase.svelte";
+	import BiosLoader from "$lib/components/BiosLoader.svelte";
 	import Clock from "$lib/components/Clock.svelte";
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
@@ -19,6 +20,7 @@
 
 	let agentCheck:boolean = $state(false);
 	let isMobile:boolean = $state(false);
+	let loadingBios:boolean = $state(true);
 
 	if (typeof navigator !== 'undefined') {
 		const ua = navigator.userAgent;
@@ -98,6 +100,12 @@
 		$selectedType = 0;
 	}
 
+	onMount(() => {
+		setTimeout(() => {
+			loadingBios = false
+		},3500);
+	});
+
 </script>
 
 <svelte:head>
@@ -107,6 +115,10 @@
 
 {#if agentCheck}
 	{#if !isMobile}
+		{#if loadingBios}
+			<BiosLoader/>
+		{/if}
+
 		<div class="w-[100vw] overflow-hidden flex flex-col content-center">
 
 			<!--TOP BAR-->

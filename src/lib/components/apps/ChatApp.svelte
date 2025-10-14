@@ -81,7 +81,7 @@
         if (messageContainer){
             setTimeout(() =>{
                 messageContainer.scrollTop = messageContainer.scrollHeight
-        },1);
+            },1);
         }
     }
 
