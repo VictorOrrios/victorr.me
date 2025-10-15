@@ -20,6 +20,7 @@
 
 	let agentCheck:boolean = $state(false);
 	let isMobile:boolean = $state(false);
+	let showedBios:boolean = $state(false);
 
 	if (typeof navigator !== 'undefined') {
 		const ua = navigator.userAgent;
@@ -68,6 +69,7 @@
 	}
 	
 	function onClickShutdown(){
+		showedBios = true;
 		location.reload();
 		$loadingBios = true;
 	}
@@ -102,7 +104,7 @@
 
 	onMount(() => {
 		setTimeout(() => {
-			$loadingBios = false
+			$loadingBios = false;
 		},3500);
 	});
 
@@ -115,7 +117,7 @@
 
 {#if agentCheck}
 	{#if !isMobile}
-		{#if $loadingBios}
+		{#if $loadingBios && !showedBios}
 			<BiosLoader/>
 		{/if}
 
