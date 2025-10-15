@@ -6,7 +6,7 @@
 	import DesktopIcon from "$lib/components/DesktopIcon.svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import WindowManager from "$lib/components/WindowManager.svelte";
-	import { activeWindows, loadingBios, occupiedCells, selectedType, themeStore, window_library } from "$lib/stores";
+	import { activeWindows, occupiedCells, selectedType, themeStore, window_library } from "$lib/stores";
 	import { changeBackground } from "$lib/tools/bgSwitcher";
 	import { nextTheme, updateTheme } from "$lib/tools/themeSwitcher";
 	import { addWindow, closeWindow, maximizeWindow, minimizeWindow } from "$lib/tools/windowFunctions";
@@ -20,7 +20,7 @@
 
 	let agentCheck:boolean = $state(false);
 	let isMobile:boolean = $state(false);
-	let showedBios:boolean = $state(false);
+	let showBios:boolean = $state(false);
 
 	if (typeof navigator !== 'undefined') {
 		const ua = navigator.userAgent;
@@ -69,9 +69,8 @@
 	}
 	
 	function onClickShutdown(){
-		showedBios = true;
-		location.reload();
-		$loadingBios = true;
+		showBios = true;
+		setTimeout(() => location.reload(),3500)
 	}
 
 	function onClickStyle(){
@@ -103,9 +102,6 @@
 	}
 
 	onMount(() => {
-		setTimeout(() => {
-			$loadingBios = false;
-		},3500);
 	});
 
 </script>
@@ -117,7 +113,7 @@
 
 {#if agentCheck}
 	{#if !isMobile}
-		{#if $loadingBios && !showedBios}
+		{#if showBios}
 			<BiosLoader/>
 		{/if}
 

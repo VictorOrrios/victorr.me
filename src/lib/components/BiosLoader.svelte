@@ -254,9 +254,6 @@
         background-color: var(--color-background);
     }
 
-    .wrapper{
-    }
-
     .line-bracket{
         border-left: 1px solid white;
         border-right: 1px solid white;

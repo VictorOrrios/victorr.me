@@ -230,4 +230,3 @@ export const activeBackground = writable<BackgroundConfig>({
     scene:bg_scene_library[0],
     filter:filter_library[0]
 });
-export const loadingBios = persisted<boolean>("Should load BIOS",false);
