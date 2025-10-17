@@ -218,6 +218,22 @@
 				<div class="flex items-center justify-center pr-8"><Clock/></div>
 			</div>
 
+			<!-- Palette visualizer-->
+			<div class="flex items-center">
+				<div class="w-[100px] h-[40px] text-center"
+				style="background-color: var(--theme-color-lighter);">Hola</div>
+				<div class="w-[100px] h-[40px] text-center"
+				style="background-color: var(--theme-color-light);">Hola</div>
+				<div class="w-[100px] h-[40px] text-center"
+				style="background-color: var(--theme-color-basic);">Hola</div>
+				<div class="w-[100px] h-[40px] text-center"
+				style="background-color: var(--theme-color-dark);">Hola</div>
+				<div class="w-[100px] h-[40px] text-center"
+				style="background-color: var(--theme-color-darker);">Hola</div>
+				<div>{$themeStore.name}</div>
+			</div>
+				
+
 			<div class="w-full h-[calc(100vh-2rem)]">
 				<div class="w-full h-[calc(100vh-2rem)] absolute z-0 overflow-hidden">
 					<BgBase/>

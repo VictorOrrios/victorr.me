@@ -162,6 +162,30 @@
   --theme-color-lighter: #ff0000;
 }
 
+[data-theme="green"]{
+  --theme-color-basic: #309975;
+  --theme-color-dark: #326050;
+  --theme-color-darker: #212820;
+  --theme-color-light: #58b368;
+  --theme-color-lighter: #76d286;
+}
+
+[data-theme="orange"]{
+  --theme-color-basic: #aa4f12;
+  --theme-color-dark: #742e00;
+  --theme-color-darker: #3e1c06;
+  --theme-color-light: #d76616;
+  --theme-color-lighter: #ff7b1d;
+}
+
+[data-theme="purple"]{
+  --theme-color-basic: #864791;
+  --theme-color-dark: #623073;
+  --theme-color-darker: #2c1734;
+  --theme-color-light: #9263a9;
+  --theme-color-lighter: #d09fec;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

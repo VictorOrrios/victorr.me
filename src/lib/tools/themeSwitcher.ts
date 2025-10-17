@@ -26,6 +26,30 @@ export const themes:Theme[] = [
         darker: 0x150505,
         light:  0x841F1F,
         lighter:0xff0000,
+    },
+    {
+        name:   "green",
+        basic:   0x309975,
+        dark:    0x326050,
+        darker:  0x212820,
+        light:   0x58b368,
+        lighter: 0x76d286
+    },
+    {
+        name:   "orange",
+        basic:   0xaa4f12,
+        dark:    0x742e00,
+        darker:  0x3e1c06,
+        light:   0xd76616,
+        lighter: 0xff7b1d
+    },
+    {
+        name:   "purple",
+        basic:   0x864791,
+        dark:    0x623073,
+        darker:  0x2c1734,
+        light:   0x9263a9,
+        lighter: 0xd09fec
     }
 ]
 
