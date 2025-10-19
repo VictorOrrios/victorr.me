@@ -8,6 +8,10 @@
 	<meta name="description" content="hobby-raytracer" />
 </svelte:head>
 
+<div class="fixed left-0 bg-color p-4 flex items-center gap-4">
+	<a href="/" class="text-2xl">victorr.me</a>
+	<div class="text-xl">- Sep 3, 2025</div>
+</div>
 
 <article>
 	<img
@@ -1115,6 +1119,10 @@
 
 	article .small-img{
 		width: 30%;
+	}
+
+	.bg-color{
+		background-color: var(--color-background);
 	}
 
 </style>

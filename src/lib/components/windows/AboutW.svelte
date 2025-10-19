@@ -4,5 +4,5 @@
 
 
 <div class="flex-1 overflow-hidden ">
-    <MicroMd preset={0} title="about"/>
+    <MicroMd preset={3} title="about"/>
 </div>

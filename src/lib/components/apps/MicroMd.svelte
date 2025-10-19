@@ -2,9 +2,15 @@
     import snarkdown from 'snarkdown';
 	import { onMount } from 'svelte';
     import testmd from '$lib/md_presets/test.md?raw'
+    import metamd from '$lib/md_presets/meta.md?raw'
+    import resumemd from '$lib/md_presets/resume.md?raw'
+    import aboutmd from '$lib/md_presets/about.md?raw'
     
     const presetLibrary = [
-        testmd
+        testmd,
+        metamd,
+        resumemd,
+        aboutmd,
     ];
 
     const { preset, title } = $props();
@@ -32,7 +38,7 @@
     <div class="flex justify-between items-center pl-4">
         {#if preset === 0}
             <div>
-                <a href="https://victorr.me">victorr.me</a> micro_md 1.0
+                <a href="/">victorr.me</a> micro_md 1.0
             </div>
         {:else}
             <div>micro_md 1.0</div>

@@ -135,13 +135,15 @@
 								<DropdownMenu.Item onclick={onClickAbout}>
 									About
 								</DropdownMenu.Item>
-								<DropdownMenu.Item onclick={onClickFoo}>
-									Resume (PDF)
+								<DropdownMenu.Item>
+									<a href="/cv.pdf" target="_blank">
+										Resume (PDF)
+									</a>
 								</DropdownMenu.Item>
 								<DropdownMenu.Sub>
 									<DropdownMenu.SubTrigger>Contac info</DropdownMenu.SubTrigger>
 									<DropdownMenu.SubContent>
-									<a href="mailto:victorr.orrios.b@gmail.com">
+									<a href="mailto:victor.orrios.b@gmail.com">
 										<DropdownMenu.Item>Email</DropdownMenu.Item>
 									</a>
 									<a href="https://www.linkedin.com/in/víctor-orrios-4b1579366">
@@ -197,7 +199,7 @@
 								<DropdownMenu.Item onclick={onClickHelp2}>
 									Minimize all windows
 								</DropdownMenu.Item>
-								<a href="mailto:victorr.orrios.b@gmail.com?subject=I found a bug in victorr.me">
+								<a href="mailto:victor.orrios.b@gmail.com?subject=I found a bug in victorr.me">
 									<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
 								</a>
 							</DropdownMenu.Content>
@@ -218,7 +220,7 @@
 				<div class="flex items-center justify-center pr-8"><Clock/></div>
 			</div>
 
-			<!-- Palette visualizer-->
+			<!-- Palette visualizer
 			<div class="flex items-center">
 				<div class="w-[100px] h-[40px] text-center"
 				style="background-color: var(--theme-color-lighter);">Hola</div>
@@ -232,7 +234,7 @@
 				style="background-color: var(--theme-color-darker);">Hola</div>
 				<div>{$themeStore.name}</div>
 			</div>
-				
+			-->
 
 			<div class="w-full h-[calc(100vh-2rem)]">
 				<div class="w-full h-[calc(100vh-2rem)] absolute z-0 overflow-hidden">

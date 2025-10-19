@@ -20,7 +20,7 @@
         ":(\nYour PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.\n69% complete"
     ]
 
-    const base:string = 'http://localhost:5173/bigms';
+    const base:string = 'http://victorr.me/bigms';
 
     let { standAlone } = $props();
 
