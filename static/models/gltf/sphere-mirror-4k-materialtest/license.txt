@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sphere-Mirror-4K-MaterialTest
+* source:	https://sketchfab.com/3d-models/sphere-mirror-4k-materialtest-37c76b996e1040f8a41a0f4bc21f3e76
+* author:	chiwei (https://sketchfab.com/chiwei2333)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sphere-Mirror-4K-MaterialTest" (https://sketchfab.com/3d-models/sphere-mirror-4k-materialtest-37c76b996e1040f8a41a0f4bc21f3e76) by chiwei (https://sketchfab.com/chiwei2333) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

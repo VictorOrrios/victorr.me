@@ -1,0 +1,11 @@
+Model Information:
+* title:	Leather Book
+* source:	https://sketchfab.com/3d-models/leather-book-7d941f84245d4bafb7e94852aec9f02d
+* author:	Smoggybeard (https://sketchfab.com/Smoggybeard)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Leather Book" (https://sketchfab.com/3d-models/leather-book-7d941f84245d4bafb7e94852aec9f02d) by Smoggybeard (https://sketchfab.com/Smoggybeard) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
