@@ -235,6 +235,12 @@
 <div class="main w-screem h-screen">
 
     <div class="w-full h-full flex gap-8 p-4">
+        {#if fps <= 0}
+            <div class="absolute m-20 text-4xl">
+                LOADING...
+            </div>
+        {/if}
+
         <canvas id="canvas" width={scene.iniP.canvas_width} height={scene.iniP.canvas_height} bind:this={canvas}></canvas>
 
         <Card class="max-w-md w-70">
