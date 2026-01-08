@@ -4,7 +4,7 @@
 	import { SceneType } from "$lib/uni-rt/scene";
 
 	let showApp = $state(false);
-	let scene:SceneType = SceneType.FINAL;
+	let scene:SceneType = $state(SceneType.FINAL);
 	
 	function launch(type:SceneType){
 		scene = type;

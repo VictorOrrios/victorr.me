@@ -109,6 +109,9 @@ export class Scene {
             this.iniP.range_slider_ini = 16;
             this.iniP.range_input = 0.3;
             this.iniP.kernel_sigma_input = 0.09;
+        }else if(this.sceneType === SceneType.TESTPLANE){
+            this.iniP.aperture_radius = 0.15;
+            this.iniP.focal_distance = 10.0;
         }
     }
 
