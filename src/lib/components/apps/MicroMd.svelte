@@ -5,6 +5,7 @@
     import metamd from '$lib/md_presets/meta.md?raw'
     import resumemd from '$lib/md_presets/resume.md?raw'
     import aboutmd from '$lib/md_presets/about.md?raw'
+	import { addWindow } from '$lib/tools/windowFunctions';
     
     const presetLibrary = [
         testmd,
@@ -26,6 +27,21 @@
 
     function convert(){
         html = snarkdown(md);
+    }
+
+    function miFunction(){
+        alert('Hola');
+    }
+
+    function handleGeneratedClick(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+
+        if (target.dataset.action === 'hola') {
+            alert("Opening window")
+            addWindow(4);
+        }
+
+        event.preventDefault();
     }
 
     
@@ -55,7 +71,10 @@
     {#if editMode}
         <textarea bind:value={md} class="p-4 flex-1"></textarea>
     {:else}
-        <div class="p-4 flex-1 generated-html overflow-auto">
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div class="p-4 flex-1 generated-html overflow-auto" 
+            onclick={handleGeneratedClick}>
             {@html html}
         </div>
     {/if}

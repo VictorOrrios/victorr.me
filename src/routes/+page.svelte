@@ -102,6 +102,7 @@
 	}
 
 	onMount(() => {
+		goto("uni-rt")
 	});
 
 </script>
@@ -249,7 +250,9 @@
 					<button onclick={onClickDesktop} class="w-full h-[calc(100vh-2rem)] absolute z-0 cursor-default!" 
 							aria-label="desktop background"></button>
 					{#each window_library as window, i (window.type)}
-						<DesktopIcon type={window.type}/>
+						{#if window.hasIcon}
+							<DesktopIcon type={window.type}/>
+						{/if}
 					{/each}
 				</div>
 

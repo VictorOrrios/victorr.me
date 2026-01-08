@@ -58,11 +58,13 @@ export interface WindowConfig {
         minWidth: number;
         minHeight: number;
     };
-    icon: Component;   
-    iconX: number;
-    iconY: number;
     window: Component;
+    hasIcon: boolean;
+    icon?: Component;   
+    iconX?: number;
+    iconY?: number;
 };
+
 
 export const window_library:WindowConfig[] = [
     {
@@ -78,6 +80,7 @@ export const window_library:WindowConfig[] = [
             minWidth: 450,
             minHeight: 250,
         },
+        hasIcon:true,
         icon: Meta,
         iconX: 1,
         iconY: 1,
@@ -96,6 +99,7 @@ export const window_library:WindowConfig[] = [
             minWidth: 400,
             minHeight: 250,
         },
+        hasIcon:true,
         icon: Resume,
         iconX: 2,
         iconY: 1,
@@ -114,6 +118,7 @@ export const window_library:WindowConfig[] = [
             minWidth: 400,
             minHeight: 250,
         },
+        hasIcon:true,
         icon: About,
         iconX: 1,
         iconY: 2,
@@ -131,6 +136,7 @@ export const window_library:WindowConfig[] = [
             minWidth: 300,
             minHeight: 250,
         },
+        hasIcon:true,
         icon: Articles,
         iconX: 1,
         iconY: 3,
@@ -143,6 +149,7 @@ export const window_library:WindowConfig[] = [
         height:450,
         link:"/bigms",
         resizeable: false,
+        hasIcon:true,
         icon: Bigms,
         iconX: 1,
         iconY: 4,
@@ -160,6 +167,7 @@ export const window_library:WindowConfig[] = [
             minWidth: 275,
             minHeight: 250,
         },
+        hasIcon:true,
         icon: Chat,
         iconX: 2,
         iconY: 2,
@@ -171,11 +179,12 @@ export const window_library:WindowConfig[] = [
         width:250,
         height:250,
         resizeable: false,
+        hasIcon:true,
         icon: Ball8,
         iconX: 2,
         iconY: 3,
         window: Ball8W
-    },
+    }
 ];
 
 export const bg_scene_library:BackgroundScene[] = [
@@ -218,8 +227,6 @@ export const filter_library:Filter[] = [
         fragment:fragmentLenticular,
     },
 ];
-
-
 
 
 export const themeStore = writable<Theme>(themes[0]);
