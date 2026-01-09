@@ -102,7 +102,7 @@
 	}
 
 	onMount(() => {
-		goto("uni-rt")
+		//goto("uni-rt")
 	});
 
 </script>
