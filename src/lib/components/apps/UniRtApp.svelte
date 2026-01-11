@@ -62,7 +62,7 @@
     $effect(() => {
         samplesPerPixel;russianRoulette;frame_acummulation;
         range_size;range_numbers_ini;kernel_sigma;
-        focal_distance;aperture_radius;
+        focal_distance;aperture_radius; fast_mode;
         if (!rendererStarted) return;
 
         let range_numbers_fix = [range_numbers_ini,range_size+range_numbers_ini];
