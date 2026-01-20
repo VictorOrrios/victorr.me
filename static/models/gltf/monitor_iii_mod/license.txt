@@ -1,0 +1,11 @@
+Model Information:
+* title:	Monitor III
+* source:	https://sketchfab.com/3d-models/monitor-iii-fb119750ac4f4b1e89b4be7c870b4eb2
+* author:	re1monsen (https://sketchfab.com/re1monsen)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Monitor III" (https://sketchfab.com/3d-models/monitor-iii-fb119750ac4f4b1e89b4be7c870b4eb2) by re1monsen (https://sketchfab.com/re1monsen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -19,8 +19,8 @@
 		<h1 class="p-8">
 			Webgl pathtracer
 		</h1>
-		<h2 class="text-center pb-8">Made by Víctor Orrios & José Miguel Quílez</h2>
-		<div class="mx-auto flex flex-col gap-4 text-2xl max-w-7xl">
+		<h2 class="text-center pb-8">Made by Víctor Orrios & <a href="https://www.linkedin.com/in/jos%C3%A9-miguel-qu%C3%ADlez-798391209/">José Miguel Quílez</a></h2>
+		<div class="mx-auto flex flex-col gap-4 text-xl max-w-7xl">
 			<div class="w-full relative flex justify-between gap-4 p-4 border-2 hover:border-white">
 				<img class="w-[500px]" src="renders/final.png" alt="Render of uni contest">
 				<div class="w-full flex flex-col gap-4 text-justify">
@@ -90,7 +90,20 @@
 					</Button>
 				</div>
 			</div>
-			
+
+			<div class="w-full relative flex flex-col text-justify gap-4 p-4 border-2">
+				<p>Credits for assets:</p>
+				<p>Chair, TV, elephant and wood textures: <a href="https://polyhaven.com/">Polyhaven</a></p>
+				<p>Skybox: <a href="https://ambientcg.com/view?id=NightSkyHDRI008">ambientcg</a></p>
+				<p>
+					<a href="models/gltf/bureau_desk/license.txt">Desk</a>,
+					<a href="models/gltf/leather_book/license.txt">book</a>,
+					<a href="models/gltf/monitor_iii_mod/license.txt">monitor</a>,
+					<a href="models/gltf/simple_retro_desk_lamp/license.txt">lamp</a>,
+					<a href="models/gltf/skull_salazar/license.txt">skull</a>,
+					<a href="models/gltf/sphere-mirror-4k-materialtest/license.txt">sphere</a>,
+					<a href="models/gltf/stanford_dragon_pbr/license.txt">dragon</a>: Sketchfab</p>
+			</div>
 		</div>
 	{/if}
 </div>
