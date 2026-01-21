@@ -19,6 +19,7 @@
     function startScene(p:SceneType){
         scene = p;
         $uniRtParams.endScene = false;
+        $uniRtParams.stopRendering = false;
         launched = true;
         addWindow(9);
         setTimeout(() => {
@@ -43,11 +44,11 @@
 </script>
 
 
-<div class="flex-1 overflow-scroll bg-emerald-950">
-    <p>{scene.toString()}</p>
+<div class="flex-1 overflow-hidden bg-emerald-950">
+    <p>{scene.toString()}, {$uniRtParams.aperture_radius},{$uniRtParams.focal_distance}</p>
     {#if !launched}
         <UniRtLauncher {startScene}/>
     {:else}
-        <UniRtCanvas {scene}/>
+        <UniRtCanvas preset={scene}/>
     {/if}
 </div>

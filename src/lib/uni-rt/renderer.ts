@@ -1,7 +1,9 @@
 import { loadEXRImage } from "./loader";
-import { Scene, SkyboxType } from "./scene";
+import { Scene, SkyboxType, type initialParams } from "./scene";
 import vertexSource from "./shaders/vertex.glsl"
 import fragmentSource from "./shaders/fragment.glsl"
+import { uniRtParams, type UniRtParams } from "$lib/stores";
+import { get } from "svelte/store";
 
 export class Renderer {
     private gl: WebGL2RenderingContext;
@@ -14,24 +16,33 @@ export class Renderer {
     private attachments: Map<string, WebGLUniformLocation> = new Map();
     private nextTexBinding:number = 0;
 
-    public frame_acummulation_on: boolean = true;
     private num_frames_rendered: number = 0;
-
-    public fast_mode_on: boolean = true;
-
     private num_frames_acummulated: number = 0;
     private last_frame!: WebGLTexture;
 
-    public spp: number = 5;
-    public rr_chance: number = 0.8;
-    public range_numbers: number[] = [0.0, 100000.0];
-    public kernel_sigma: number = 0.0;
-    public aperture_radius: number = 0.0;
-    public focal_distance: number = 1.0;
 
     constructor(gl: WebGL2RenderingContext, scene: Scene) {
         this.gl = gl;
         this.scene = scene;
+        this.setupInitialParams(scene.iniP);
+    }
+
+    private setupInitialParams(p:initialParams){
+        uniRtParams.set({
+            endScene: false,
+            stopRendering: false,
+            needCapture: false,
+            samplesPerPixel: p.ssp,
+            meanBounces: p.meanBounces,
+            frame_acummulation: p.frame_acummulation,
+            fast_mode: p.fast_mode,
+            transient_on: false,
+            range_ini: p.range_slider_ini,
+            range_size: p.range_input,
+            kernel_sigma: p.kernel_sigma_input,
+            aperture_radius: p.aperture_radius,
+            focal_distance: p.focal_distance,
+        })
     }
 
     public async initialize() {
@@ -147,7 +158,7 @@ export class Renderer {
         this.camera_ubo = gl.createBuffer();
         gl.bindBuffer(gl.UNIFORM_BUFFER, this.camera_ubo);
         // std140 is 16 BYTE aligned
-        let data = this.scene.camera.serialize(this.aperture_radius, this.focal_distance);
+        let data = this.scene.camera.serialize(get(uniRtParams).aperture_radius, get(uniRtParams).focal_distance);
         gl.bufferData(gl.UNIFORM_BUFFER, data, gl.STATIC_DRAW);
         // Link to binding point
         let blockIndex = gl.getUniformBlockIndex(this.program, "Camera");
@@ -469,6 +480,7 @@ export class Renderer {
 
     private updateBuffers(time: number) {
         const gl = this.gl;
+        const params:UniRtParams = get(uniRtParams);
 
         // Time buffer
         gl.uniform1f(this.getLocation("time"), time);
@@ -480,30 +492,35 @@ export class Renderer {
         gl.uniform3f(this.getLocation("resolution"), gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height);
 
         // Sample per pixel uniform buffer
-        gl.uniform1ui(this.getLocation("spp"), this.spp);
+        gl.uniform1ui(this.getLocation("spp"), params.samplesPerPixel);
 
         // Frame acummulation count buffer
         gl.uniform1ui(this.getLocation("frames_acummulated"), this.num_frames_acummulated);
 
         // Rusian roulette chance
-        gl.uniform1f(this.getLocation("rr_chance"), this.rr_chance);
-
-        // Ray ranges
-        gl.uniform3f(this.getLocation("ray_range"),
-            this.range_numbers[0], this.range_numbers[1], (this.range_numbers[0] + this.range_numbers[1]) / 2.0);
+        gl.uniform1f(this.getLocation("rr_chance"), 1 - 1/params.meanBounces);
 
         // Kernel sigma
-        gl.uniform1f(this.getLocation("kernel_sigma"), this.kernel_sigma);
+        gl.uniform1f(this.getLocation("kernel_sigma"), params.kernel_sigma);
 
         // Fast mode
-        gl.uniform1ui(this.getLocation("fast_mode"), this.fast_mode_on? 1 : 0);
+        gl.uniform1ui(this.getLocation("fast_mode"), params.fast_mode? 1 : 0);
 
+        // Ray ranges
+        if(params.transient_on){
+            gl.uniform3f(this.getLocation("ray_range"),
+                params.range_ini, params.range_ini+params.range_size, params.range_ini+params.range_size/2.0);
+        }else{
+            gl.uniform3f(this.getLocation("ray_range"),
+                0.0, 100000.0, 1.0);
+        }
     }
 
     private updateCameraUBO() {
         const gl = this.gl;
+        const params:UniRtParams = get(uniRtParams);
 
-        let data = this.scene.camera.serialize(this.aperture_radius, this.focal_distance);
+        let data = this.scene.camera.serialize(params.aperture_radius, params.focal_distance);
 
         gl.bindBuffer(gl.UNIFORM_BUFFER, this.camera_ubo);
         gl.bufferSubData(gl.UNIFORM_BUFFER, 0, data);
@@ -548,7 +565,7 @@ export class Renderer {
 
 
         this.num_frames_rendered++;
-        if (this.frame_acummulation_on) this.num_frames_acummulated++;
+        if (get(uniRtParams).frame_acummulation) this.num_frames_acummulated++;
     }
 }
 
