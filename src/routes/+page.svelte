@@ -102,7 +102,7 @@
 	}
 
 	onMount(() => {
-		goto("uni-rt")
+		//goto("uni-rt")
 	});
 
 </script>
@@ -209,7 +209,7 @@
 
 					<div class="flex items-center">
 						{#each minimizedWindows as w, i (w.type)}
-							<button class="pr-2 pl-2 mini-title" 
+							<button class="pr-2 pl-2 mini-title text-nowrap" 
 								onclick={() => {maximizeWindow(w.type)}}
 								transition:slide={{axis: 'x', duration: 400 }}>
 								{w.title}

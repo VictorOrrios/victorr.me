@@ -2,7 +2,7 @@
     import { Renderer } from "$lib/uni-rt/renderer";
     import { Scene } from "$lib/uni-rt/scene";
     
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { Input } from "$lib/components/ui/input";
     import { Label } from "$lib/components/ui/label";
     import {
@@ -239,6 +239,12 @@
         canvas.addEventListener("mousemove", (e) => mousemove(e));
         await setUpMain();
     });
+
+    onDestroy(() => {
+        cancelAnimationFrame(rafId);
+        stopRendering = true;
+    });
+    
 </script>
 
 <div class="main w-full h-full">

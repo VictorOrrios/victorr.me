@@ -27,6 +27,9 @@ import { themes, type Theme } from "./tools/themeSwitcher";
 import Ball8 from './components/icons/Ball8.svelte';
 import Ball8W from './components/windows/Ball8W.svelte';
 import { persisted } from 'svelte-persisted-store';
+import UniRt from './components/icons/UniRt.svelte';
+import UniRtW from './components/windows/UniRtW.svelte';
+import UniRtControlW from './components/windows/UniRtControlW.svelte';
 
 export interface BackgroundConfig {
     scene: BackgroundScene;
@@ -64,6 +67,20 @@ export interface WindowConfig {
     iconX?: number;
     iconY?: number;
 };
+
+export interface UniRtParams {
+    endScene: boolean,
+    stopRendering: boolean,
+    samplesPerPixel: number,
+    russianRoulette: number,
+    frame_acummulation: boolean,
+    fast_mode: boolean,
+    range_ini: number,
+    range_end: number,
+    kernel_sigma: number,
+    aperture_radius: number,
+    focal_distance: number,
+}
 
 
 export const window_library:WindowConfig[] = [
@@ -184,6 +201,41 @@ export const window_library:WindowConfig[] = [
         iconX: 2,
         iconY: 3,
         window: Ball8W
+    },
+    {
+        text:"uni-rt",
+        link:"/uni-rt",
+        type: 8,
+        width:600,
+        height:600,
+        resizeable: true,
+        resizeParams: {
+            maxWidth: 10000,
+            maxHeight: 10000,
+            minWidth: 300,
+            minHeight: 250,
+        },
+        hasIcon:true,
+        icon: UniRt,
+        iconX: 2,
+        iconY: 4,
+        window: UniRtW
+    },
+    {
+        text:"uni-rt control panel",
+        link:"/uni-rt",
+        type: 9,
+        width:600,
+        height:600,
+        resizeable: true,
+        resizeParams: {
+            maxWidth: 10000,
+            maxHeight: 10000,
+            minWidth: 300,
+            minHeight: 250,
+        },
+        hasIcon:false,
+        window: UniRtControlW
     }
 ];
 
@@ -228,6 +280,19 @@ export const filter_library:Filter[] = [
     },
 ];
 
+export const uniRtParamsNull:UniRtParams = {
+    endScene: false,
+    stopRendering: false,
+    samplesPerPixel: 0,
+    russianRoulette: 0.0,
+    frame_acummulation: false,
+    fast_mode: false,
+    range_ini: 0.0,
+    range_end: 100000.0,
+    kernel_sigma: 0.0,
+    aperture_radius: 0.0,
+    focal_distance: 1.0,
+};
 
 export const themeStore = writable<Theme>(themes[0]);
 export const occupiedCells = writable<{ x: number, y: number }[]>([]);
@@ -237,3 +302,6 @@ export const activeBackground = writable<BackgroundConfig>({
     scene:bg_scene_library[0],
     filter:filter_library[0]
 });
+
+export const uniRtParams = writable<UniRtParams>(uniRtParamsNull);
+export const uniRtFPS = writable<number>(0);

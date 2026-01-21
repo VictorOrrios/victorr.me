@@ -1,7 +1,7 @@
 <script lang="ts">
-	import UniRtApp from "$lib/components/apps/UniRtApp.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import { SceneType } from "$lib/uni-rt/scene";
+	import UniRtFull from "$lib/uni-rt/UniRtFull.svelte";
 
 	let showApp = $state(false);
 	let scene:SceneType = $state(SceneType.FINAL);
@@ -14,7 +14,7 @@
 </script>
 <div class="w-[100%] h-[100vh]">
 	{#if showApp}
-    	<UniRtApp preset={scene}/>
+    	<UniRtFull preset={scene}/>
 	{:else}
 		<h1 class="p-8">
 			Webgl pathtracer
