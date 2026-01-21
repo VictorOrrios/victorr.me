@@ -44,8 +44,7 @@
 </script>
 
 
-<div class="flex-1 overflow-hidden bg-emerald-950">
-    <p>{scene.toString()}, {$uniRtParams.aperture_radius},{$uniRtParams.focal_distance}</p>
+<div class="w-full h-full overflow-hidden backdrop-blur-md">
     {#if !launched}
         <UniRtLauncher {startScene}/>
     {:else}

@@ -18,6 +18,6 @@
 </script>
 
 
-<div class="flex-1 overflow-hidden bg-blue-950">
+<div class="w-full h-full overflow-hidden backdrop-blur-md">
     <UniRtPanel/>
 </div>

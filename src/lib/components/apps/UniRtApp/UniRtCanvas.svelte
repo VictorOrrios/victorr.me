@@ -48,7 +48,7 @@
         const rect = canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.right;
         const y = Math.min(Math.max((event.clientY - rect.top) / rect.bottom,0.05),0.95);
-        let azymuth:number = x * 4*Math.PI;
+        let azymuth:number = x * 6*Math.PI;
         let polar:number = y * Math.PI;
         mousePos.target = {x:azymuth,y:polar};
     }
@@ -63,7 +63,7 @@
 
     $effect(() => {
         $uniRtParams;
-        if(renderer) renderer.resetFrameAcummulation();
+        if(renderer && !$uniRtParams.needCapture) renderer.resetFrameAcummulation();
     })
 
 
@@ -101,13 +101,12 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.download = `
-            ${Date.now()}
-            ${$uniRtFPS}fps
-            ${$uniRtParams.frame_acummulation?"TAA":""}
-            ${$uniRtParams.samplesPerPixel}spp
-            ${Math.floor(1-1/$uniRtParams.meanBounces * 1000) / 1000}rr
-            .png`;
+            link.download = "victorr uni-rt "+
+            $uniRtFPS+"fps "+
+            ($uniRtParams.frame_acummulation?"TAA ":"")+
+            $uniRtParams.samplesPerPixel+"spp "+
+            $uniRtParams.meanBounces+" bounces";
+
 
             document.body.appendChild(link);
             link.click();
@@ -164,7 +163,7 @@
         canvas.addEventListener("mouseup", (e) => mouseup(e));
         canvas.addEventListener("wheel", (e) => wheel(e));
         canvas.addEventListener("mousemove", (e) => mousemove(e));
-        await setUpMain();
+        setTimeout(async () => await setUpMain(),500);
     });
 
     onDestroy(() => {
@@ -176,38 +175,18 @@
     
 </script>
 
-<div class="main w-full h-full">
+<div class="w-full h-full relative">
 
-    <div class="w-full h-full flex gap-8 p-4">
-        
-
-        <div class="flex-1 relative">
-            {#if $uniRtFPS <= 0}
-                <div class="absolute m-20 text-4xl">
-                    LOADING...
-                </div>
-            {/if}
-            <canvas id="canvas" class="w-full h-full block object-contain" width={scene.iniP.canvas_width} height={scene.iniP.canvas_height} bind:this={canvas}></canvas>
+    {#if $uniRtFPS <= 0}
+        <div class="absolute m-20 text-4xl">
+            LOADING...
         </div>
+    {/if}
+    <canvas id="canvas" class="w-full h-full block object-contain" 
+        width={scene.iniP.canvas_width} height={scene.iniP.canvas_height} 
+        bind:this={canvas}>
+    </canvas>
 
         
-    </div>
 </div>
 
-<style>
-    canvas {
-        display: block;
-        border: 1px solid #333;
-        margin-top: 10px;
-    }
-
-    .main {
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: #111;
-        color: white;
-    }
-
-</style>
