@@ -59,17 +59,21 @@
 
 <div class="w-full h-full flex flex-col gap-3 p-2">
     <div class="flex justify-between items-center">
-        <div class="flex-1 text-xl gradient h-full text-center py-1">{$uniRtFPS}FPS</div>
+        <div class="flex-1 text-base gradient h-full flex items-center justify-center">
+            <div>
+            {$uniRtFPS}FPS
+            </div>  
+        </div>
         <div class="flex">
             <Button
-                class="w-12"
+                class="w-11"
                 onclick={() => {
                     $uniRtParams.needCapture = true;
                 }}>
                     <img class="w-[1rem]" src="camera.svg" alt="camera"/>
             </Button>
             <Button
-            class="w-12"
+            class="w-11"
                 onclick={() => {
                     $uniRtParams.stopRendering = !$uniRtParams.stopRendering;
                 }}>
@@ -80,11 +84,16 @@
                     {/if}
             </Button>
             <Button
-                class="w-12"
+                class="w-11"
                 onclick={() => {
                     alert("No implementado");
                 }}>
                     <b>?</b>
+            </Button>
+            <Button
+                class="w-11"
+                onclick={() => {endScene()}}>
+                    <b>X</b>
             </Button>
         </div>
     </div>
