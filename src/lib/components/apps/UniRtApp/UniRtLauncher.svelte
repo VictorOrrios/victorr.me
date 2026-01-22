@@ -73,6 +73,9 @@
 </div>
 
 <style>
+    h1{
+        font-family: 'Dot Matrix';
+    }
     .card{
         padding: 2rem;
         text-align: left;

@@ -27,9 +27,10 @@ import { themes, type Theme } from "./tools/themeSwitcher";
 import Ball8 from './components/icons/Ball8.svelte';
 import Ball8W from './components/windows/Ball8W.svelte';
 import { persisted } from 'svelte-persisted-store';
-import UniRt from './components/icons/UniRt.svelte';
-import UniRtW from './components/windows/UniRtW.svelte';
-import UniRtControlW from './components/windows/UniRtControlW.svelte';
+import UniRt from '$lib/components/icons/UniRt.svelte';
+import UniRtW from '$lib/components/windows/UniRt/UniRtW.svelte';
+import UniRtControlW from '$lib/components/windows/UniRt//UniRtControlW.svelte';
+import UniRtHelpW from './components/windows/UniRt/UniRtHelpW.svelte';
 
 export interface BackgroundConfig {
     scene: BackgroundScene;
@@ -232,6 +233,16 @@ export const window_library:WindowConfig[] = [
         resizeable: false,
         hasIcon:false,
         window: UniRtControlW
+    },
+    {
+        text:"uni-rt help",
+        link:"/uni-rt",
+        type: 10,
+        width:300,
+        height:534,
+        resizeable: false,
+        hasIcon:false,
+        window: UniRtHelpW
     }
 ];
 

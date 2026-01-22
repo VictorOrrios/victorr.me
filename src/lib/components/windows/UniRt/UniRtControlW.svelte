@@ -1,23 +1,20 @@
 <script lang="ts">
 	import { onDestroy, onMount } from "svelte";
 	import { addWindow, closeWindow } from "$lib/tools/windowFunctions";
-	import UniRtPanel from "../apps/UniRtApp/UniRtPanel.svelte";
+	import UniRtPanel from "$lib/components/apps/UniRtApp/UniRtPanel.svelte";
 	import { uniRtParams } from "$lib/stores";
 
-
-
-
-
-    onMount(() => {
-        addWindow(8);
-    })
+    function launchHelp(){
+        addWindow(10);
+    }
 
     onDestroy(() => {
+        closeWindow(10);
         $uniRtParams.endScene = true;
     })
 </script>
 
 
 <div class="w-full h-full overflow-hidden backdrop-blur-md">
-    <UniRtPanel/>
+    <UniRtPanel {launchHelp}/>
 </div>

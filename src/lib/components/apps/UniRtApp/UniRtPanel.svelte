@@ -18,6 +18,7 @@
     import { cubicOut } from "svelte/easing";
 	import { uniRtFPS, uniRtParams } from "$lib/stores";
 
+    let {launchHelp} = $props();
 
     let transient_on: boolean = $state(false);
     let range_slider_ini: number = $state($uniRtParams.range_ini);
@@ -86,7 +87,7 @@
             <Button
                 class="w-11"
                 onclick={() => {
-                    alert("No implementado");
+                    launchHelp();
                 }}>
                     <b>?</b>
             </Button>

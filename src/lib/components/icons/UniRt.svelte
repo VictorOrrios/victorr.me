@@ -7,13 +7,19 @@
 <div class="group  p-4 flex flex-col items-center gap-2 relative">
     {#if $selectedType === type}
 		<svg class="absolute" width="80" height="80" viewBox="0 0 400 300">
+			<defs>
+				<linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%" stop-color="var(--theme-color-darker)" />
+				<stop offset="100%" stop-color="var(--theme-color-lighter)" />
+				</linearGradient>
+			</defs>
 			<polyline
 				in:draw={{duration: 750}}
 				out:draw={{duration: 500}}
 				points="0,0 175,190 220,0 350,110, 270,190"
 				fill="none"
-				stroke="var(--theme-color-lighter)"
-				stroke-width="10" />
+				stroke="url(#lineGradient)"
+				stroke-width="15" />
 		</svg>
     {/if}
     <img src="teapot.svg" alt="teapot" class="h-[50px] ml-[10px] mt-[30px] overflow-visible z-[6]"/>

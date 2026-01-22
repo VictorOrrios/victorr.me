@@ -5,6 +5,7 @@
     import metamd from '$lib/md_presets/meta.md?raw'
     import resumemd from '$lib/md_presets/resume.md?raw'
     import aboutmd from '$lib/md_presets/about.md?raw'
+    import uniRtHelp from '$lib/md_presets/uni-rt-help.md?raw'
 	import { addWindow } from '$lib/tools/windowFunctions';
     
     const presetLibrary = [
@@ -12,6 +13,7 @@
         metamd,
         resumemd,
         aboutmd,
+        uniRtHelp
     ];
 
     const { preset, title } = $props();
