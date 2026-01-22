@@ -59,20 +59,34 @@
 
 <div class="w-full h-full flex flex-col gap-3 p-2">
     <div class="flex justify-between items-center">
-        <div class="w-20 text-center">{$uniRtFPS}FPS</div>
-        <Button
-            onclick={() => {
-                $uniRtParams.needCapture = true;
-            }}>Capture</Button
-        >
-        <Button
-            class="w-20"
-            onclick={() => {
-                $uniRtParams.stopRendering = !$uniRtParams.stopRendering;
-            }}>
-                {$uniRtParams.stopRendering?'Resume':'Pause'}
-            </Button
-        >
+        <div class="flex-1 text-xl gradient h-full text-center py-1">{$uniRtFPS}FPS</div>
+        <div class="flex">
+            <Button
+                class="w-12"
+                onclick={() => {
+                    $uniRtParams.needCapture = true;
+                }}>
+                    <img class="w-[1rem]" src="camera.svg" alt="camera"/>
+            </Button>
+            <Button
+            class="w-12"
+                onclick={() => {
+                    $uniRtParams.stopRendering = !$uniRtParams.stopRendering;
+                }}>
+                    {#if $uniRtParams.stopRendering}
+                        ▶
+                    {:else}
+                        <img class="w-[0.8rem]" src="pause.svg" alt="pause"/>
+                    {/if}
+            </Button>
+            <Button
+                class="w-12"
+                onclick={() => {
+                    alert("No implementado");
+                }}>
+                    <b>?</b>
+            </Button>
+        </div>
     </div>
     <hr>
 
@@ -216,6 +230,19 @@
 
 <style>
 
+    .gradient{
+        background: linear-gradient(to right, var(--theme-color-darker), var(--theme-color-basic), var(--theme-color-lighter), var(--theme-color-basic) ,var(--theme-color-darker));
+		background-size: 1000% 100%;
+		animation: move-gradient 90s linear infinite;
+	}
 
+    @keyframes move-gradient {
+		0% {
+			background-position: 0% 0%;
+		}
+		100% {
+			background-position: 1000% 0%;
+		}
+	}
 </style>
 
