@@ -22,7 +22,7 @@
         $uniRtParams.stopRendering = false;
         launched = true;
         addWindow(9);
-    }
+        }
 
     function endScene(){
         closeWindow(9);
