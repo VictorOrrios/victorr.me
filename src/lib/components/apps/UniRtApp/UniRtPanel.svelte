@@ -58,25 +58,23 @@
 </script>
 
 <div class="w-full h-full flex flex-col gap-3 p-2">
-    <div class="grid-col-3">
-        <div class="">{$uniRtFPS}FPS</div>
-        <div>
-            <Button
-                onclick={() => {
-                    $uniRtParams.needCapture = true;
-                }}>Capture</Button
-            >
-        </div>
-        <div>
-            <Button
-                onclick={() => {
-                    $uniRtParams.stopRendering = !$uniRtParams.stopRendering;
-                }}>
-                    {$uniRtParams.stopRendering?'Resume':'Pause'}
-                </Button
-            >
-        </div>
+    <div class="flex justify-between items-center">
+        <div class="w-20 text-center">{$uniRtFPS}FPS</div>
+        <Button
+            onclick={() => {
+                $uniRtParams.needCapture = true;
+            }}>Capture</Button
+        >
+        <Button
+            class="w-20"
+            onclick={() => {
+                $uniRtParams.stopRendering = !$uniRtParams.stopRendering;
+            }}>
+                {$uniRtParams.stopRendering?'Resume':'Pause'}
+            </Button
+        >
     </div>
+    <hr>
 
     <!-- Samples per pixel -->
     <div class="flex gap-4 justify-between">
