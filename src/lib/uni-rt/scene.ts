@@ -103,6 +103,7 @@ export class Scene {
         }else if(this.sceneType === SceneType.BRUCE){
             this.iniP.ssp = 150;
             this.iniP.meanBounces = 10;
+            this.iniP.fast_mode = false;
         }else if(this.sceneType === SceneType.TRANSIENT){
             this.iniP.ssp = 100;
             this.iniP.meanBounces = 3;

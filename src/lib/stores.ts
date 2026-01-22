@@ -236,11 +236,17 @@ export const window_library:WindowConfig[] = [
     },
     {
         text:"uni-rt help",
-        link:"/uni-rt",
         type: 10,
-        width:300,
-        height:534,
-        resizeable: false,
+        width:500,
+        height:500,
+        link:"/micromd",
+        resizeable: true,
+        resizeParams: {
+            maxWidth: 10000,
+            maxHeight: 10000,
+            minWidth: 450,
+            minHeight: 250,
+        },
         hasIcon:false,
         window: UniRtHelpW
     }
