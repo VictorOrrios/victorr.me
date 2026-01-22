@@ -1,12 +1,23 @@
 <script lang="ts">
 	import { selectedType } from "$lib/stores";
+	import { draw } from "svelte/transition";
     const type:number = 8;
 </script>
 
-<div class="group  p-4 flex flex-col items-center gap-2">
-    <img src="man.svg" alt="Man" class="h-[80px] m-auto overflow-visible z-[6]"/>
+<div class="group  p-4 flex flex-col items-center gap-2 relative">
+    {#if $selectedType === type}
+		<svg class="absolute" width="80" height="80" viewBox="0 0 400 300">
+			<polyline
+				in:draw={{duration: 750}}
+				out:draw={{duration: 500}}
+				points="0,0 175,190 220,0 350,110, 270,190"
+				fill="none"
+				stroke="var(--theme-color-lighter)"
+				stroke-width="10" />
+		</svg>
+    {/if}
+    <img src="teapot.svg" alt="teapot" class="h-[50px] ml-[10px] mt-[30px] overflow-visible z-[6]"/>
     <p class="rounded-[3px] group-hover:bg-(--theme-color-dark)">uni-rt</p>
-	<div class="absolute rounded-full z-[5] {$selectedType === type ? 'active':''}"></div>
 </div>
 
 <style>
