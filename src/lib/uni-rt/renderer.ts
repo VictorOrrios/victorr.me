@@ -500,17 +500,16 @@ export class Renderer {
         // Rusian roulette chance
         gl.uniform1f(this.getLocation("rr_chance"), 1 - 1/params.meanBounces);
 
-        // Kernel sigma
-        gl.uniform1f(this.getLocation("kernel_sigma"), params.kernel_sigma);
-
         // Fast mode
         gl.uniform1ui(this.getLocation("fast_mode"), params.fast_mode? 1 : 0);
 
-        // Ray ranges
+        // Transient
         if(params.transient_on){
+            gl.uniform1f(this.getLocation("kernel_sigma"), params.kernel_sigma);
             gl.uniform3f(this.getLocation("ray_range"),
                 params.range_ini, params.range_ini+params.range_size, params.range_ini+params.range_size/2.0);
         }else{
+            gl.uniform1f(this.getLocation("kernel_sigma"), 0.0);
             gl.uniform3f(this.getLocation("ray_range"),
                 0.0, 100000.0, 1.0);
         }
