@@ -10,7 +10,8 @@
     <h1 class="p-2">
         Webgl pathtracer
     </h1>
-    <h2 class="text-center pb-2">Made by Víctor Orrios & <a href="https://www.linkedin.com/in/jos%C3%A9-miguel-qu%C3%ADlez-798391209/">José Miguel Quílez</a></h2>
+    <h2 class="text-center">Made by Víctor Orrios & <a href="https://www.linkedin.com/in/jos%C3%A9-miguel-qu%C3%ADlez-798391209/">José Miguel Quílez</a></h2>
+    <h2 class="text-center pb-2">Code available <i><a href="https://github.com/VictorOrrios/Uni-Rt">here</a></i></h2>
 
     <div class="relative w-full h-[230px] overflow-hidden">
         <img class="w-full absolute top-[-65px]" src="renders/final.png" alt="Render of uni contest">
