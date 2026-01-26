@@ -197,44 +197,6 @@
         bind:value={$uniRtParams.kernel_sigma} disabled={!$uniRtParams.transient_on}/>
     </div>
     
-    <div class="space-y-2">
-        <Label></Label>
-        <div class="text-sm {$uniRtParams.transient_on?'':'text-muted-foreground'} flex justify-between">
-            <p>Activate</p> 
-            <p>Offset</p>
-        </div>
-        <div class="flex items-center gap-2">
-            <Slider type="single" bind:value={range_slider_ini} 
-            disabled={!$uniRtParams.transient_on}
-            max={30.0} step={0.1} />
-            <Button 
-            disabled={!$uniRtParams.transient_on}
-            onclick={() => {
-                if(!range_animated){
-                    range_animated = true;
-                    range_animation_ini = $uniRtParams.range_ini;
-                    animateRange();
-                }else{
-                    range_slider_ini = range_animation_ini;
-                    range_animated = false;
-                }
-                
-            }}>
-                {#if range_animated}
-                    ●
-                {:else}
-                    ▶
-                {/if}
-            </Button>
-        </div>
-        <div class="flex items-center gap-2 text-sm ">
-            <p>Range</p> 
-        </div>
-        <div class="flex items-center gap-2 text-sm ">
-            <p>Sigma</p>
-            <Input id="kernelsigma" type="number" min="0" step="0.01" bind:value={$uniRtParams.kernel_sigma} disabled={!$uniRtParams.transient_on}/>
-        </div>    
-    </div>
 
 </div>
 
