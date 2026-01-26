@@ -3,6 +3,8 @@
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
 	import { onMount } from "svelte";
+	import { ghAccessToken } from "$lib/stores";
+    import { getUser } from "./ChatUtils"
 
     const CLIENT_ID = "Ov23limxkwBq55RCkMMS"
 
@@ -75,11 +77,13 @@
     let { botId } = $props();
     
     let globalChat = $state(true);
+    let globalMessages:ghMessage[] = $state([]);
+    let currentUser:any = $state(null);
+
     let bot = $state(botLibrary[botId])
     let mssKey = $state(1);
     let text = $state('');
     let messages:message[] = $state([]);
-    let globalMessages:ghMessage[] = $state([]);
 
     let botSending = $state(false);
     let thinking = $state(false);
@@ -134,15 +138,18 @@
             if(text.length == 0) return;
 
             if(globalChat){
-                loginWithGithub();
-                const newMss:ghMessage = { 
+                if(currentUser !== null){
+                    const newMss:ghMessage = { 
                     id: getKey(), 
-                    user:"VictorOrrios", 
-                    avatar:"https://avatars.githubusercontent.com/u/87021331?v=4", 
-                    link:"https://github.com/VictorOrrios",
+                    user:currentUser.name, 
+                    avatar:currentUser.avatar_url, 
+                    link:currentUser.html_url,
                     text:text};
-                globalMessages = [...globalMessages,newMss];
-                
+
+                    globalMessages = [...globalMessages,newMss];
+                }else{
+                    loginWithGithub();
+                }
             }else{
                 const newMss:message = { id: getKey(), user:null, text:text};
                 
@@ -175,15 +182,39 @@
         globalChat = true;
     }
 
-    function loginWithGithub(){
-        window.location.assign("https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID)
+    async function setCurrentUser() {
+        const user = await getUser($ghAccessToken);
+        if(user !== null){
+            console.log(user)
+            currentUser = user;
+        }
     }
 
-    onMount(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const codeParam = urlParams.get('code');
-        console.log(codeParam)
-        
+    function loginWithGithub(){
+        const width = 600;
+        const height = 700;
+        const left = (screen.width / 2) - (width / 2);
+        const top = (screen.height / 2) - (height / 2);
+
+        const url = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`;
+
+        window.open(
+            url,
+            'GitHubLogin',
+            `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=yes`
+        );
+    }
+
+    onMount(async () => {
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin) return;
+            const { access_token } = event.data;
+            $ghAccessToken = access_token;
+            setCurrentUser();
+        });
+
+        setCurrentUser();
+
         //changeBot(0);
         changeToGlobal();
     })

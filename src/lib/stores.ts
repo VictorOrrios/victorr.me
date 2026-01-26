@@ -320,3 +320,5 @@ export const activeBackground = writable<BackgroundConfig>({
 
 export const uniRtParams = writable<UniRtParams>(uniRtParamsNull);
 export const uniRtFPS = writable<number>(0);
+
+export const ghAccessToken = persisted<string>("github_access_token",""); 

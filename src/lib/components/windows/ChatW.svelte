@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ChatApp from "../apps/ChatApp.svelte";
+	import ChatApp from "../apps/Chat/ChatApp.svelte";
 
 </script>
 
