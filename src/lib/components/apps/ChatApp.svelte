@@ -4,9 +4,19 @@
     import { Button } from "$lib/components/ui/button/index.js";
 	import { onMount } from "svelte";
 
+    const CLIENT_ID = "Ov23limxkwBq55RCkMMS"
+
     type message = {
         id:number,
         user:string|null,
+        text:string
+    }
+
+    type ghMessage = {
+        id:number,
+        user:string|null,
+        avatar:string|null,
+        link:string|null,
         text:string
     }
 
@@ -64,10 +74,12 @@
     
     let { botId } = $props();
     
+    let globalChat = $state(true);
     let bot = $state(botLibrary[botId])
     let mssKey = $state(1);
     let text = $state('');
     let messages:message[] = $state([]);
+    let globalMessages:ghMessage[] = $state([]);
 
     let botSending = $state(false);
     let thinking = $state(false);
@@ -119,7 +131,19 @@
     function onClickSend(e:any){
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            if(text.length !== 0){
+            if(text.length == 0) return;
+
+            if(globalChat){
+                loginWithGithub();
+                const newMss:ghMessage = { 
+                    id: getKey(), 
+                    user:"VictorOrrios", 
+                    avatar:"https://avatars.githubusercontent.com/u/87021331?v=4", 
+                    link:"https://github.com/VictorOrrios",
+                    text:text};
+                globalMessages = [...globalMessages,newMss];
+                
+            }else{
                 const newMss:message = { id: getKey(), user:null, text:text};
                 
                 messages = [...messages,newMss];
@@ -137,6 +161,7 @@
     }
 
     function changeBot(id:number){
+        globalChat = false;
         thinking = false;
         botSending = false;
         bot = botLibrary[id];
@@ -146,8 +171,21 @@
         messages = [...bot.chat];
     }
 
+    function changeToGlobal(){
+        globalChat = true;
+    }
+
+    function loginWithGithub(){
+        window.location.assign("https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID)
+    }
+
     onMount(() => {
-        changeBot(0);
+        const urlParams = new URLSearchParams(window.location.search);
+        const codeParam = urlParams.get('code');
+        console.log(codeParam)
+        
+        //changeBot(0);
+        changeToGlobal();
     })
 
 </script>
@@ -155,37 +193,58 @@
 <div class="h-full w-full flex flex-col gap-2 justify-between backdrop-blur-md main-container pt-2">
 
     <div class="flex-1 flex flex-col gap-2 overflow-y-auto messages-container px-[7px]">
-        {#each messages as m, i (m.id)}
-            <div class="flex items-end gap-2 {m.user === null? 'justify-end' : 'justify-start'}"
-            in:fade={{duration: 300 }}>
-                {#if m.user !== null}
+        {#if globalChat}
+            {#each globalMessages as m, i (m.id)}
+                <div class="flex items-end gap-2 justify-start w-full"
+                in:fade={{duration: 300 }}>
+                        <img src={m.avatar} alt="Github avatar" class="w-[25px] h-[25px] rounded-full">
+                    <div class="not-me-mss p-1">{m.text}</div>
+                </div>
+                <a href={m.link}
+                    class="text-xs">
+                    {m.user}
+                </a>
+            {/each}
+        {:else}
+            {#each messages as m, i (m.id)}
+                <div class="flex items-end gap-2 {m.user === null? 'justify-end' : 'justify-start'}"
+                in:fade={{duration: 300 }}>
+                    {#if m.user !== null}
+                        <img src={bot.iconSrc} alt="Bot icon" class="h-6 w-6 rounded-full mb-1">
+                    {/if}
+                    <div class="{m.user === null? 'me-mss' : 'not-me-mss'} p-1">{m.text}</div>
+                </div>
+            {/each}
+            {#if thinking}
+                <div class="flex items-end gap-2 justify-start"
+                in:fade={{duration: 100 }}>
                     <img src={bot.iconSrc} alt="Bot icon" class="h-6 w-6 rounded-full mb-1">
-                {/if}
-                <div class="{m.user === null? 'me-mss' : 'not-me-mss'} p-1">{m.text}</div>
-            </div>
-        {/each}
-        {#if thinking}
-            <div class="flex items-end gap-2 justify-start"
-            in:fade={{duration: 100 }}>
-                <img src={bot.iconSrc} alt="Bot icon" class="h-6 w-6 rounded-full mb-1">
-                <div class="not-me-mss p-1">...</div>
-            </div>
+                    <div class="not-me-mss p-1">...</div>
+                </div>
+            {/if}
         {/if}
     </div>
 
     <div class="flex">
         <textarea onkeydown={onClickSend} bind:value={text} 
-            maxlength="28"
+            maxlength="125"
             placeholder="Type a message to..." class="flex-1 h-10 p-2"></textarea>
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
                 {#snippet child({ props })}
                     <button type="button" {...props} class="p-2 hover:cursor-pointer">
-                        <span>·{bot.name}</span>
+                        {#if globalChat}
+                            <span>·Global</span>
+                        {:else}
+                            <span>·{bot.name}</span>
+                        {/if}
                     </button>
                 {/snippet}
             </DropdownMenu.Trigger>
             <DropdownMenu.Content class="" align="start">
+                <DropdownMenu.Item onclick={() => changeToGlobal()}>
+                        Global
+                </DropdownMenu.Item>
                 {#each botLibrary as botI, i (botI.name)}
                     <DropdownMenu.Item onclick={() => changeBot(i)}>
                         {botI.name}
@@ -215,6 +274,7 @@
     .not-me-mss{
         background-color: var(--theme-color-lighter);
         margin-right: 1rem;
+        word-break: break-all;
     }
 
     .me-mss{
