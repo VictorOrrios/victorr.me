@@ -4,7 +4,7 @@
     import { Button } from "$lib/components/ui/button/index.js";
 	import { onMount } from "svelte";
 	import { ghAccessToken } from "$lib/stores";
-    import { getUser } from "./ChatUtils"
+    import { formatDate, getAllMessages, getUser, postChatMessage, type ghMessage } from "./ChatUtils"
 
     const CLIENT_ID = "Ov23limxkwBq55RCkMMS"
 
@@ -14,13 +14,7 @@
         text:string
     }
 
-    type ghMessage = {
-        id:number,
-        user:string|null,
-        avatar:string|null,
-        link:string|null,
-        text:string
-    }
+    
 
     type bot = {
         name:string,
@@ -78,7 +72,7 @@
     
     let globalChat = $state(true);
     let globalMessages:ghMessage[] = $state([]);
-    let currentUser:any = $state(null);
+    let userValidated:boolean = $state(false);
 
     let bot = $state(botLibrary[botId])
     let mssKey = $state(1);
@@ -90,6 +84,11 @@
 
     function randInt(max: number, min: number): number {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function getKey():number{
+        mssKey++;
+        return mssKey;
     }
 
     function scrollToBottom(){
@@ -132,21 +131,25 @@
         }
     }
 
-    function onClickSend(e:any){
+    async function onClickSend(e:any){
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             if(text.length == 0) return;
 
             if(globalChat){
-                if(currentUser !== null){
-                    const newMss:ghMessage = { 
-                    id: getKey(), 
-                    user:currentUser.name, 
-                    avatar:currentUser.avatar_url, 
-                    link:currentUser.html_url,
-                    text:text};
-
-                    globalMessages = [...globalMessages,newMss];
+                if(userValidated){
+                    const savedMsm = await postChatMessage($ghAccessToken,text);
+                    const newMsm:ghMessage = {
+                        id:savedMsm.id,
+                        user:savedMsm.name,
+                        avatar:savedMsm.avatar,
+                        link:savedMsm.link,
+                        date:formatDate(savedMsm.date),
+                        text:text
+                    };
+                    globalMessages = [...globalMessages,newMsm]
+                    scrollToBottom();
+                    text = '';
                 }else{
                     loginWithGithub();
                 }
@@ -157,14 +160,14 @@
                 bot.chat = [...messages];
                 scrollToBottom();
                 sendBotMss();
+                text = '';
             }
-            text = '';
         }
     }
 
-    function getKey():number{
-        mssKey++;
-        return mssKey;
+    async function updateGlobalChat() {
+        const msms = await getAllMessages();
+        globalMessages = msms;
     }
 
     function changeBot(id:number){
@@ -182,12 +185,15 @@
         globalChat = true;
     }
 
-    async function setCurrentUser() {
+    async function validateUser() {
         const user = await getUser($ghAccessToken);
-        if(user !== null){
-            console.log(user)
-            currentUser = user;
-        }
+        userValidated = user !== null;
+        console.log("User validated:",user)
+    }
+
+    function forgetUser(){
+        $ghAccessToken = ""
+        userValidated = false;
     }
 
     function loginWithGithub(){
@@ -207,16 +213,20 @@
 
     onMount(async () => {
         window.addEventListener('message', (event) => {
-            if (event.origin !== window.location.origin) return;
-            const { access_token } = event.data;
+            console.log("Message event recieved")
+            if (event.origin !== "http://localhost:3000") return;
+            const access_token = event.data;
+            console.log("Acces token recieved:",access_token)
             $ghAccessToken = access_token;
-            setCurrentUser();
+            validateUser();
         });
 
-        setCurrentUser();
+        validateUser();
 
         //changeBot(0);
         changeToGlobal();
+
+        await updateGlobalChat();
     })
 
 </script>
@@ -231,10 +241,9 @@
                         <img src={m.avatar} alt="Github avatar" class="w-[25px] h-[25px] rounded-full">
                     <div class="not-me-mss p-1">{m.text}</div>
                 </div>
-                <a href={m.link}
-                    class="text-xs">
-                    {m.user}
-                </a>
+                <p class="text-xs">
+                    <a href={m.link} >{m.user}</a> - {m.date}
+                </p>
             {/each}
         {:else}
             {#each messages as m, i (m.id)}
@@ -283,6 +292,9 @@
                 {/each}
             </DropdownMenu.Content>
         </DropdownMenu.Root>            
+    </div>
+    <div>
+        <button onclick={() => forgetUser()}>forget</button>
     </div>
 
 </div>

@@ -51,6 +51,7 @@
 		"@math.gl/core": "^4.1.0",
 		"@neodrag/svelte": "^3.0.0-next.8",
 		"@types/three": "^0.180.0",
+		"axios": "^1.13.3",
 		"cannon-es": "^0.20.0",
 		"interactjs": "^1.10.27",
 		"jimp": "^1.6.0",
