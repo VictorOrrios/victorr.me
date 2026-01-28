@@ -33,7 +33,7 @@ export async function getUser(access_token:string):Promise<any>{
 }
 
 export async function postChatMessage(access_token:string, text:string):Promise<any>{
-    const url = 'https://victorr.me/api/chat/send';
+    const url = 'https://api.victorr.me/api/chat/send';
 
     try {
         const response = await axios.post(
@@ -72,7 +72,7 @@ export function formatDate(dateS:string):string{
 }
 
 export async function getAllMessages():Promise<ghMessage[]>{
-    const url = 'https://victorr.me/api/chat';
+    const url = 'https://api.victorr.me/api/chat';
 
     try {
         const response = await axios.get(
