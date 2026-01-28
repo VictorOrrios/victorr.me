@@ -211,8 +211,8 @@
 
     onMount(async () => {
         window.addEventListener('message', (event) => {
-            console.log("Message event recieved")
-            if (event.origin !== "http://localhost:3000") return;
+            console.log("Message event recieved",event.origin)
+            if (event.origin !== "https://api.victorr.me") return;
             const access_token = event.data;
             console.log("Acces token recieved:",access_token)
             $ghAccessToken = access_token;
