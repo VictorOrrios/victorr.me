@@ -14,8 +14,6 @@
         text:string
     }
 
-    
-
     type bot = {
         name:string,
         iconSrc:string,
@@ -292,9 +290,6 @@
                 {/each}
             </DropdownMenu.Content>
         </DropdownMenu.Root>            
-    </div>
-    <div>
-        <button onclick={() => forgetUser()}>forget</button>
     </div>
 
 </div>
