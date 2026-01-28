@@ -313,7 +313,6 @@
     .not-me-mss{
         background-color: var(--theme-color-lighter);
         margin-right: 1rem;
-        word-break: break-all;
     }
 
     .me-mss{
