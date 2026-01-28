@@ -166,6 +166,7 @@
     async function updateGlobalChat() {
         const msms = await getAllMessages();
         globalMessages = msms;
+        scrollToBottom();
     }
 
     function changeBot(id:number){
