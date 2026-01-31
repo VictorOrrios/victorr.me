@@ -179,9 +179,11 @@
 							</DropdownMenu.Trigger>
 							<DropdownMenu.Content class="w-56" align="start">
 								{#each window_library as window, i (window.type)}
-									<DropdownMenu.Item onclick={() => addWindow(window.type)}>
-										{window.text}
-									</DropdownMenu.Item>
+									{#if window.hasIcon}
+										<DropdownMenu.Item onclick={() => addWindow(window.type)}>
+											{window.text}
+										</DropdownMenu.Item>
+									{/if}
 								{/each}
 							</DropdownMenu.Content>
 						</DropdownMenu.Root>
