@@ -1,5 +1,5 @@
 <div class="text-right">
-~Updated @ Oct 2025. [***PDF Version***](/cv.pdf)
+~Updated @ Jan 2026. [***PDF Version***](/cv.pdf)
 </div>
 
 # **Victor Orrios**
@@ -41,7 +41,15 @@ Zaragoza, Spain
 <br>
 
 ## Projects and Events
-- [**victorr.me**](/) — October 2025  
+- **Signed Distance Function Field Grid Engine** — January 2026/Present  
+Currently developing a SDF Grid engine for my bachelor thesis at Unizar. Made with Vulkan and the [nvpro core2](https://github.com/nvpro-samples) helper library, using hardware accelerated custom raytracing and BVH structures.
+<br>
+
+- **WebGL GLTF Pathtracer** — Q3, Q4 2025  
+Developed in WebGL a physically based pathtracer with BVH, transient rendering and GLTF model and material support for the “Computer graphics” course at Unizar. Live demo available at: [victorr.me/uni-rt](uni-rt).
+<br>
+
+- ** Personal website - [victorr.me](/)** — October 2025  
 Interactive, window-like personal website built with Three.js.
 <br>
 
