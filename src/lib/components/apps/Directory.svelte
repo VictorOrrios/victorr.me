@@ -2,6 +2,7 @@
 
     const articles = [
         "hobby-raytracer",
+        "bs-thesis",
     ]
 
 </script>
