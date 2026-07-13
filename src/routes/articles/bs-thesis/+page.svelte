@@ -109,8 +109,30 @@
 	<h2 id="Section-2"><a href="#Section-2">##</a> Demos</h2>
 
 	<img src="/articles/bs-thesis/super_render_sphere.webp" alt="Visual demo of a mountain" />
-	<img src="/articles/bs-thesis/sim.gif" alt="Video demo of physics simulation" />
-	<p class="img-subtitle">* Gif may be laggy due to file size</p>
+	<video
+	autoplay
+	loop
+	muted
+	playsinline
+	>
+	<source src="/articles/bs-thesis/sim.mp4" type="video/mp4" />
+	</video>
+	<video
+	autoplay
+	loop
+	muted
+	playsinline
+	>
+	<source src="/articles/bs-thesis/TerrainTFG.mp4" type="video/mp4" />
+	</video>
+	<video
+	autoplay
+	loop
+	muted
+	playsinline
+	>
+	<source src="/articles/bs-thesis/EditTFG.mp4" type="video/mp4" />
+	</video>
 
 	<br />
 	<br />
@@ -146,7 +168,7 @@
 		margin-top: 1.5rem;
 	}
 
-	article img {
+	article img, video {
 		margin: auto;
 		width: 85%;
 		margin-top: 1rem;
