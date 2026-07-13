@@ -1,4 +1,5 @@
 <script lang="ts">
+  	import * as Carousel from "$lib/components/ui/carousel/index.js";
 </script>
 
 <svelte:head>
@@ -108,31 +109,47 @@
 
 	<h2 id="Section-2"><a href="#Section-2">##</a> Demos</h2>
 
-	<img src="/articles/bs-thesis/super_render_sphere.webp" alt="Visual demo of a mountain" />
-	<video
-	autoplay
-	loop
-	muted
-	playsinline
-	>
-	<source src="/articles/bs-thesis/sim.mp4" type="video/mp4" />
-	</video>
-	<video
-	autoplay
-	loop
-	muted
-	playsinline
-	>
-	<source src="/articles/bs-thesis/TerrainTFG.mp4" type="video/mp4" />
-	</video>
-	<video
-	autoplay
-	loop
-	muted
-	playsinline
-	>
-	<source src="/articles/bs-thesis/EditTFG.mp4" type="video/mp4" />
-	</video>
+	<Carousel.Root class="w-full m-auto">
+	<Carousel.Content>
+		
+		<Carousel.Item>
+			<video
+			autoplay
+			loop
+			muted
+			playsinline
+			>
+			<source src="/articles/bs-thesis/sim.mp4" type="video/mp4" />
+			</video>
+		</Carousel.Item>
+		<Carousel.Item>
+			<video
+			autoplay
+			loop
+			muted
+			playsinline
+			>
+			<source src="/articles/bs-thesis/TerrainTFG.mp4" type="video/mp4" />
+			</video>
+		</Carousel.Item>
+		<Carousel.Item>
+			<video
+			autoplay
+			loop
+			muted
+			playsinline
+			>
+			<source src="/articles/bs-thesis/EditTFG.mp4" type="video/mp4" />
+			</video>
+		</Carousel.Item>
+		<Carousel.Item>
+			<img src="/articles/bs-thesis/super_render_sphere.webp" alt="Visual demo of a mountain" />
+			<p class="img-subtitle">I <b><i>loved</i></b> making this project, SDFs are so cool!</p>
+		</Carousel.Item>
+	</Carousel.Content>
+	<Carousel.Previous class="absolute left-2 top-1/2 -translate-y-1/2" />
+  	<Carousel.Next class="absolute right-2 top-1/2 -translate-y-1/2" />
+	</Carousel.Root>
 
 	<br />
 	<br />
