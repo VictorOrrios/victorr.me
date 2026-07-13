@@ -72,7 +72,7 @@
 		Slides (in english) can be found <a href="/articles/bs-thesis/slides.pdf">here</a>. 62 slides.
 	</p>
 	<p>
-		Written report (in spanish) can be found <a href="/articles/bs-thesis/Memoria.pdf">here</a>. 91 pages.
+		Written report (in spanish) can be found <a href="https://drive.google.com/file/d/1iNfQrWKYKhwBhbgA1l2_W-BvGJ6aSXcw/view?usp=sharing">here</a>. 91 pages.
 	</p>
 
 	<h2 id="Section-1"><a href="#Section-1">##</a> Features</h2>
