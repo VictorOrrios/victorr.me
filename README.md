@@ -10,12 +10,6 @@ This is my website - my **personal and virtual portfolio** website, to be exact.
 - Articles
 - Fun tools and gizmos
 
-This website has been a side project I've worked on in my free time for over a month now.  
-Right now it's a bit bare, but I'll fill it out with future works.
-<br>
-
-I've had **sooo much fun** building this — new expansions with more tools and things to do are coming **for sure**.
-
 <br>
 
 ## Technical side
