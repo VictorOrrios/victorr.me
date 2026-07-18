@@ -128,50 +128,55 @@
             lastPosition = getCurrentPosition();
             pollPosition();
         }else{
+            const isIOS =
+                /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
             let lastTime = 0;
-            const threshold = 20; // Ajusta la sensibilidad
+            const threshold = 20;
 
-            function handleMotion(event: DeviceMotionEvent) {
-                const acc = event.accelerationIncludingGravity;
-                if (!acc) return;
+            if(!isIOS){
+                function handleMotion(event: DeviceMotionEvent) {
+                    const acc = event.accelerationIncludingGravity;
+                    if (!acc) return;
 
-                const x = acc.x ?? 0;
-                const y = acc.y ?? 0;
-                const z = acc.z ?? 0;
+                    const x = acc.x ?? 0;
+                    const y = acc.y ?? 0;
+                    const z = acc.z ?? 0;
 
-                const magnitude = Math.sqrt(x * x + y * y + z * z);
+                    const magnitude = Math.sqrt(x * x + y * y + z * z);
 
-                const now = Date.now();
+                    const now = Date.now();
 
-                if (magnitude > threshold && now - lastTime > 1000) {
-                    lastTime = now;
-                    shake(100);
-
-                    console.log("¡Móvil agitado!");
-
+                    if (magnitude > threshold && now - lastTime > 1000) {
+                        lastTime = now;
+                        shake(150);
+                    }
                 }
+
+                window.addEventListener("devicemotion", handleMotion);
+
+                return () => {
+                    window.removeEventListener("devicemotion", handleMotion);
+                };
             }
-
-            window.addEventListener("devicemotion", handleMotion);
-
-            return () => {
-                window.removeEventListener("devicemotion", handleMotion);
-            };
         }
     });
 
 
 </script>
 
-<div bind:this={container} class="w-full h-full flex flex-col items-center justify-center {isMobile? 'backdrop-blur-md scale-150':''}">
-    <div class="w-[170px] h-[170px] rounded-full flex items-center justify-center border-2 ball border-white overflow-hidden">
-        <div class="triangle z-1 {animation? 'active-tri': ''}"
-             style="transform: rotate({rotation}deg) scale({scale},{scale}); 
-             margin-top: {positionX}%; margin-left: {positionY}%;"></div>
-        <div class="absolute w-[170px] h-[170px] ring z-2"></div>
+<button class="w-full h-full" onclick={() => shake(150)}>
+    <div bind:this={container} class="w-full h-full flex flex-col items-center justify-center {isMobile? 'backdrop-blur-md scale-150':''}">
+        <div class="w-[170px] h-[170px] rounded-full flex items-center justify-center border-2 ball border-white overflow-hidden">
+            <div class="triangle z-1 {animation? 'active-tri': ''}"
+                style="transform: rotate({rotation}deg) scale({scale},{scale}); 
+                margin-top: {positionX}%; margin-left: {positionY}%;"></div>
+            <div class="absolute w-[170px] h-[170px] ring z-2"></div>
+        </div>
+        <p class="absolute z-2 w-[100px] text-center select-none text {animation? 'active-text': ''}">{text}</p>
     </div>
-    <p class="absolute z-2 w-[100px] text-center select-none text {animation? 'active-text': ''}">{text}</p>
-</div>
+</button>
 
 <style>
     .ball{

@@ -274,7 +274,7 @@
 			</div>
 		</div>
 	{:else}
-		<div class="w-[100vw] h-[100vh] flex flex-col content-center overflow-hidden">
+		<div class="w-[100vw] h-full flex flex-col content-center overflow-hidden">
 			<!--TOP BAR-->
 			<div class="relative flex h-[3.5rem] w-full flex-row content-center p-0">
 				<button onclick={onClickStyle} class="marquee text-2xl! font-normal!">
