@@ -62,7 +62,7 @@ export interface WindowConfig {
         minWidth: number;
         minHeight: number;
     };
-    window: Component;
+    window: Component<any>;
     hasIcon: boolean;
     icon?: Component;   
     iconX?: number;

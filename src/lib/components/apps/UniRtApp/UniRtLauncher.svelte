@@ -84,7 +84,7 @@
         background-color: none;
 		transition: background-color 0.5s ease, opacity 0.5s ease;
     }
-    .card:hover{
+    .card:hover, .card:focus{
         cursor: pointer;
         opacity: 100%;
         background-color: rgba(0.0,0.0,0.0,0.5);

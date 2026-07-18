@@ -4,6 +4,7 @@
 	import BiosLoader from '$lib/components/BiosLoader.svelte';
 	import Clock from '$lib/components/Clock.svelte';
 	import DesktopIcon from '$lib/components/DesktopIcon.svelte';
+	import MobileWindowManager from '$lib/components/MobileWindowManager.svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import WindowManager from '$lib/components/WindowManager.svelte';
 	import {
@@ -22,7 +23,7 @@
 		minimizeWindow
 	} from '$lib/tools/windowFunctions';
 	import { onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 
 	$occupiedCells = [];
 
@@ -125,10 +126,13 @@
 </svelte:head>
 
 {#if agentCheck}
+
+	{#if showBios}
+		<BiosLoader isMobile={isMobile}/>
+	{/if}
+
 	{#if !isMobile}
-		{#if showBios}
-			<BiosLoader />
-		{/if}
+		
 
 		<div class="flex w-[100vw] flex-col content-center overflow-hidden">
 			<!--TOP BAR-->
@@ -263,22 +267,22 @@
 					></button>
 					{#each window_library as window, i (window.type)}
 						{#if window.hasIcon}
-							<DesktopIcon type={window.type} />
+							<DesktopIcon type={window.type} isMobile={false}/>
 						{/if}
 					{/each}
 				</div>
 			</div>
 		</div>
 	{:else}
-		<div class="flex w-[100vw] flex-col content-center overflow-hidden">
+		<div class="w-[100vw] h-[100vh] flex flex-col content-center overflow-hidden">
 			<!--TOP BAR-->
 			<div class="relative flex h-[3.5rem] w-full flex-row content-center p-0">
-				<div class="marquee text-2xl">
+				<button onclick={onClickStyle} class="marquee text-2xl! font-normal!">
 					<div class="track">
 						<span>VICTORR.ME VICTORR.ME VICTORR.ME</span>
 						<span>VICTORR.ME VICTORR.ME VICTORR.ME</span>
 					</div>
-				</div>
+				</button>
 
 				<div class="absolute h-full">
 					<DropdownMenu.Root>
@@ -313,39 +317,41 @@
 								</DropdownMenu.SubContent>
 							</DropdownMenu.Sub>
 							<DropdownMenu.Separator />
-							<DropdownMenu.Item onclick={toogleFullScreen}>
-								{#if isInFullScreen}
-									Exit fullscreen
-								{:else}
-									Enter fullscreen
-								{/if}
-							</DropdownMenu.Item>
+							<a href="mailto:victor.orrios.b@gmail.com?subject=I found a bug in victorr.me">
+								<DropdownMenu.Item>Report a bug</DropdownMenu.Item>
+							</a>
+							{#if $activeWindows.length > 0}
+								<DropdownMenu.Item onclick={() => {closeWindow($activeWindows[0].type)}}>Close window</DropdownMenu.Item>
+							{/if}
 							<DropdownMenu.Item onclick={onClickShutdown}>Shutdown</DropdownMenu.Item>
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>
 				</div>
+
+				{#if $activeWindows.length > 0}
+					<button 
+						class="absolute h-full close-button right-0" 
+						onclick={() => {closeWindow($activeWindows[0].type)}}
+						in:slide={{ axis: 'x', duration: 400 }}
+						out:slide={{ axis: 'x', duration: 400 }}
+					>
+						X
+					</button>
+				{/if}
+					
+
 			</div>
 
-			<div class="h-[calc(100vh-2rem)] w-full">
-				<div class="absolute z-0 h-[calc(100vh-2rem)] w-full overflow-hidden">
-					<BgBase />
-				</div>
+			<div class="relative flex-1 w-full">
 
-				<div class="pointer-events-none absolute z-30 h-[calc(100vh-2rem)] w-full overflow-hidden">
-					<WindowManager />
-				</div>
-
+				<MobileWindowManager />
+				
 				<div
 					class="grid h-full w-full grid-cols-[repeat(auto-fill,150px)] grid-rows-[repeat(auto-fill,150px)] overflow-hidden"
 				>
-					<button
-						onclick={onClickDesktop}
-						class="absolute z-0 h-[calc(100vh-2rem)] w-full cursor-default!"
-						aria-label="desktop background"
-					></button>
 					{#each window_library as window, i (window.type)}
 						{#if window.hasIcon}
-							<DesktopIcon type={window.type} />
+							<DesktopIcon type={window.type} isMobile={true} />
 						{/if}
 					{/each}
 				</div>
@@ -371,7 +377,8 @@
 	}
 
 	.name-card,
-	.name-card-mobile {
+	.name-card-mobile,
+	.close-button {
 		background: linear-gradient(
 			to right,
 			var(--theme-color-darker),
@@ -397,7 +404,8 @@
 			box-shadow 0.7s ease-in;
 	}
 
-	.name-card-mobile {
+	.name-card-mobile, 
+	.close-button {
 		width: 3.5rem;
 		height: 3.5rem;
 		margin: 0px;
@@ -409,6 +417,14 @@
 			font-size 0.5s ease,
 			border-radius 0.5s ease,
 			box-shadow 0.7s ease-in;
+	}
+
+	.close-button {
+		border-radius: 0% 0% 0% 100%;
+		font-size: x-large;
+		padding-left: 1rem;
+		padding-bottom: 0.5rem;
+		font-family: 'Dot Matrix';
 	}
 
 	.name-card:hover,

@@ -26,17 +26,8 @@
         minimizeWindow(type);
     }
 
-    function updateZ(){
-        const L = $activeWindows.length;
-        const i = $activeWindows.findIndex(w => w.type === type);
-        if(i<0) return;
-        
-        if(wel) wel.style.zIndex = String(200+i*5);
-    }
-
     $effect(() => {
         $activeWindows;
-        //updateZ();
     });
 
     function handleControlButtonClick(e:Event) {
@@ -128,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <window_data.window/>
+        <window_data.window isMobile={false}/>
     </div>
 {/if}
 

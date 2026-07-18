@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
+
 
     interface prompt {
         text:string,
@@ -51,6 +52,8 @@
         {text:"Do you need to shake so hard?",chance:0.5},
         {text:"Shake me like a polaroid",chance:0.5},
     ];
+
+	let { isMobile } = $props();
 
     let sumChance = 0.0
     prompts.map((v,i,a) => sumChance+=v.chance);
@@ -121,13 +124,46 @@
     }
 
     onMount(() => {
-        lastPosition = getCurrentPosition();
-        pollPosition();
+        if(!isMobile){
+            lastPosition = getCurrentPosition();
+            pollPosition();
+        }else{
+            let lastTime = 0;
+            const threshold = 20; // Ajusta la sensibilidad
+
+            function handleMotion(event: DeviceMotionEvent) {
+                const acc = event.accelerationIncludingGravity;
+                if (!acc) return;
+
+                const x = acc.x ?? 0;
+                const y = acc.y ?? 0;
+                const z = acc.z ?? 0;
+
+                const magnitude = Math.sqrt(x * x + y * y + z * z);
+
+                const now = Date.now();
+
+                if (magnitude > threshold && now - lastTime > 1000) {
+                    lastTime = now;
+                    shake(100);
+
+                    console.log("¡Móvil agitado!");
+
+                }
+            }
+
+            window.addEventListener("devicemotion", handleMotion);
+
+            return () => {
+                window.removeEventListener("devicemotion", handleMotion);
+            };
+        }
     });
+
 
 </script>
 
-<div bind:this={container} class="w-full h-full flex flex-col items-center justify-center">
+<div bind:this={container} class="w-full h-full flex flex-col items-center justify-center {isMobile? 'backdrop-blur-md scale-150':''}">
     <div class="w-[170px] h-[170px] rounded-full flex items-center justify-center border-2 ball border-white overflow-hidden">
         <div class="triangle z-1 {animation? 'active-tri': ''}"
              style="transform: rotate({rotation}deg) scale({scale},{scale}); 

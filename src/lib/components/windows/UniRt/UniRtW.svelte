@@ -6,6 +6,8 @@
 	import UniRtCanvas from "$lib/components/apps/UniRtApp/UniRtCanvas.svelte";
 	import { activeWindows, uniRtFPS, uniRtParams, uniRtParamsNull } from "$lib/stores";
 
+	let { isMobile } = $props();
+    
     let launched:boolean = $state(false);
     let scene:SceneType = $state(SceneType.CORNEL);
 
@@ -17,6 +19,7 @@
     });
 
     function startScene(p:SceneType){
+        if(isMobile) return; // Dont let user activate scene on mobile
         scene = p;
         $uniRtParams.endScene = false;
         $uniRtParams.stopRendering = false;

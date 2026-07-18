@@ -9,6 +9,8 @@
  
     const spinner_states = ["/","—","\\","|"];
 
+	let { isMobile } = $props();
+
     let text_library = [
         "Hola, que tal estas?",
         "Doin' sm, idk",
@@ -134,6 +136,17 @@
         }, randomIntFromInterval(100,300)*speed)
     }
 
+    function getBrowser() {
+        const ua = navigator.userAgent;
+
+        if (ua.includes("Edg")) return "Edge";
+        if (ua.includes("Chrome")) return "Chrome";
+        if (ua.includes("Firefox")) return "Firefox";
+        if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
+        if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
+
+        return "Unknown";
+    }
 
     onMount(() => {
         spinnerNextState();
@@ -155,7 +168,7 @@
 
 <div class="absolute w-[100vw] h-[100vh] bg-black z-10000 bios-container overflow-scroll text-left">
 <!--found on https://textart.sh/topic/crow-->
-<pre class="fixed right-8 bottom-8 text-[1.6vh]! leading-none select-none">                                                                  
+<pre class="fixed right-8 bottom-8 leading-none select-none {isMobile? 'text-[2vw]!': 'text-[1.6vh]!'}">                                                                  
               ░░                                                  
           ░░  ░░                                                  
 ░░░░      ░░░░░░░░                                                
@@ -202,6 +215,7 @@
 </pre>
     <div class="wrapper w-full h-full text-left p-4">
 
+{#if !isMobile}
 <pre class="leading-none"> __     __   
  \ \   / /o    
   \ \ / //     ==VICTORR.ME==
@@ -211,6 +225,18 @@
   (__)       
 
 </pre>
+{:else}
+<pre class="leading-none overflow-hidden"> __     __   
+ \ \   / /o    
+  \ \ / //     ==VICTORR.ME==
+  /\ V /_,-.   @{getBrowser()}
+ o  \_/-(_/    
+   //          
+  (__)       
+
+</pre>
+
+{/if}
 
     <div class="grid grid-cols-[4rem_1fr] gap-x-4 w-full pb-12">
             {#each textBox as line, i (i)}

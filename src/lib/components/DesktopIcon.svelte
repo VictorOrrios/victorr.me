@@ -8,7 +8,7 @@
 	import Resume from "./icons/Resume.svelte";
 	import { addWindow } from "$lib/tools/windowFunctions";
 
-	let { type } = $props();
+	let { type, isMobile } = $props();
 	const cellWidth = 150;
 	const cellHeight = 150;
 	const debugLogs = false;
@@ -52,66 +52,76 @@
 		if(debugLogs) console.log("INI:",xIndexIni,yIndexIni,x,y);
 
 
-		interact(el).draggable({
-			modifiers: [
-			interact.modifiers.snap({
-				targets: [
-					interact.snappers.grid({
-						x: cellWidth,y: cellHeight,
-						offset: { x: prect.left, y: prect.top },
-					})
+		if(!isMobile){
+			interact(el).draggable({
+				modifiers: [
+				interact.modifiers.snap({
+					targets: [
+						interact.snappers.grid({
+							x: cellWidth,y: cellHeight,
+							offset: { x: prect.left, y: prect.top },
+						})
+					],
+					range: Infinity,
+					relativePoints: [ { x: 0, y: 0 } ],
+					endOnly: true
+				}),
+				interact.modifiers.restrictRect({
+					restriction: 'parent',
+					endOnly: true
+				})
 				],
-				range: Infinity,
-				relativePoints: [ { x: 0, y: 0 } ],
-				endOnly: true
-			}),
-			interact.modifiers.restrictRect({
-				restriction: 'parent',
-				endOnly: true
+				inertia: false
 			})
-			],
-			inertia: false
-		})
-		.on("dragstart", (event) => {
-			if(debugLogs) console.log($selectedType,"=>",type);
-			$selectedType = type;
-			startX = x;
-			startY = y;
-		})
-		.on("dragmove", (event) => {
-			x += event.dx;
-			y += event.dy;
-			event.target.style.transform = `translate(${x-iniX}px, ${y-iniY}px)`;
-		})
-		.on("dragend", (event) => {
-			const xIndexEnd = Math.abs(Math.round((x-prect.left) / cellWidth));
-			const yIndexEnd = Math.abs(Math.round((y-prect.top) / cellHeight));
-			const xIndexStart = Math.abs(Math.round((startX-prect.left) / cellWidth));
-			const yIndexStart = Math.abs(Math.round((startY-prect.top) / cellHeight));
-			if(debugLogs) console.log("START: ",xIndexStart,yIndexStart,startX,startY);
-			if(debugLogs) console.log("END: ",xIndexEnd,yIndexEnd,x,y);
+			.on("dragstart", (event) => {
+				if(debugLogs) console.log($selectedType,"=>",type);
+				$selectedType = type;
+				startX = x;
+				startY = y;
+			})
+			.on("dragmove", (event) => {
+				x += event.dx;
+				y += event.dy;
+				event.target.style.transform = `translate(${x-iniX}px, ${y-iniY}px)`;
+			})
+			.on("dragend", (event) => {
+				const xIndexEnd = Math.abs(Math.round((x-prect.left) / cellWidth));
+				const yIndexEnd = Math.abs(Math.round((y-prect.top) / cellHeight));
+				const xIndexStart = Math.abs(Math.round((startX-prect.left) / cellWidth));
+				const yIndexStart = Math.abs(Math.round((startY-prect.top) / cellHeight));
+				if(debugLogs) console.log("START: ",xIndexStart,yIndexStart,startX,startY);
+				if(debugLogs) console.log("END: ",xIndexEnd,yIndexEnd,x,y);
 
-			if(isCellOccupied(xIndexEnd, yIndexEnd)) {
-				x = startX;
-				y = startY;
-				console.log("Cell ocupied");
-			} else {
-				changeCell(xIndexStart,yIndexStart,xIndexEnd,yIndexEnd);
-			}
+				if(isCellOccupied(xIndexEnd, yIndexEnd)) {
+					x = startX;
+					y = startY;
+					console.log("Cell ocupied");
+				} else {
+					changeCell(xIndexStart,yIndexStart,xIndexEnd,yIndexEnd);
+				}
 
-			event.target.style.transform = `translate(${x-iniX}px, ${y-iniY}px)`;
-		})
-		.on('tap', function (event) {
-			if(debugLogs) console.log($selectedType,"=>",type);
-			$selectedType = type;
-			if(debugLogs) console.log("TAP",type);
-			event.preventDefault()
-		})
-		.on('doubletap', function (event) {
-			if(debugLogs) console.log("DOUBLE TAP",type);
-			addWindow(type);
-			event.preventDefault();
-		});
+				event.target.style.transform = `translate(${x-iniX}px, ${y-iniY}px)`;
+			})
+			.on('tap', function (event) {
+				if(debugLogs) console.log($selectedType,"=>",type);
+				$selectedType = type;
+				if(debugLogs) console.log("TAP",type);
+				event.preventDefault()
+			})
+			.on('doubletap', function (event) {
+				if(debugLogs) console.log("DOUBLE TAP",type);
+				addWindow(type);
+				event.preventDefault();
+			});
+		}else{
+			interact(el).draggable({})
+			.on('tap', function (event) {
+				if(debugLogs) console.log("TAP",type);
+				$selectedType = type;
+				addWindow(type);
+				event.preventDefault();
+			});
+		}
 
 	});
 	
